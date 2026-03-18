@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바이브 코딩 기초 개념</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Pretendard', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased py-10 px-4 md:px-0 selection:bg-indigo-100 selection:text-indigo-900">
+
+    <main class="max-w-4xl mx-auto space-y-12">
+        
+        <!-- Header Section -->
+        <header class="text-center space-y-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+                바이브 코딩을 하는데 필요한<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">기초 개념</span>
+            </h1>
+        </header>
+
+        <!-- 핵심 요약 -->
+        <section class="bg-white rounded-2xl shadow-sm border-l-4 border-indigo-500 p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <span>🎯</span> 핵심 요약
+            </h2>
+            <ul class="space-y-4 text-slate-700 text-lg">
+                <li class="flex items-start gap-3">
+                    <span class="text-indigo-500 font-bold mt-1">•</span>
+                    <div>
+                        <strong class="text-slate-900">바이브 코딩</strong> = AI와 사람이 함께 코딩 흐름(vibe)을 만들어가는 방식<br>
+                        <span class="text-sm text-slate-500">→ AI에게 기획, 설계, 코드 생성을 맡기고 사람은 방향·품질을 잡는 구조</span>
+                    </div>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-indigo-500 font-bold mt-1">•</span>
+                    <div>
+                        <strong class="text-slate-900">풀스택(Full-stack)</strong><br>
+                        <span class="text-sm text-slate-500">→ 웹 서비스를 만들 때 필요한 전 과정(Frontend + Backend + DB + Infra)을 한 사람이 전체적으로 이해하는 개념</span>
+                    </div>
+                </li>
+            </ul>
+            <div class="mt-6 bg-slate-50 p-4 rounded-xl border border-slate-100 text-slate-600">
+                💡 <strong>바이브 코딩을 잘하려면 전체의 흐름을 구조적으로 이해하는 능력이 중요합니다.</strong><br>
+                AI가 코드를 대신 만들어주기 때문에, 이제는 "직접 다 코딩하기"보다 <strong>"전체 시스템을 조립하고 조율하는 능력"</strong>이 핵심입니다.
+            </div>
+        </section>
+
+        <!-- 1. 바이브 코딩 기본 개념 -->
+        <section class="space-y-6">
+            <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3">
+                <span class="text-indigo-600 text-2xl">1.</span> ⭐ 바이브 코딩(Vibe Coding) 기본 개념
+            </h2>
+            <p class="text-lg text-slate-600">
+                바이브 코딩은 최근 개발 트렌드 중 하나로, AI와 함께 완성해 나가는 개발 방식입니다.
+            </p>
+            
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2">✔ 바이브 코딩 핵심 키워드</h3>
+                <ul class="grid md:grid-cols-2 gap-4 mb-6">
+                    <li class="flex items-center gap-2 text-slate-600"><span class="bg-indigo-100 text-indigo-600 p-1 rounded">🤖</span> AI First 개발 방식</li>
+                    <li class="flex items-center gap-2 text-slate-600"><span class="bg-indigo-100 text-indigo-600 p-1 rounded">🔄</span> 설계 → 구조화 → 코드 생성 → 디버깅까지 AI 동행</li>
+                    <li class="flex items-center gap-2 text-slate-600"><span class="bg-indigo-100 text-indigo-600 p-1 rounded">🎯</span> 개발자는 "문제 정의·검증·조율·품질관리"에 집중</li>
+                    <li class="flex items-center gap-2 text-slate-600"><span class="bg-indigo-100 text-indigo-600 p-1 rounded">🧩</span> 작은 기능 단위로 끊어 AI에게 명확히 지시</li>
+                </ul>
+
+                <h4 class="font-bold text-slate-800 mb-2">지시(Prompt) 예시</h4>
+                <div class="space-y-2">
+                    <div class="bg-red-50 text-red-800 p-3 rounded-lg flex items-start gap-3 border border-red-100">
+                        <span class="font-bold text-lg leading-none">❌</span>
+                        <div>"회원가입 API 만들어줘" <span class="text-red-500 text-sm">(너무 모호함)</span></div>
+                    </div>
+                    <div class="bg-emerald-50 text-emerald-800 p-3 rounded-lg flex items-start gap-3 border border-emerald-100">
+                        <span class="font-bold text-lg leading-none">⭕</span>
+                        <div>"FastAPI 기반 / POST /signup / email-password 검증 포함 / DB는 SQLite / 응답 형태는 JSON" <span class="text-emerald-600 text-sm font-semibold">(올바른 vibe 지시)</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 왜 풀스택 개념이 필요한가? -->
+        <section class="space-y-6">
+            <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3">
+                <span class="text-indigo-600 text-2xl">2.</span> ⭐ 왜 풀스택 개념이 필요한가?
+            </h2>
+            <div class="bg-gradient-to-r from-slate-800 to-slate-900 text-white rounded-2xl p-6 md:p-8 shadow-md">
+                <p class="text-lg leading-relaxed mb-4">
+                    바이브 코딩을 잘하려면 <strong class="text-indigo-300">전체 시스템 구조를 머릿속에서 그릴 수 있어야</strong> AI에게 적절히 지시할 수 있습니다.
+                </p>
+                <p class="text-slate-300">
+                    AI가 코드 생성은 잘하지만 <strong>"이걸 어디에 놓을지?", "무엇과 연결해야 하는지?"</strong>는 사람이 방향을 잡아줘야 합니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. 풀스택 개념 완전 정리 -->
+        <section class="space-y-6">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3 mb-3">
+                    <span class="text-indigo-600 text-2xl">3.</span> ⭐ 풀스택(Full-Stack) 개념 완전 정리
+                </h2>
+                <p class="text-lg text-slate-600">
+                    풀스택은 웹/앱 서비스가 돌아가기 위해 필요한 전체 레이어를 이해하는 것을 말합니다.<br>
+                    아래의 4단계를 모두 이해하면 <strong>"풀스택 사고(Full-stack mindset)"</strong>이 가능해 집니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Frontend -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4">🖥️</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-1">3-1) Frontend (프론트엔드)</h3>
+                    <p class="text-sm text-slate-500 mb-4">→ 사용자가 눈으로 보는 화면(UI)</p>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase tracking-wider">주요 기술</span>
+                            <p class="text-slate-700 text-sm mt-1">HTML / CSS / JavaScript<br>React, Next.js, Vue.js 등</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase tracking-wider">기능</span>
+                            <p class="text-slate-700 text-sm mt-1">버튼, 화면 이동, 폼 입력, 차트, 화면 인터랙션</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <span class="font-semibold text-sm text-slate-800">예시:</span>
+                            <p class="text-slate-600 text-sm italic">"로그인 화면에 이메일·비밀번호 입력 UI 만들기"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4">⚙️</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-1">3-2) Backend (백엔드)</h3>
+                    <p class="text-sm text-slate-500 mb-4">→ 화면 뒤에서 돌아가는 로직</p>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded uppercase tracking-wider">주요 기술</span>
+                            <p class="text-slate-700 text-sm mt-1">Python(FastAPI, Django), Node.js(Express), Java(Spring 등)</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded uppercase tracking-wider">주요 기능</span>
+                            <p class="text-slate-700 text-sm mt-1">회원가입, 로그인, 데이터 저장·조회, 비즈니스 로직 처리, 외부 API 호출</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <span class="font-semibold text-sm text-slate-800">예시:</span>
+                            <p class="text-slate-600 text-sm italic">"로그인 버튼 누르면 DB에서 아이디·비밀번호 확인 → JWT 토큰 발급"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4">🗄️</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-1">3-3) Database (DB)</h3>
+                    <p class="text-sm text-slate-500 mb-4">→ 데이터가 저장되는 곳</p>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded uppercase tracking-wider">주요 기술</span>
+                            <p class="text-slate-700 text-sm mt-1">MySQL, PostgreSQL, MongoDB, Supabase, Firebase 등</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded uppercase tracking-wider">개념</span>
+                            <p class="text-slate-700 text-sm mt-1">사용자의 모든 정보를 저장 (SQL 기반이 가장 일반적)</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <span class="font-semibold text-sm text-slate-800">예시:</span>
+                            <p class="text-slate-600 text-sm italic">회원 테이블 users(email, password_hash, created_at) 저장</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Infra -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4">☁️</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-1">3-4) Infra (배포/운영)</h3>
+                    <p class="text-sm text-slate-500 mb-4">→ 내가 만든 서비스를 전 세계 사용자에게 배포하는 과정</p>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded uppercase tracking-wider">주요 기술</span>
+                            <p class="text-slate-700 text-sm mt-1">AWS, GCP, Azure<br>Vercel(Frontend), Railway/Fly.io(Backend)</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded uppercase tracking-wider">개념</span>
+                            <p class="text-slate-700 text-sm mt-1">서버를 띄우고, DB 연결하고, 트래픽 관리 (대부분 클라우드 사용)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 풀스택 사고법 & 개발자 역할 변화 -->
+        <section class="space-y-6">
+            <h2 class="text-3xl font-bold text-slate-900">⭐ 바이브 코딩 시대의 풀스택 사고법</h2>
+            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-6 text-indigo-900 text-lg">
+                AI 코딩 시대에는 "모든 코드를 내가 직접 작성"하는 것이 아니라,<br>
+                <strong class="text-indigo-700 text-xl block mt-2">✔ 모든 레이어를 연결하는 사람(Architect)이 되는 것이 핵심입니다.</strong>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">개발자 역할 변화</h3>
+            <div class="overflow-x-auto bg-white rounded-2xl shadow-sm border border-slate-200">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200">
+                            <th class="p-4 font-bold text-slate-600">구분</th>
+                            <th class="p-4 font-bold text-slate-600 text-center">과거</th>
+                            <th class="p-4 font-bold text-indigo-600 text-center">현재 (바이브 코딩·AI 시대)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-700 bg-slate-50">코드 작성</td>
+                            <td class="p-4 text-slate-600 text-center">나 혼자 모든 코드를 작성</td>
+                            <td class="p-4 font-bold text-indigo-700 text-center bg-indigo-50/30">AI가 80% 코드를 생성</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-700 bg-slate-50">핵심 목표</td>
+                            <td class="p-4 text-slate-600 text-center">기능 구현이 핵심</td>
+                            <td class="p-4 font-bold text-indigo-700 text-center bg-indigo-50/30">구조 설계·요구사항 정의가 핵심</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-700 bg-slate-50">필요 역량</td>
+                            <td class="p-4 text-slate-600 text-center">사소한 문법 공부 필요</td>
+                            <td class="p-4 font-bold text-indigo-700 text-center bg-indigo-50/30">시스템 사고, 조립 능력 필요</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-slate-700 bg-slate-50">배포 방식</td>
+                            <td class="p-4 text-slate-600 text-center">배포 어려움 → DevOps 필수</td>
+                            <td class="p-4 font-bold text-indigo-700 text-center bg-indigo-50/30">버튼 몇 번으로 배포 가능</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5. 시나리오 예시 -->
+        <section class="space-y-6">
+            <h2 class="text-3xl font-bold text-slate-900">⭐ 예시로 보는 "풀스택 + 바이브 코딩" 시나리오</h2>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <h3 class="text-xl font-bold text-slate-800 mb-6 pb-4 border-b border-slate-100 flex items-center gap-2">
+                    <span>🎯</span> 목표: "간단한 AI 챗봇 웹서비스 만들기"
+                </h3>
+                
+                <div class="space-y-6">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="md:w-1/4">
+                            <span class="inline-block bg-blue-100 text-blue-700 font-bold px-3 py-1 rounded text-sm">Step 1</span>
+                            <div class="font-bold text-slate-700 mt-1">프론트엔드 지시</div>
+                        </div>
+                        <div class="md:w-3/4 bg-slate-50 p-4 rounded-xl border border-slate-100 font-mono text-sm text-slate-700 shadow-inner">
+                            React로 질문 입력창 + 응답 출력 UI 만들어줘
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="md:w-1/4">
+                            <span class="inline-block bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded text-sm">Step 2</span>
+                            <div class="font-bold text-slate-700 mt-1">백엔드 지시</div>
+                        </div>
+                        <div class="md:w-3/4 bg-slate-50 p-4 rounded-xl border border-slate-100 font-mono text-sm text-slate-700 shadow-inner">
+                            FastAPI로 /chat 엔드포인트 만들고<br>OpenAI GPT로 응답 생성하는 코드를 작성해줘.
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="md:w-1/4">
+                            <span class="inline-block bg-amber-100 text-amber-700 font-bold px-3 py-1 rounded text-sm">Step 3</span>
+                            <div class="font-bold text-slate-700 mt-1">DB 지시</div>
+                        </div>
+                        <div class="md:w-3/4 bg-slate-50 p-4 rounded-xl border border-slate-100 font-mono text-sm text-slate-700 shadow-inner">
+                            chat_history 테이블을 만들고 질문/응답을 저장하는 기능 추가해줘.
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="md:w-1/4">
+                            <span class="inline-block bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded text-sm">Step 4</span>
+                            <div class="font-bold text-slate-700 mt-1">배포 지시</div>
+                        </div>
+                        <div class="md:w-3/4 bg-slate-50 p-4 rounded-xl border border-slate-100 font-mono text-sm text-slate-700 shadow-inner">
+                            백엔드는 Railway에, 프론트는 Vercel에 배포하는 과정을 단계별로 설명해줘.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+                    <p class="text-lg text-slate-700">
+                        AI가 대부분의 코드를 자동 생성하므로,<br>
+                        <strong class="text-indigo-600">→ 풀스택 개념을 이해하고, 전체를 연결하는 역할만 하면 됨.</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 바이브 코딩 핵심 Mindset 5가지 -->
+        <section class="pb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">⭐ 바이브 코딩을 잘하기 위한 핵심 Mindset 5가지</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <div class="bg-indigo-600 text-white rounded-2xl p-6 shadow-md hover:-translate-y-1 transition-transform">
+                    <div class="text-4xl font-black text-indigo-400/50 mb-2">01</div>
+                    <p class="font-bold text-lg">AI에게 명확하고 구조적인 지시를 내려라.</p>
+                </div>
+                
+                <div class="bg-indigo-600 text-white rounded-2xl p-6 shadow-md hover:-translate-y-1 transition-transform">
+                    <div class="text-4xl font-black text-indigo-400/50 mb-2">02</div>
+                    <p class="font-bold text-lg">전체 아키텍처(Frontend ↔ Backend ↔ DB ↔ Infra)를 항상 머리에 그려라.</p>
+                </div>
+
+                <div class="bg-indigo-600 text-white rounded-2xl p-6 shadow-md hover:-translate-y-1 transition-transform">
+                    <div class="text-4xl font-black text-indigo-400/50 mb-2">03</div>
+                    <p class="font-bold text-lg">기능을 작은 단위로 나눠 AI에게 전달하라.</p>
+                </div>
+
+                <div class="bg-indigo-600 text-white rounded-2xl p-6 shadow-md hover:-translate-y-1 transition-transform md:col-span-1 lg:col-span-1">
+                    <div class="text-4xl font-black text-indigo-400/50 mb-2">04</div>
+                    <p class="font-bold text-lg">에러는 AI에게 해결을 맡겨라.</p>
+                </div>
+
+                <div class="bg-indigo-600 text-white rounded-2xl p-6 shadow-md hover:-translate-y-1 transition-transform md:col-span-2 lg:col-span-2">
+                    <div class="text-4xl font-black text-indigo-400/50 mb-2">05</div>
+                    <p class="font-bold text-lg text-xl">내가 직접 코드를 쓰기보다 품질 검증·설계·통합에 집중하라.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
