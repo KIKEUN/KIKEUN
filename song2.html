@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAYDAY 우수작을 소개합니다</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f8fafc;
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            color: #334155;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        /* 헤더 섹션 */
+        .header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+            padding: 50px 20px;
+            text-align: center;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.3;
+        }
+
+        .header .highlight-text {
+            color: #fde047;
+        }
+
+        /* 인트로 섹션 */
+        .intro-section {
+            padding: 30px 40px;
+            text-align: center;
+            background: #ffffff;
+        }
+
+        .intro-card {
+            background-color: #f1f5f9;
+            padding: 20px 30px;
+            border-radius: 12px;
+            position: relative;
+            border: 1px solid #e2e8f0;
+        }
+
+        .intro-main {
+            color: #1e293b;
+            line-height: 1.6;
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            word-break: keep-all;
+        }
+
+        .intro-sub {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+            word-break: keep-all;
+            padding-top: 12px;
+            border-top: 1px dashed #cbd5e1;
+            display: inline-block;
+        }
+
+        .text-accent {
+            color: #2563eb;
+            font-weight: 800;
+            background: linear-gradient(transparent 70%, #dbeafe 30%);
+            padding: 0 4px;
+        }
+
+        .best-badge {
+            background: linear-gradient(45deg, #f97316, #fb923c);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+            vertical-align: middle;
+            display: inline-block;
+            box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2);
+        }
+
+        .author-info {
+            margin-left: 12px;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 6px;
+            vertical-align: middle;
+        }
+
+        .author-dept { font-size: 13px; color: #64748b; }
+        .author-name { font-size: 16px; color: #1e293b; font-weight: bold; }
+
+        /* 이미지 슬라이더 */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+            border: 1px solid #f1f5f9;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+
+        .slides {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            width: 33.3333%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide img { width: 100%; height: 100%; object-fit: contain; }
+
+        input[name="slide-dot"] { display: none; }
+        #dot1:checked ~ .slider-container .slides { transform: translateX(0%); }
+        #dot2:checked ~ .slider-container .slides { transform: translateX(-33.3333%); }
+        #dot3:checked ~ .slider-container .slides { transform: translateX(-66.6666%); }
+
+        .arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .arrow-btn:hover { background-color: #fff; transform: translateY(-50%) scale(1.1); color: #2563eb; }
+        .arrow-left { left: 15px; }
+        .arrow-right { right: 15px; }
+        .arrow-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+        .arrow-btn-label { display: none; }
+        #dot1:checked ~ .arrow-r2 { display: flex; }
+        #dot2:checked ~ .arrow-l1, #dot2:checked ~ .arrow-r3 { display: flex; }
+        #dot3:checked ~ .arrow-l2 { display: flex; }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .dot-label {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #dot1:checked ~ .dots .dot1-label,
+        #dot2:checked ~ .dots .dot2-label,
+        #dot3:checked ~ .dots .dot3-label {
+            background-color: #2563eb;
+            width: 20px;
+            border-radius: 10px;
+        }
+
+        /* 플레이어 섹션 */
+        .modern-player {
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 15px;
+        }
+
+        .album-art {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(45deg, #f43f5e, #3b82f6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .track-details h3 { margin: 0; font-size: 16px; color: #fff; font-weight: 700; }
+        .track-details p { margin: 2px 0 0; font-size: 12px; color: #94a3b8; }
+
+        .play-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #fff;
+            border: none;
+            color: #0f172a;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .play-btn:hover { transform: scale(1.1); background: #fde047; }
+        .play-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: #3b82f6;
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        /* 가사 상자 개선 */
+        .lyrics-outer {
+            margin: 15px auto 0;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .lyrics-box {
+            padding: 60px 20px; /* 상하 패딩을 늘려 중앙 정렬 효과 극대화 */
+            height: 140px;     
+            overflow-y: auto;  
+            font-size: 14px;
+            line-height: 2.4;  
+            color: #94a3b8;
+            text-align: center;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none; /* 스크롤바 숨기기 (IE) */
+            scrollbar-width: none;    /* 스크롤바 숨기기 (Firefox) */
+        }
+
+        .lyrics-box::-webkit-scrollbar {
+            display: none; /* 스크롤바 숨기기 (Chrome, Safari) */
+        }
+
+        .lyric-line {
+            opacity: 0.4;
+            transition: all 0.4s ease;
+            margin-bottom: 8px;
+            word-break: keep-all;
+        }
+
+        .lyric-line.active {
+            color: #2563eb;
+            font-weight: 800;
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .lyric-line.is-tag {
+            font-size: 11px;
+            color: #cbd5e1;
+            margin: 15px 0;
+            font-weight: normal;
+        }
+
+        .content-section { padding: 0 40px 40px; }
+
+        .project-card {
+            margin-bottom: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .footer {
+            padding: 25px;
+            text-align: center;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .footer-brand { font-weight: 800; color: #1e293b; font-size: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1><span class="highlight-text">PLAYDAY</span> AI 체험 부스 우수작품</h1>
+        </div>
+
+        <div class="intro-section">
+            <div class="intro-card">
+                <p class="intro-main">
+                    업무 효율 향상을 위해 AI를 적극 활용해주신 분들의<br>
+                    <span class="text-accent">‘PLAYDAY AI 온라인 부스 우수작’</span>을 소개합니다.
+                </p>
+                <p class="intro-sub">
+                    참여해주신 모든 분들께 진심으로 감사드립니다. (3/23~3/31 진행)
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="project-card" style="border-top: none; padding-top: 0;">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <span style="background-color: #eff6ff; color: #2563eb; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; margin-right: 10px;">Category 01</span>
+                    <h2 style="margin: 0; font-size: 22px; display: flex; align-items: center; flex-wrap: wrap; letter-spacing: -0.5px;">
+                        📊 데이터 시각화 대시보드 
+                        <span class="best-badge">우수작품</span>
+                        <div class="author-info">
+                            <span class="author-dept">파나마 메트로 3구역</span>
+                            <span class="author-name">박재현 매니저</span>
+                        </div>
+                    </h2>
+                </div>
+                
+                <p style="color: #475569; line-height: 1.7; margin-bottom: 20px; font-size: 15px; word-break: keep-all;">
+                    번거로운 현장 엑셀 작업을 최소화하고 복잡한 수치들을 직관적인 데이터로 시각화한 대시보드입니다. 
+                    실시간 공정률과 투입 리소스를 한눈에 파악하여 관리 효율을 극대화했습니다.
+                </p>
+
+                <div class="slider-wrapper">
+                    <input type="radio" name="slide-dot" id="dot1" checked>
+                    <input type="radio" name="slide-dot" id="dot2">
+                    <input type="radio" name="slide-dot" id="dot3">
+                    
+                    <label for="dot1" class="arrow-btn arrow-left arrow-l1 arrow-btn-label"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></label>
+                    <label for="dot2" class="arrow-btn arrow-left arrow-l2 arrow-btn-label"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></label>
+                    <label for="dot2" class="arrow-btn arrow-right arrow-r2 arrow-btn-label"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></label>
+                    <label for="dot3" class="arrow-btn arrow-right arrow-r3 arrow-btn-label"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></label>
+
+                    <div class="slider-container">
+                        <div class="slides">
+                            <div class="slide"><img src="https://kikeun.github.io/KIKEUN/ai11.png" alt="대시보드 1"></div>
+                            <div class="slide"><img src="https://kikeun.github.io/KIKEUN/ai12.png" alt="대시보드 2"></div>
+                            <div class="slide"><img src="https://kikeun.github.io/KIKEUN/ai13.png" alt="대시보드 3"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="dots">
+                        <label for="dot1" class="dot-label dot1-label"></label>
+                        <label for="dot2" class="dot-label dot2-label"></label>
+                        <label for="dot3" class="dot-label dot3-label"></label>
+                    </div>
+                </div>
+                <p style="text-align: center; color: #94a3b8; font-size: 11px; margin-top: 10px;">• 데이터 자료는 샘플 자료를 활용하였습니다 •</p>
+            </div>
+
+            <div class="project-card">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <span style="background-color: #fff1f2; color: #e11d48; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; margin-right: 10px;">Category 02</span>
+                    <h2 style="margin: 0; font-size: 22px; display: flex; align-items: center; letter-spacing: -0.5px;">
+                        🎵 사내 활력 충전! AI 노동요 
+                        <span class="best-badge">우수작품</span>
+                        <div class="author-info">
+                            <span class="author-dept">건축기전PI팀</span>
+                            <span class="author-name">오현철 책임</span>
+                        </div>
+                    </h2>
+                </div>
+
+                <p style="color: #475569; line-height: 1.7; margin-bottom: 20px; font-size: 15px; word-break: keep-all;">
+                    유쾌하고 현실적인 업무 상황을 재치 있게 풀어낸 가사와 중독성 있는 멜로디가 돋보입니다. 
+                    AI가 만든 신나는 노래로 스트레스를 시원하게 날려보세요!
+                </p>
+
+                <div class="modern-player">
+                    <div class="player-info">
+                        <div class="album-art">🎧</div>
+                        <div class="track-details">
+                            <h3>노동왕국 (Disney Ver.)</h3>
+                            <p>AI generated content</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <button class="play-btn" id="playBtn">
+                            <svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
+                        
+                        <div style="flex: 1;">
+                            <div class="progress-bar-container" id="progressContainer">
+                                <div class="progress-bar-fill" id="progressFill"></div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; margin-top: 6px; font-family: monospace;">
+                                <span id="currentTime">0:00</span>
+                                <span id="durationTime">0:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <audio id="audioPlayer" crossorigin="anonymous">
+                    <source src="https://kikeun.github.io/KIKEUN/노동왕국(디즈니버전).mp3" type="audio/mpeg">
+                </audio>
+
+                <div class="lyrics-outer">
+                    <div id="lyricsContainer" class="lyrics-box"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>워크이노베이션센터</span>
+            <span style="color: #cbd5e1;">|</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 100 100" fill="none">
+                    <path d="M12 45L28 35V80L12 90V45Z" fill="#1e293b" />
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z" fill="#1e293b" />
+                </svg>
+                <span class="footer-brand">AI디자인랩</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const lyricsData = [
+            { time: 0, text: "[Intro – spoken]", isTag: true },
+            { time: 0.5, text: "너가 왜 일을 해야 하냐구…?" },
+            { time: 2.8, text: "내가 지금부터 말해줄게!" },
+            { time: 5.2, text: "잘 들어봐" },
+            { time: 7.0, text: "[Chorus]", isTag: true },
+            { time: 7.5, text: "아유 어 건물주? (아니요?)" },
+            { time: 10.2, text: "아유 어 대주주? (제가요?)" },
+            { time: 12.2, text: "아유 어 금수저? (흙흙흙수저)" },
+            { time: 14.8, text: "그래서 일해야져? (유레카!)" },
+            { time: 17.5, text: "아빠가 로다쥬? (아니쥬!)" },
+            { time: 19.5, text: "아빠가 빌 게이츠? (he is Korean!)" },
+            { time: 22.0, text: "아니면 일해야쥬? (이미 하고 있쥬?)" },
+            { time: 25.5, text: "이번주 또다음주 (가정의 날이 뭐쥬?)" },
+            { time: 28.2, text: "[Verse 1]", isTag: true },
+            { time: 28.2, text: "비행기 창가에 앉아 설렘을 맞고" },
+            { time: 32.0, text: "푸른 바다 위에서 바람을 맞고" },
+            { time: 36.2, text: "야자수 아래에서 사랑을 이루고" },
+            { time: 39.8, text: "그거 다 지금 버는 돈 들어가고" },
+            { time: 43.2, text: "지금 안 하면 못 가" },
+            { time: 45.3, text: "비행기 표도 못 사" },
+            { time: 48.0, text: "여권은 만료만 되고" },
+            { time: 50.0, text: "이비에스 타고 세계를 가고" },
+            { time: 53.0, text: "[Chorus]", isTag: true },
+            { time: 53.8, text: "아유 어 건물주? (아니요!)" },
+            { time: 56.2, text: "아유 어 대주주? (제가요!)" },
+            { time: 58.2, text: "아유 어 금수저? (흙흙흙수저!)" },
+            { time: 60.8, text: "그래서 일해야져! (유레카!)" },
+            { time: 63.0, text: "아빠가 로다쥬? (아니쥬!)" },
+            { time: 64.0, text: "아빠가 빌 게이츠? (he is Korean!)" },
+            { time: 67.0, text: "아니면 일해야쥬! (이미 하고 있쥬!)" },
+            { time: 69.0, text: "이번주 또다음주! (가정의 날이 뭐쥬!)" },
+            { time: 72.0, text: "[Verse 2]", isTag: true },
+            { time: 73.2, text: "인스타그램 오마카세 맛집 가고" },
+            { time: 77.2, text: "두바이가 쫀득한지 알아보고" },
+            { time: 81.2, text: "제철 방어 위에다 참기름 바르고" },
+            { time: 87.2, text: "그거 다 지금 버는 돈 들어가고" },
+            { time: 91.2, text: "지금 일 안 하면 못 사" },
+            { time: 93.2, text: "리뷰만 보다가 끝나" },
+            { time: 95.2, text: "쿠팡이츠 바라만 보고" },
+            { time: 97.5, text: "흑백 요리사로 대리 만족 채우고" },
+            { time: 100.5, text: "[Chorus]", isTag: true },
+            { time: 101.2, text: "아유 어 건물주? (아니요!)" },
+            { time: 105.1, text: "아유 어 대주주? (제가요!)" },
+            { time: 107.5, text: "아유 어 금수저? (흙흙흙수저!)" },
+            { time: 109.0, text: "그래서 일해야져! (유레카!)" },
+            { time: 111.5, text: "아빠가 로다쥬? (아니쥬!)" },
+            { time: 113.5, text: "아빠가 빌 게이츠? (he is Korean!)" },
+            { time: 116.5, text: "아니면 일해야쥬! (이미 하고 있쥬!)" },
+            { time: 118.5, text: "이번주 또다음주! (가정의 날이 뭐쥬!)" },
+            { time: 121.5, text: "[Verse 3 – rap]", isTag: true },
+            { time: 122.2, text: "프라다 구찌 샤넬 루이비통" },
+            { time: 124.2, text: "디올 펜디 지미추 에르메스" },
+            { time: 126.2, text: "버버리 발렌티노 생로랑 셀린느" },
+            { time: 128.2, text: "보테가 베네타 발렌시아가 톰브라운" },
+            { time: 130.2, text: "지금 일 안 하면 못 사" },
+            { time: 132.2, text: "지금 일해도 사실 못 사" },
+            { time: 134.2, text: "카트에 담아서 1년을 버티고" },
+            { time: 137.2, text: "성과급 돌아오길~~~ (대표님 부탁드립니다!)" },
+            { time: 140.0, text: "[Bridge]", isTag: true },
+            { time: 143.0, text: "월세를 받으시나요?" },
+            { time: 145.0, text: "아니 월세를 내고 있지요" },
+            { time: 150.0, text: "로또가 된다고 한들" },
+            { time: 153.0, text: "크게 변치 않는 내일이 와" },
+            { time: 157.0, text: "We build tomorrow…" },
+            { time: 159.0, text: "the same as today" },
+            { time: 164.0, text: "[Final Chorus]", isTag: true },
+            { time: 164.5, text: "아유 어 건물주! (할 수 있다!)" },
+            { time: 166.0, text: "아유 어 대주주! (슈퍼개미!)" },
+            { time: 168.0, text: "아유 어 금수저! (다음 생애!)" },
+            { time: 170.0, text: "그래서 일해야져! (유레카!)" },
+            { time: 172.0, text: "아빠가 로다쥬! (아니어도 오케이!)" },
+            { time: 174.0, text: "아빠가 빌 게이츠! (엑셀 잘 쓸게요!)" },
+            { time: 177.0, text: "아니면 일해야쥬! (이미 하고 있쥬!)" },
+            { time: 179.0, text: "이번주 또다음주! (가정의 날이 뭐쥬!)" },
+            { time: 182.0, text: "[Outro – whisper]", isTag: true },
+            { time: 183.0, text: "다음달 카드값…" },
+            { time: 189.0, text: "잊지 말아요…" }
+        ];
+
+        const audio = document.getElementById('audioPlayer');
+        const container = document.getElementById('lyricsContainer');
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationTimeEl = document.getElementById('durationTime');
+        const progressContainer = document.getElementById('progressContainer');
+        
+        let lastIdx = -1;
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s < 10 ? '0' + s : s}`;
+        }
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+            } else {
+                audio.pause();
+                playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+            }
+        });
+
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = pos * audio.duration;
+        });
+
+        function renderLyrics() {
+            container.innerHTML = '';
+            lyricsData.forEach((d, i) => {
+                const el = document.createElement('div');
+                el.className = 'lyric-line' + (d.isTag ? ' is-tag' : '');
+                el.id = `l-${i}`;
+                el.innerText = d.text;
+                container.appendChild(el);
+            });
+        }
+        renderLyrics();
+
+        audio.addEventListener('timeupdate', () => {
+            const ct = audio.currentTime;
+            const du = audio.duration || 0;
+            progressFill.style.width = (ct / du * 100) + '%';
+            currentTimeEl.innerText = formatTime(ct);
+            durationTimeEl.innerText = formatTime(du);
+
+            let idx = -1;
+            // 현재 시간에 가장 가까운 이전 가사 인덱스 찾기
+            for (let i = 0; i < lyricsData.length; i++) {
+                if (ct >= lyricsData[i].time) {
+                    idx = i;
+                } else {
+                    break;
+                }
+            }
+
+            if (idx !== -1 && idx !== lastIdx) {
+                lastIdx = idx;
+                
+                // 모든 가사 라인 스타일 초기화 및 현재 라인 강조
+                const lines = container.querySelectorAll('.lyric-line');
+                lines.forEach((l, i) => {
+                    l.classList.toggle('active', i === idx);
+                });
+                
+                const activeEl = document.getElementById(`l-${idx}`);
+                if (activeEl) {
+                    // 스크롤 위치 계산: 활성 요소가 가사 상자의 정중앙에 오도록 설정
+                    const containerHeight = container.clientHeight;
+                    const lineTop = activeEl.offsetTop;
+                    const lineHeight = activeEl.clientHeight;
+                    
+                    // 중앙에 위치시키기 위한 상단 값 계산
+                    const scrollPos = lineTop - (containerHeight / 2) + (lineHeight / 2);
+                    
+                    container.scrollTo({
+                        top: scrollPos,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+            progressFill.style.width = '0%';
+            lastIdx = -1;
+            container.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
