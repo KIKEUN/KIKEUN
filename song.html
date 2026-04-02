@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAYDAY 우수작을 소개합니다</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f9;
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #d1d9e0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #002c5f 0%, #004b93 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 12px;
+            background-color: #f1f3f5;
+            margin-bottom: 10px;
+        }
+
+        .slides {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            width: 33.333%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9ecef;
+        }
+
+        .slide-placeholder {
+            text-align: center;
+            color: #adb5bd;
+            font-size: 14px;
+        }
+
+        input[name="slide-dot"] { display: none; }
+
+        #dot1:checked ~ .slides { transform: translateX(0%); }
+        #dot2:checked ~ .slides { transform: translateX(-33.333%); }
+        #dot3:checked ~ .slides { transform: translateX(-66.666%); }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 15;
+            color: #333;
+        }
+
+        #dot1:checked ~ .arrows .arrow-next-1 { display: flex; right: 15px; }
+        #dot2:checked ~ .arrows .arrow-prev-2 { display: flex; left: 15px; }
+        #dot2:checked ~ .arrows .arrow-next-2 { display: flex; right: 15px; }
+        #dot3:checked ~ .arrows .arrow-prev-3 { display: flex; left: 15px; }
+
+        .dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .dot-label {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        #dot1:checked ~ .dots .dot1-label,
+        #dot2:checked ~ .dots .dot2-label,
+        #dot3:checked ~ .dots .dot3-label {
+            background-color: #ffffff;
+            width: 25px;
+            border-radius: 10px;
+        }
+
+        .lyrics-outer {
+            position: relative;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .lyrics-box {
+            padding: 40px 20px; 
+            height: 250px;     
+            overflow-y: auto;  
+            font-size: 16px;
+            line-height: 1.8;  
+            color: #6c757d;
+            text-align: center;
+            scroll-behavior: smooth;
+        }
+
+        .lyric-line {
+            transition: all 0.3s ease-out;
+            display: block;
+            opacity: 0.3;
+            padding: 8px 0;
+        }
+
+        .lyric-line.section-tag {
+            font-weight: bold;
+            color: #004b93;
+            margin-top: 20px;
+            opacity: 0.6;
+        }
+
+        .lyric-line.active {
+            color: #d6336c;
+            font-weight: 800;
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .content-section { padding: 40px; }
+
+        .project-card {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .sample-notice {
+            font-size: 12px;
+            color: #adb5bd;
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="badge">ANNUAL PLAYDAY 2024</div>
+            <h1 style="margin: 0; font-size: 32px; font-weight: 800;">🏆 PLAYDAY 우수작 소개</h1>
+        </div>
+
+        <div class="content-section">
+            <div class="project-card">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="background-color: #e6f0ff; color: #0056b3; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 13px; margin-right: 12px;">Category 01</span>
+                        <h2 style="margin: 0; font-size: 24px;">📊 데이터 시각화 대시보드</h2>
+                    </div>
+                </div>
+                
+                <p style="color: #4a4a4a; line-height: 1.8; margin-bottom: 25px;">
+                    기술 부문 우승작 <strong>'Tunnel Construction Dashboard'</strong>입니다. 실시간 데이터를 시각화하여 공정 효율을 극대화한 프로젝트입니다.
+                </p>
+
+                <div class="slider-container">
+                    <input type="radio" name="slide-dot" id="dot1" checked>
+                    <input type="radio" name="slide-dot" id="dot2">
+                    <input type="radio" name="slide-dot" id="dot3">
+                    <div class="arrows">
+                        <label for="dot2" class="arrow arrow-next-1">❯</label>
+                        <label for="dot1" class="arrow arrow-prev-2">❮</label>
+                        <label for="dot3" class="arrow arrow-next-2">❯</label>
+                        <label for="dot2" class="arrow arrow-prev-3">❮</label>
+                    </div>
+                    <div class="slides">
+                        <div class="slide"><div class="slide-placeholder"></div></div>
+                        <div class="slide"><div class="slide-placeholder"></div></div>
+                        <div class="slide"><div class="slide-placeholder"></div></div>
+                    </div>
+                    <div class="dots">
+                        <label for="dot1" class="dot-label dot1-label"></label>
+                        <label for="dot2" class="dot-label dot2-label"></label>
+                        <label for="dot3" class="dot-label dot3-label"></label>
+                    </div>
+                </div>
+                <div class="sample-notice">※ 1번은 sample 데이터를 기반으로 작성되었습니다.</div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <span style="background-color: #fff0f6; color: #d6336c; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 13px; margin-right: 12px;">Category 02</span>
+                    <h2 style="margin: 0; font-size: 24px;">🎵 사내 활력 충전! AI 로고송</h2>
+                </div>
+
+                <p style="color: #4a4a4a; line-height: 1.8; margin-bottom: 25px;">
+                    지친 직장인들의 심금을 울리는 화제의 우승작 <strong>'노동왕국'</strong>입니다!<br> 
+                    웅장한 오케스트라 선율 속에 숨겨진 우리들의 솔직한 '본심'이 유쾌하게 펼쳐집니다.<br>
+                    오늘도 카드값을 위해 행진하는 우리 모두를 위한 노래를 지금 감상해 보세요!
+                </p>
+
+                <div style="background-color: #ffffff; border: 1px solid #dee2e6; border-radius: 12px; padding: 25px;">
+                    <audio id="audioPlayer" crossorigin="anonymous" controls style="width: 100%; margin-bottom: 10px;">
+                        <source src="https://kikeun.github.io/KIKEUN/노동왕국(디즈니버전).mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="lyrics-outer">
+                        <div id="lyricsContainer" class="lyrics-box">
+                            <!-- JS에서 가사 생성 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p style="font-size: 14px; color: #555;">함께 혁신하고 즐기는 PlayDay 2024!</p>
+        </div>
+    </div>
+
+    <script>
+        const lyricsData = [
+            { time: 0, text: "[Intro]", isTag: true },
+            { time: 1.5, text: "너가 왜 일을 해야 하냐구…?" },
+            { time: 3.5, text: "내가 지금부터 말해줄게!" },
+            { time: 8.0, text: "[Chorus]", isTag: true },
+            { time: 8.5, text: "아유 어 건물주? (아니요?)" },
+            { time: 10.5, text: "아유 어 대주주? (제가요?)" },
+            { time: 12.5, text: "아유 어 금수저? (흙흙흙수저)" },
+            { time: 15.5, text: "그래서 일해야져? (유레카!)" },
+            { time: 29.5, text: "[Verse 1]", isTag: true },
+            { time: 30.5, text: "비행기 창가에 앉아 설렘을 맞고" },
+            { time: 33.5, text: "푸른 바다 위에서 바람을 맞고" },
+            { time: 42.5, text: "지금 안 하면 못 가" },
+            { time: 44.5, text: "비행기 표도 못 사" },
+            { time: 53.0, text: "[Chorus]", isTag: true },
+            { time: 54.0, text: "아유 어 건물주? (아니요!)" },
+            { time: 56.5, text: "아유 어 대주주? (제가요!)" },
+            { time: 58.5, text: "아유 어 금수저? (흙흙흙수저!)" }, // 59초 싱크 보정
+            { time: 61.0, text: "그래서 일해야져! (유레카!)" },
+            { time: 64.0, text: "아빠가 로다쥬? (아니쥬!)" },
+            { time: 67.0, text: "아빠가 빌 게이츠? (he is Korean!)" },
+            { time: 70.0, text: "아니면 일해야쥬! (이미 하고 있쥬!)" },
+            { time: 129.0, text: "[Rap Section]", isTag: true },
+            { time: 130.0, text: "프라다 구찌 샤넬 루이비통" },
+            { time: 140.5, text: "지금 일 안 하면 못 사" },
+            { time: 143.0, text: "지금 일해도 사실 못 사" },
+            { time: 148.5, text: "성과급 돌아오길~~~" }
+        ];
+
+        const audio = document.getElementById('audioPlayer');
+        const container = document.getElementById('lyricsContainer');
+        let isUserScrolling = false;
+        let lastIdx = -1;
+
+        function render() {
+            container.innerHTML = '';
+            lyricsData.forEach((d, i) => {
+                const el = document.createElement('span');
+                el.className = 'lyric-line' + (d.isTag ? ' section-tag' : '');
+                el.id = `l-${i}`;
+                el.innerText = d.text;
+                container.appendChild(el);
+            });
+        }
+        render();
+
+        audio.addEventListener('timeupdate', () => {
+            const ct = audio.currentTime;
+            let idx = -1;
+            for (let i = 0; i < lyricsData.length; i++) {
+                if (ct >= lyricsData[i].time) idx = i;
+            }
+
+            if (idx !== -1 && idx !== lastIdx) {
+                lastIdx = idx;
+                document.querySelectorAll('.lyric-line').forEach((l, i) => {
+                    l.classList.toggle('active', i === idx);
+                });
+                if (!isUserScrolling) {
+                    const activeEl = document.getElementById(`l-${idx}`);
+                    container.scrollTop = activeEl.offsetTop - (container.clientHeight / 2);
+                }
+            }
+        });
+
+        container.addEventListener('scroll', () => {
+            isUserScrolling = true;
+            clearTimeout(window.st);
+            window.st = setTimeout(() => isUserScrolling = false, 2000);
+        });
+    </script>
+</body>
+</html>
