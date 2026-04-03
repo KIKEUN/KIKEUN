@@ -339,23 +339,30 @@
             margin-bottom: 20px;
         }
 
-        /* 이미지 슬라이더 */
+        /* 이미지 슬라이더 — song3 대시보드와 같은 카드형 박스 */
         .slider-wrapper {
             position: relative;
             width: 100%;
             margin-bottom: 15px;
-            border: none;
             border-radius: 20px;
+            border: 1px solid rgba(29, 92, 86, 0.14);
+            background: #fff;
             overflow: hidden;
-            box-shadow: none;
+            box-shadow: 0 8px 28px rgba(13, 77, 74, 0.08);
         }
 
         .slider-container {
             position: relative;
             width: 100%;
-            height: 480px;
+            height: 620px;
             overflow: hidden;
             background-color: #ffffff;
+        }
+
+        @media (max-width: 560px) {
+            .slider-container {
+                height: 400px;
+            }
         }
 
         .slides {
