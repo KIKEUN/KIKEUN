@@ -8,7 +8,35 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round:wght@400;700;800&display=swap');
-        body { font-family: 'Nanum Square Round', 'Malgun Gothic', sans-serif; }
+
+        html {
+            background: transparent;
+        }
+
+        body {
+            font-family: 'Nanum Square Round', 'Malgun Gothic', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: transparent;
+        }
+
+        /* 흰 카드 틀 + 연한 테두리 (보라/인디고 없음) */
+        .ai97-surface {
+            position: relative;
+            background-color: #ffffff;
+            background-image: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+            border: 1px solid rgb(226 232 240);
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.04),
+                0 12px 40px -12px rgba(15, 23, 42, 0.12);
+        }
+
+        .glass-panel {
+            background: rgb(248 250 252);
+            border: 1px solid rgb(226 232 240);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+        }
         textarea.input-field {
             min-height: 4.5rem;
             resize: vertical;
@@ -31,35 +59,46 @@
             color: rgb(148 163 184);
             opacity: 1;
         }
+
+        /* 6개 프롬프트 카드: 아주 연한 하늘색 틀 (작성란은 흰색 유지) */
+        .prompt-field-card {
+            background: linear-gradient(
+                165deg,
+                rgba(224, 242, 254, 0.42) 0%,
+                rgba(240, 249, 255, 0.28) 45%,
+                rgba(248, 250, 252, 0.9) 100%
+            );
+            border: 1px solid rgb(226 232 240);
+        }
     </style>
 </head>
-<body class="min-h-screen bg-slate-100 text-slate-800 text-sm">
-
-    <header class="border-b border-slate-200 bg-white/90 backdrop-blur sticky top-0 z-10 shadow-sm">
-        <div class="max-w-3xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-                <a href="./vol2.html" class="text-teal-600 hover:text-teal-800 text-xs font-bold inline-flex items-center gap-1">
-                    <i class="fas fa-arrow-left"></i> PLAYDAY로
-                </a>
-            </div>
-            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Markdown → Gemini</span>
-        </div>
-    </header>
+<body class="min-h-screen text-slate-800 text-sm">
 
     <main class="max-w-3xl mx-auto px-4 py-6 pb-12">
+        <div class="ai97-surface rounded-3xl px-5 sm:px-8 pt-6 sm:pt-7 pb-10 sm:pb-12">
 
-        <div class="rounded-2xl border-2 border-teal-200/80 bg-gradient-to-br from-teal-50 via-white to-slate-50 p-4 md:p-6 mb-8 shadow-sm">
-            <p class="text-base md:text-lg font-extrabold text-slate-900 text-center leading-snug">
-                자유롭게 웹툰·이미지를 만들어 보세요 
-            </p>
-            <p class="mt-3 text-xs md:text-sm text-slate-600 text-center leading-relaxed">
-                어려우신 분들을 위해 <strong class="text-slate-800">가이드 프롬프트</strong>를 제공해 드립니다.
-            </p>
-        </div>
+            <header class="border-b border-slate-200 pb-4 mb-6">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <a href="./vol2.html" class="text-slate-700 hover:text-slate-900 text-xs font-bold inline-flex items-center gap-1">
+                        <i class="fas fa-arrow-left"></i> PLAYDAY로 돌아가기기
+                    </a>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Markdown → Gemini</span>
+                </div>
+            </header>
 
-        <div class="mb-8">
-            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900 mb-2">웹툰 제작 프롬프트</h1>
-            <p class="text-slate-600 text-xs md:text-sm leading-relaxed">
+            <section class="glass-panel rounded-3xl px-5 sm:px-6 py-5 md:py-6 mb-8 text-center max-w-2xl mx-auto w-full">
+                <p class="text-base md:text-lg font-extrabold text-slate-900 leading-snug">
+                    자유롭게 웹툰·이미지를 만들어 보세요
+                </p>
+                <p class="mt-3 text-xs md:text-sm text-slate-600 leading-relaxed">
+                    어려우신 분들을 위해 <strong class="text-slate-800">가이드 프롬프트</strong>를 제공해 드립니다.
+                </p>
+            </section>
+
+        <div class="mb-8 max-w-2xl mx-auto w-full border-t border-slate-200/90 pt-5">
+            <h1 class="text-center text-xl md:text-2xl font-extrabold text-slate-900 mb-2">웹툰 제작 프롬프트</h1>
+            <div class="glass-panel rounded-2xl px-4 py-4 text-left">
+            <p class="text-slate-700 text-xs md:text-sm leading-relaxed">
                 아래 항목을 채우면 <strong class="text-slate-800">마크다운</strong>이 자동으로 만들어지니,
                 <strong class="text-slate-800">복사</strong>해 Gemini에 붙여 넣고 이미지 생성 프롬프트로 활용해 보세요.
                 예시를 참고하여 나만의 스토리로 만들어 보세요—빈 칸에 보이는 <span class="text-slate-500 font-semibold">회색 글씨</span> 힌트는 그대로 참고·활용해 보시면 됩니다.
@@ -71,89 +110,92 @@
                     프롬프트 지우기
                 </button>
             </p>
+            </div>
         </div>
 
-        <div class="space-y-5 mb-8">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+        <div class="space-y-5 mb-8 max-w-2xl mx-auto w-full">
+            <div class="prompt-field-card rounded-2xl shadow-sm p-3 md:p-4">
                 <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fTitle">작품 제목 <span class="text-slate-400 font-normal">(선택)</span></label>
-                <input type="text" id="fTitle" class="w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none">
+                <input type="text" id="fTitle" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-slate-400 focus:border-slate-400 outline-none">
             </div>
 
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+            <div class="prompt-field-card rounded-2xl shadow-sm p-3 md:p-4">
                 <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fDesign">1. 화면·편집 구조</label>
                 <p class="text-[11px] text-slate-500 mb-1.5">컷 수·배치(예: 4컷 2×2), 세로 롤·한 장, 카드/틀, 제목·자막 자리 등 <span class="text-slate-600 font-semibold">페이지 뼈대·읽는 순서</span></p>
-                <textarea id="fDesign" rows="1" class="input-field prompt-compact w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-teal-400 outline-none"></textarea>
+                <textarea id="fDesign" rows="1" class="input-field prompt-compact w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-slate-400 outline-none"></textarea>
             </div>
 
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+            <div class="prompt-field-card rounded-2xl shadow-sm p-3 md:p-4">
                 <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fRole">2. 역할</label>
                 <p class="text-[11px] text-slate-500 mb-1.5">주인공 설정, 시점(1인칭·3인칭), 말투나 직업 등</p>
-                <textarea id="fRole" rows="1" class="input-field prompt-compact w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-teal-400 outline-none"></textarea>
+                <textarea id="fRole" rows="1" class="input-field prompt-compact w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-slate-400 outline-none"></textarea>
             </div>
 
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+            <div class="prompt-field-card rounded-2xl shadow-sm p-3 md:p-4">
                 <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fImageDesign">3. 만들고 싶은 이미지 디자인</label>
                 <p class="text-[11px] text-slate-500 mb-1.5">원하는 그림 느낌을 적어 주세요. (예: <span class="text-slate-600 font-semibold">픽사, 디즈니, 지브리, 웹툰 선화, 실사풍</span> 등)</p>
-                <textarea id="fImageDesign" rows="1" class="input-field prompt-compact w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-teal-400 outline-none"></textarea>
+                <textarea id="fImageDesign" rows="1" class="input-field prompt-compact w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-slate-400 outline-none"></textarea>
             </div>
 
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+            <div class="prompt-field-card rounded-2xl shadow-sm p-3 md:p-4">
                 <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fStory">4. 스토리 내용 구성</label>
                 <p class="text-[11px] text-slate-500 mb-1.5">컷별로 무엇이 일어나는지, 대사·자막, 마지막 반전 등</p>
-                <textarea id="fStory" class="input-field w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-teal-400 outline-none min-h-[14rem]"></textarea>
+                <textarea id="fStory" class="input-field w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-slate-400 outline-none min-h-[14rem]"></textarea>
             </div>
 
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+            <div class="prompt-field-card rounded-2xl shadow-sm p-3 md:p-4">
                 <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fExtra">5. 추가 메모 <span class="text-slate-400 font-normal">(선택)</span></label>
                 <p class="text-[11px] text-slate-500 mb-1.5">금지 요소, 참고 링크, 해상도 등</p>
-                <textarea id="fExtra" class="input-field w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-teal-400 outline-none min-h-[4.5rem]"></textarea>
+                <textarea id="fExtra" class="input-field w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-slate-400 outline-none min-h-[4.5rem]"></textarea>
             </div>
         </div>
 
-        <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-xl overflow-hidden">
+        <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-xl overflow-hidden max-w-2xl mx-auto w-full">
             <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-slate-800 border-b border-slate-700">
-                <span class="text-[10px] font-bold text-teal-300 uppercase tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 마크다운</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 마크다운</span>
                 <div class="flex gap-2">
-                    <button type="button" id="btnCopy" class="text-xs font-bold bg-teal-500 hover:bg-teal-400 text-slate-900 px-3 py-1.5 rounded-lg transition-colors">
+                    <button type="button" id="btnCopy" class="text-xs font-bold bg-slate-200 hover:bg-slate-300 text-slate-900 px-3 py-1.5 rounded-lg transition-colors">
                         <i class="fas fa-copy mr-1"></i>복사
                     </button>
                     <button type="button" id="btnReset" class="text-xs font-bold bg-slate-600 hover:bg-slate-500 text-white px-3 py-1.5 rounded-lg transition-colors">초기화</button>
                 </div>
             </div>
-            <textarea id="mdPreview" readonly class="w-full min-h-[280px] p-3 text-teal-100/95 bg-slate-900 border-0 outline-none resize-y text-xs"></textarea>
+            <textarea id="mdPreview" readonly class="w-full min-h-[280px] p-3 text-slate-200 bg-slate-900 border-0 outline-none resize-y text-xs"></textarea>
         </div>
 
         <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer"
-           class="mt-4 flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3 font-bold text-white shadow-lg transition hover:opacity-95 hover:shadow-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-xs md:text-sm">
-            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-sm" aria-hidden="true">✦</span>
-            <span class="text-center">
-                <span class="block text-[9px] font-semibold uppercase tracking-widest text-white/80">Google Gemini</span>
-                <span class="block mt-0.5">브라우저에서 Gemini 열기 <i class="fas fa-external-link-alt ml-1 text-[10px] opacity-90"></i></span>
+           class="mt-4 max-w-2xl mx-auto w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3 font-bold shadow-md transition hover:shadow-lg border border-teal-200/80 bg-gradient-to-r from-teal-100 via-emerald-100 to-sky-100 text-slate-800 text-xs md:text-sm hover:from-teal-50 hover:via-emerald-50 hover:to-sky-50">
+            <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/70 text-teal-700 text-sm shadow-sm" aria-hidden="true">✦</span>
+            <span class="text-center min-w-0">
+                <span class="block text-[9px] font-semibold uppercase tracking-widest text-teal-800/90">Google Gemini</span>
+                <span class="block mt-0.5 text-slate-800">브라우저에서 Gemini 열기 <i class="fas fa-external-link-alt ml-1 text-[10px] opacity-80"></i></span>
             </span>
         </a>
 
-        <p id="copyToast" class="hidden mt-3 text-center text-xs font-bold text-teal-600">클립보드에 복사했습니다.</p>
+        <p id="copyToast" class="hidden mt-3 text-center text-xs font-bold text-slate-600">클립보드에 복사했습니다.</p>
 
         <footer class="mt-12 pt-8 border-t border-slate-200 text-center">
-            <div class="rounded-2xl border border-amber-200/90 bg-gradient-to-b from-amber-50 to-orange-50/60 shadow-sm mb-10 overflow-x-auto overscroll-x-contain">
-                <div class="w-max max-w-none mx-auto px-4 md:px-6 py-4 md:py-5 flex flex-col items-center gap-2.5 text-xs md:text-sm text-slate-800 leading-relaxed">
-                    <p class="whitespace-nowrap text-center">
-                        AI로 작업하고, 만드신 <strong>본인만의 스토리</strong>를 <strong>AI디자인랩</strong> (<a href="mailto:ai_design_lab@hdec.co.kr" class="text-teal-700 font-bold underline underline-offset-2 hover:text-teal-900">ai_design_lab@hdec.co.kr</a>)으로 보내 주세요.
+            <div class="max-w-2xl mx-auto w-full rounded-2xl border border-amber-200/90 bg-gradient-to-b from-amber-50 to-orange-50/60 shadow-sm mb-10 overflow-hidden">
+                <div class="px-3 sm:px-5 py-4 md:py-5 flex flex-col items-stretch gap-2.5 text-slate-800 leading-snug text-center max-w-full">
+                    <p class="text-[clamp(0.625rem,2.8vw,0.8125rem)] break-words">
+                        AI로 작업하고, 만드신 <strong>본인만의 스토리</strong>를 <strong>AI디자인랩</strong> (<a href="mailto:ai_design_lab@hdec.co.kr" class="text-slate-900 font-bold underline underline-offset-2 break-all hover:text-slate-950">ai_design_lab@hdec.co.kr</a>)으로 보내 주세요.
                     </p>
-                    <p class="whitespace-nowrap text-center font-semibold text-slate-900">
+                    <p class="text-[clamp(0.625rem,2.8vw,0.8125rem)] font-semibold text-slate-900 break-words">
                         우수작을 선정하여 <strong class="text-amber-800">스타벅스 상품권</strong>을 보내 드립니다. (제출기한 : 26년 4월 30일)
                     </p>
                 </div>
             </div>
             <div class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-slate-600 font-semibold">
-                <span class="text-slate-400">워크이노베이션센터</span>
-                <span class="text-slate-300">│</span>
+                <span class="text-slate-500">워크이노베이션센터</span>
+                <span class="text-slate-300" aria-hidden="true">│</span>
                 <span class="inline-flex items-center gap-1">
                     <svg class="h-4 w-4 text-slate-700" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 45L28 35V80L12 90V45Z" fill="currentColor"/><path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z" fill="currentColor"/></svg>
                     AI디자인랩
                 </span>
             </div>
         </footer>
+
+        </div>
     </main>
 
     <script>
