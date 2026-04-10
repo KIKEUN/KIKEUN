@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAYDAY — 웹툰 제작 프롬프트 (마크다운)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round:wght@400;700;800&display=swap');
+        body { font-family: 'Nanum Square Round', 'Malgun Gothic', sans-serif; }
+        textarea.input-field {
+            min-height: 4.5rem;
+            resize: vertical;
+        }
+        /* 1·2·3번 짧은 항목: 낮은 기본 높이 (필요 시 세로로만 늘림) */
+        textarea.input-field.prompt-compact {
+            min-height: 2.25rem;
+            max-height: 12rem;
+            line-height: 1.35;
+        }
+        #mdPreview {
+            font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.72rem;
+            line-height: 1.5;
+            tab-size: 2;
+        }
+        /* 빈 칸 힌트: 브라우저 기본보다 잘 보이게 */
+        input::placeholder,
+        textarea::placeholder {
+            color: rgb(148 163 184);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-800 text-sm">
+
+    <header class="border-b border-slate-200 bg-white/90 backdrop-blur sticky top-0 z-10 shadow-sm">
+        <div class="max-w-3xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <a href="./readme.html" class="text-teal-600 hover:text-teal-800 text-xs font-bold inline-flex items-center gap-1">
+                    <i class="fas fa-arrow-left"></i> PLAYDAY로
+                </a>
+            </div>
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Markdown → Gemini</span>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 py-6 pb-12">
+
+        <div class="rounded-2xl border-2 border-teal-200/80 bg-gradient-to-br from-teal-50 via-white to-slate-50 p-4 md:p-6 mb-8 shadow-sm">
+            <p class="text-base md:text-lg font-extrabold text-slate-900 text-center leading-snug">
+                자유롭게 웹툰·이미지를 만들어 보세요 
+            </p>
+            <p class="mt-3 text-xs md:text-sm text-slate-600 text-center leading-relaxed">
+                어려우신 분들을 위해 <strong class="text-slate-800">가이드 프롬프트</strong>를 제공해 드립니다.
+            </p>
+        </div>
+
+        <div class="mb-8">
+            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900 mb-2">웹툰 제작 프롬프트</h1>
+            <p class="text-slate-600 text-xs md:text-sm leading-relaxed">
+                아래 항목을 채우면 <strong class="text-slate-800">마크다운</strong>이 자동으로 만들어지니,
+                <strong class="text-slate-800">복사</strong>해 Gemini에 붙여 넣고 이미지 생성 프롬프트로 활용해 보세요.
+                예시를 참고하여 나만의 스토리로 만들어 보세요—빈 칸에 보이는 <span class="text-slate-500 font-semibold">회색 글씨</span> 힌트는 그대로 참고·활용해 보시면 됩니다.
+                직접 입력한 내용만 마크다운에 반영되고, 비어 있는 칸은 <code class="rounded bg-slate-100 px-1 py-0.5 text-[11px] text-slate-700">_(작성 예정)_</code>으로 나옵니다.
+            </p>
+            <p class="mt-3 flex flex-wrap items-center gap-2">
+                <button type="button" id="btnClearPrompt" class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 shadow-sm transition hover:bg-slate-50 hover:border-slate-300">
+                    <i class="fas fa-eraser text-[11px]" aria-hidden="true"></i>
+                    프롬프트 지우기
+                </button>
+            </p>
+        </div>
+
+        <div class="space-y-5 mb-8">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+                <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fTitle">작품 제목 <span class="text-slate-400 font-normal">(선택)</span></label>
+                <input type="text" id="fTitle" class="w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none">
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+                <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fDesign">1. 화면·편집 구조</label>
+                <p class="text-[11px] text-slate-500 mb-1.5">컷 수·배치(예: 4컷 2×2), 세로 롤·한 장, 카드/틀, 제목·자막 자리 등 <span class="text-slate-600 font-semibold">페이지 뼈대·읽는 순서</span></p>
+                <textarea id="fDesign" rows="1" class="input-field prompt-compact w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-teal-400 outline-none"></textarea>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+                <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fRole">2. 역할</label>
+                <p class="text-[11px] text-slate-500 mb-1.5">주인공 설정, 시점(1인칭·3인칭), 말투나 직업 등</p>
+                <textarea id="fRole" rows="1" class="input-field prompt-compact w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-teal-400 outline-none"></textarea>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+                <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fImageDesign">3. 만들고 싶은 이미지 디자인</label>
+                <p class="text-[11px] text-slate-500 mb-1.5">원하는 그림 느낌을 적어 주세요. (예: <span class="text-slate-600 font-semibold">픽사, 디즈니, 지브리, 웹툰 선화, 실사풍</span> 등)</p>
+                <textarea id="fImageDesign" rows="1" class="input-field prompt-compact w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs leading-snug focus:ring-2 focus:ring-teal-400 outline-none"></textarea>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+                <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fStory">4. 스토리 내용 구성</label>
+                <p class="text-[11px] text-slate-500 mb-1.5">컷별로 무엇이 일어나는지, 대사·자막, 마지막 반전 등</p>
+                <textarea id="fStory" class="input-field w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-teal-400 outline-none min-h-[14rem]"></textarea>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4">
+                <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fExtra">5. 추가 메모 <span class="text-slate-400 font-normal">(선택)</span></label>
+                <p class="text-[11px] text-slate-500 mb-1.5">금지 요소, 참고 링크, 해상도 등</p>
+                <textarea id="fExtra" class="input-field w-full border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-teal-400 outline-none min-h-[4.5rem]"></textarea>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-xl overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-slate-800 border-b border-slate-700">
+                <span class="text-[10px] font-bold text-teal-300 uppercase tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 마크다운</span>
+                <div class="flex gap-2">
+                    <button type="button" id="btnCopy" class="text-xs font-bold bg-teal-500 hover:bg-teal-400 text-slate-900 px-3 py-1.5 rounded-lg transition-colors">
+                        <i class="fas fa-copy mr-1"></i>복사
+                    </button>
+                    <button type="button" id="btnReset" class="text-xs font-bold bg-slate-600 hover:bg-slate-500 text-white px-3 py-1.5 rounded-lg transition-colors">초기화</button>
+                </div>
+            </div>
+            <textarea id="mdPreview" readonly class="w-full min-h-[280px] p-3 text-teal-100/95 bg-slate-900 border-0 outline-none resize-y text-xs"></textarea>
+        </div>
+
+        <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer"
+           class="mt-4 flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3 font-bold text-white shadow-lg transition hover:opacity-95 hover:shadow-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-xs md:text-sm">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-sm" aria-hidden="true">✦</span>
+            <span class="text-center">
+                <span class="block text-[9px] font-semibold uppercase tracking-widest text-white/80">Google Gemini</span>
+                <span class="block mt-0.5">브라우저에서 Gemini 열기 <i class="fas fa-external-link-alt ml-1 text-[10px] opacity-90"></i></span>
+            </span>
+        </a>
+
+        <p id="copyToast" class="hidden mt-3 text-center text-xs font-bold text-teal-600">클립보드에 복사했습니다.</p>
+
+        <footer class="mt-12 pt-8 border-t border-slate-200 text-center">
+            <div class="rounded-2xl border border-amber-200/90 bg-gradient-to-b from-amber-50 to-orange-50/60 shadow-sm mb-10 overflow-x-auto overscroll-x-contain">
+                <div class="w-max max-w-none mx-auto px-4 md:px-6 py-4 md:py-5 flex flex-col items-center gap-2.5 text-xs md:text-sm text-slate-800 leading-relaxed">
+                    <p class="whitespace-nowrap text-center">
+                        AI로 작업하고, 만드신 <strong>본인만의 스토리</strong>를 <strong>AI디자인랩</strong> (<a href="mailto:ai_design_lab@hdec.co.kr" class="text-teal-700 font-bold underline underline-offset-2 hover:text-teal-900">ai_design_lab@hdec.co.kr</a>)으로 보내 주세요.
+                    </p>
+                    <p class="whitespace-nowrap text-center font-semibold text-slate-900">
+                        우수작을 선정하여 <strong class="text-amber-800">스타벅스 상품권</strong>을 보내 드립니다. (제출기한 : 26년 4월 30일)
+                    </p>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">이 메모를 Gemini에 붙인 뒤, <strong class="text-slate-600">이미지 생성</strong> 또는 <strong class="text-slate-600">스토리보드</strong> 요청에 함께 넣어 보세요.</p>
+            <div class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-slate-600 font-semibold">
+                <span class="text-slate-400">워크이노베이션센터</span>
+                <span class="text-slate-300">│</span>
+                <span class="inline-flex items-center gap-1">
+                    <svg class="h-4 w-4 text-slate-700" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 45L28 35V80L12 90V45Z" fill="currentColor"/><path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z" fill="currentColor"/></svg>
+                    AI디자인랩
+                </span>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+
+        function esc(s) {
+            return (s || '').trim();
+        }
+
+        function buildMarkdown() {
+            const title = esc($('fTitle').value);
+            const design = esc($('fDesign').value);
+            const role = esc($('fRole').value);
+            const imageDesign = esc($('fImageDesign').value);
+            const story = esc($('fStory').value);
+            const extra = esc($('fExtra').value);
+
+            const lines = [];
+            lines.push('# 웹툰 제작 브리프 — PLAYDAY');
+            lines.push('');
+            if (title) {
+                lines.push('> **작품 제목:** ' + title);
+                lines.push('');
+            }
+            lines.push('## 1. 화면·편집 구조 (레이아웃·읽기 흐름)');
+            lines.push(design || '_(작성 예정)_');
+            lines.push('');
+            lines.push('## 2. 역할 (캐릭터·시점)');
+            lines.push(role || '_(작성 예정)_');
+            lines.push('');
+            lines.push('## 3. 만들고 싶은 이미지 디자인');
+            lines.push(imageDesign || '_(작성 예정)_');
+            lines.push('');
+            lines.push('## 4. 스토리 내용 구성');
+            lines.push(story || '_(작성 예정)_');
+            lines.push('');
+            if (extra) {
+                lines.push('## 5. 추가 메모');
+                lines.push(extra);
+                lines.push('');
+            }
+            lines.push('--위 마크다운 기반으로 웹툰 만들어줘');
+            lines.push('');
+
+            return lines.join('\n');
+        }
+
+        function refresh() {
+            $('mdPreview').value = buildMarkdown();
+        }
+
+        const inputs = ['fTitle', 'fDesign', 'fRole', 'fImageDesign', 'fStory', 'fExtra'];
+
+        /** 빈 칸에만 보이는 회색 힌트(마크다운·복사에는 넣지 않음) */
+        const PLACEHOLDER_HINTS = {
+            fTitle: '노동왕국',
+            fDesign:
+                '한 장에 4컷. 2×2 그리드이지만 딱 정사각형은 아님. 캐릭터·말풍선이 컷을 넘어가도 됨.',
+            fRole: '30대 직장인들의 모습',
+            fImageDesign: '픽사·디즈니 등 3D 애니메이션 스타일 (캐릭터·조명·질감 통일)',
+            fStory: `- 1컷: 회사에서 일을 왜 자기가 해야 하냐며 한탄하는 직장인 모습. 일이 너무 많아 짜증이 난 모습. 말풍선 "내가 왜 일을 해야하냐구!!" "왜 나만 이렇게 일이 많냐구!!" 책상에 많은 서류가 쌓여 있음.
+
+- 2컷: 해외여행을 상상하는 가족들의 모습과, 명품 쇼핑백을 상상하는 나의 모습. 그 뒤로 지갑에서 계속 돈이 빠져나가는 배경. 말풍선 "오늘 잔고가 얼마나 남았더라.."
+
+- 3컷: "오늘 가정의 날이래" 하며 퇴근하는 동료들. 엄청난 업무에 나 혼자 퇴근 못하고 녹초가 되어 가는 내 모습. 상상으로 '가정의 날이 뭐쥬?' 하는 내 모습. 상상으로 '성과급이나 들어오면 좋겠다' 하는 내 모습.
+
+- 4컷: 영수증 더미에 파묻혀 있는 내 모습(초췌해진 얼굴). 다음달 카드값 잊지 말아요.. 하면서`,
+            fExtra:
+                'https://www.pixar.com/feature-films 참고, 오타가 나지 않도록 철저히 확인. 그리드는 사각형일 필요 없음. 비방하거나 욕설은 금지지',
+        };
+
+        function applyPlaceholderHints() {
+            Object.entries(PLACEHOLDER_HINTS).forEach(([id, text]) => {
+                const el = $(id);
+                if (el) el.placeholder = text;
+            });
+        }
+
+        function clearPromptFields() {
+            inputs.forEach((id) => {
+                $(id).value = '';
+            });
+            refresh();
+        }
+
+        inputs.forEach((id) => {
+            $(id).addEventListener('input', refresh);
+        });
+
+        $('btnClearPrompt').addEventListener('click', () => {
+            clearPromptFields();
+        });
+
+        $('btnCopy').addEventListener('click', async () => {
+            refresh();
+            try {
+                await navigator.clipboard.writeText($('mdPreview').value);
+                const t = $('copyToast');
+                t.classList.remove('hidden');
+                setTimeout(() => t.classList.add('hidden'), 2000);
+            } catch (e) {
+                $('mdPreview').select();
+                document.execCommand('copy');
+                $('copyToast').classList.remove('hidden');
+            }
+        });
+
+        $('btnReset').addEventListener('click', () => {
+            if (!confirm('입력 내용을 모두 지울까요?')) return;
+            clearPromptFields();
+        });
+
+        applyPlaceholderHints();
+        refresh();
+    </script>
+</body>
+</html>

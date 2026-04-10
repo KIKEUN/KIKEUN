@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAYDAY VOL2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round:wght@400;700;800&display=swap');
+
+        body {
+            font-family: 'Nanum Square Round', 'Malgun Gothic', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: #f0f4f8;
+        }
+
+        .ai97-surface {
+            position: relative;
+            background-color: #5eead4;
+            background-image:
+                radial-gradient(ellipse 120% 90% at 50% -15%, rgba(236, 254, 248, 0.97) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 60% at 100% 20%, rgba(45, 212, 191, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 55% at 0% 40%, rgba(20, 184, 166, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 40% at 50% 95%, rgba(6, 78, 59, 0.25) 0%, transparent 50%),
+                linear-gradient(165deg, #d1fae5 0%, #86efac 14%, #5eead4 32%, #2dd4bf 50%, #14b8a6 68%, #0f766e 84%, #134e4a 100%);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* 웹툰 이미지: 흰 매트 + 틸 그림자 (이미지 자체 검은 테두리 대신 화면에서 정돈된 액자 느낌) */
+        .webtoon-frame {
+            position: relative;
+            border-radius: 1.35rem;
+            padding: 0.55rem;
+            background: linear-gradient(
+                165deg,
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(240, 253, 250, 0.94) 45%,
+                rgba(204, 251, 241, 0.35) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow:
+                0 0 0 1px rgba(19, 78, 74, 0.06),
+                0 2px 6px rgba(0, 0, 0, 0.05),
+                0 18px 44px -14px rgba(15, 118, 110, 0.42),
+                0 8px 22px -10px rgba(15, 23, 42, 0.16),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+        }
+
+        .webtoon-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            box-shadow: inset 0 0 0 1px rgba(45, 212, 191, 0.22);
+        }
+
+        .webtoon-frame:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 0 0 1px rgba(19, 78, 74, 0.08),
+                0 4px 12px rgba(0, 0, 0, 0.07),
+                0 26px 56px -14px rgba(15, 118, 110, 0.5),
+                0 12px 28px -10px rgba(15, 23, 42, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+
+        .webtoon-frame img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 0.9rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .webtoon-frame:hover {
+                transform: none;
+            }
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ff4757, #ff6b6b);
+            color: white;
+            font-weight: 800;
+            padding: 14px 34px;
+            border-radius: 50px;
+            box-shadow: 0 6px 0 #c44141, 0 8px 24px rgba(255, 71, 87, 0.3);
+            transition: all 0.2s ease;
+            display: inline-block;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            filter: brightness(1.06);
+            box-shadow: 0 6px 0 #c44141, 0 12px 32px rgba(255, 71, 87, 0.35);
+        }
+
+        .cta-button:active {
+            box-shadow: 0 0 0 #c44141;
+            transform: translateY(6px);
+        }
+
+        .audio-progress-track {
+            touch-action: none;
+        }
+
+        .tag-pill {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: background 0.2s;
+        }
+        .tag-pill:hover {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeInUp 0.7s ease both; }
+        .fade-in-d1 { animation-delay: 0.15s; }
+        .fade-in-d2 { animation-delay: 0.3s; }
+        .fade-in-d3 { animation-delay: 0.45s; }
+        .fade-in-d4 { animation-delay: 0.6s; }
+
+        /* 로고 PNG가 흰 배경(mat)일 때: 배경만 그라데이션과 섞여 사라지고 글자(어두운 색)는 유지 */
+        .playday-logo {
+            mix-blend-mode: multiply;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+        <div class="ai97-surface rounded-3xl px-5 sm:px-8 pt-10 pb-14">
+
+            <!-- 헤더 -->
+            <div class="text-center fade-in">
+                <p class="tracking-[0.35em] text-sm mb-2 text-slate-700/80">✦ ✦ ✦ ✦ ✦ ✦</p>
+                <h1 class="mt-3 mb-3 flex justify-center px-2">
+                    <img src="./title.png" alt="PLAYDAY" class="playday-logo translate-y-1.5 h-16 sm:h-20 md:h-24 w-auto max-w-[min(100%,440px)] object-contain" width="440" height="110" decoding="async">
+                </h1>
+                <hr class="border-0 border-t-2 border-slate-900/60 max-w-md mx-auto mb-8">
+            </div>
+
+            <!-- 글래스 카드 -->
+            <section class="glass-panel rounded-3xl px-6 sm:px-8 py-8 text-center mx-auto max-w-xl fade-in fade-in-d1">
+                <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 mb-4 leading-snug">
+                    당신의 이야기를 웹툰으로 만들어보세요
+                </h2>
+                <p class="text-[0.95rem] leading-relaxed text-slate-600">
+                    평범한 일상도 하나의 스토리가 됩니다.<br>
+                    AI로 쉽고 재미있게, 나만의 웹툰을 완성해보세요.
+                </p>
+                <div class="mt-5 flex flex-wrap justify-center gap-2">
+                    <span class="tag-pill text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold">#AI초보환영</span>
+                    <span class="tag-pill text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold">#스토리웹툰</span>
+                    <span class="tag-pill text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold">#나만의스토리</span>
+                </div>
+            </section>
+
+            <!-- 웹툰 제목 -->
+            <h3 class="text-center text-base md:text-lg font-black text-white mt-10 mb-4 px-2 drop-shadow-lg fade-in fade-in-d2">
+                <i class="fas fa-film text-teal-100 mr-1"></i> AI 가 그린 '노동요 노동왕국 웹툰 버전'
+            </h3>
+
+            <!-- 노래 배너 (재생 전에는 진행 막대 0% — 재생 시작 후에만 채워짐) -->
+            <div class="music-strip max-w-2xl mx-auto mb-4 w-full fade-in fade-in-d2">
+                <div class="flex flex-row items-center gap-2 sm:gap-3 rounded-xl border border-white/50 bg-white/75 backdrop-blur-sm px-3 sm:px-4 py-2 shadow-sm">
+                    <span class="text-[11px] sm:text-xs font-bold text-slate-700 whitespace-nowrap shrink-0 flex items-center gap-1">
+                        <i class="fas fa-music text-teal-600 text-[9px] sm:text-[10px]" aria-hidden="true"></i>
+                        노동왕국 (디즈니 버전)
+                    </span>
+                    <div class="flex flex-1 min-w-0 flex-wrap items-center gap-x-2 gap-y-2">
+                        <button type="button" id="audioPlayBtn" class="shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-teal-600 text-white text-xs hover:bg-teal-700 transition-colors shadow-sm" aria-label="재생">
+                            <i class="fas fa-play pl-0.5" id="audioPlayIcon"></i>
+                        </button>
+                        <div class="flex-1 min-w-0 flex flex-col gap-1 justify-center">
+                            <div id="audioProgressTrack" class="audio-progress-track h-1.5 rounded-full bg-slate-200 cursor-pointer" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                                <div id="audioProgressFill" class="h-full w-0 bg-teal-600 rounded-full transition-[width] duration-75 ease-linear pointer-events-none"></div>
+                            </div>
+                            <div class="flex justify-between text-[9px] text-slate-500 tabular-nums leading-none select-none">
+                                <span id="audioCurrent">0:00</span>
+                                <span id="audioDuration">--:--</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0 min-w-[5.5rem] sm:min-w-[6.5rem]">
+                            <i class="fas fa-volume-up text-slate-500 text-[10px]" id="audioVolIcon" aria-hidden="true"></i>
+                            <input type="range" id="audioVolume" min="0" max="100" value="100" step="1" aria-label="볼륨" class="w-14 sm:w-20 h-1.5 accent-teal-600 cursor-pointer align-middle">
+                        </div>
+                    </div>
+                    <audio id="playdayAudio" preload="none" playsinline class="hidden">
+                        <source src="https://kikeun.github.io/KIKEUN/%EB%85%B8%EB%8F%99%EC%99%95%EA%B5%AD(%EB%94%94%EC%A6%88%EB%8B%88%EB%B2%84%EC%A0%84).mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+
+            <!-- 웹툰 이미지 -->
+            <div class="webtoon-frame max-w-2xl mx-auto fade-in fade-in-d3">
+                <img
+                    src="./image.png"
+                    alt="AI 가 그린 노동요 노동왕국 웹툰 버전"
+                    width="800"
+                    height="auto"
+                    decoding="async"
+                >
+            </div>
+
+            <!-- 인용 -->
+            <p class="text-center text-sm md:text-base font-bold italic text-white mt-7 px-3 drop-shadow-lg fade-in fade-in-d4">
+                "당신은 어떤 이야기를 웹툰으로 표현하고 싶나요?"
+            </p>
+
+            <!-- CTA -->
+            <div class="text-center mt-7 fade-in fade-in-d4">
+                <a href="./studio.html" class="cta-button group">
+                     체험하기  <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform inline-block"></i>
+                </a>
+            </div>
+
+            <!-- 푸터 -->
+            <footer class="text-center mt-12 border-t border-white/30 pt-7">
+                <div class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1.5 text-xs md:text-sm font-bold text-white/90 drop-shadow-sm">
+                    <span class="text-white/50 font-semibold">워크이노베이션센터</span>
+                    <span class="text-white/60" aria-hidden="true">│</span>
+                    <span class="inline-flex items-center gap-1.5">
+                        <svg class="h-5 w-5 shrink-0 text-white" width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M12 45L28 35V80L12 90V45Z" fill="currentColor" />
+                            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z" fill="currentColor" />
+                        </svg>
+                        <span>AI디자인랩</span>
+                    </span>
+                </div>
+                <p class="text-xs text-white/60 mt-3">© PLAYDAY VOL2 · AI Webtoon Concept</p>
+            </footer>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            var audio = document.getElementById('playdayAudio');
+            var btn = document.getElementById('audioPlayBtn');
+            var icon = document.getElementById('audioPlayIcon');
+            var fill = document.getElementById('audioProgressFill');
+            var track = document.getElementById('audioProgressTrack');
+            var curEl = document.getElementById('audioCurrent');
+            var durEl = document.getElementById('audioDuration');
+            var volInput = document.getElementById('audioVolume');
+            var volIcon = document.getElementById('audioVolIcon');
+
+            audio.volume = 1;
+
+            function syncVolumeIcon() {
+                var v = audio.volume;
+                if (!volIcon) return;
+                volIcon.className = 'text-slate-500 text-[10px] fas ' + (v === 0 ? 'fa-volume-off' : v < 0.45 ? 'fa-volume-down' : 'fa-volume-up');
+            }
+
+            volInput.addEventListener('input', function () {
+                audio.volume = volInput.value / 100;
+                syncVolumeIcon();
+            });
+
+            syncVolumeIcon();
+
+            function fmt(t) {
+                if (!isFinite(t) || t < 0) return '0:00';
+                var m = Math.floor(t / 60);
+                var s = Math.floor(t % 60);
+                return m + ':' + (s < 10 ? '0' : '') + s;
+            }
+
+            function setProgressFromAudio() {
+                var d = audio.duration;
+                var c = audio.currentTime;
+                if (!isFinite(d) || d <= 0) {
+                    fill.style.width = '0%';
+                    return;
+                }
+                fill.style.width = Math.min(100, (c / d) * 100) + '%';
+                curEl.textContent = fmt(c);
+                track.setAttribute('aria-valuenow', String(Math.round((c / d) * 100)));
+            }
+
+            audio.addEventListener('loadedmetadata', function () {
+                durEl.textContent = fmt(audio.duration);
+            });
+
+            audio.addEventListener('timeupdate', setProgressFromAudio);
+
+            audio.addEventListener('play', function () {
+                icon.className = 'fas fa-pause';
+                btn.setAttribute('aria-label', '일시정지');
+            });
+
+            audio.addEventListener('pause', function () {
+                icon.className = 'fas fa-play pl-0.5';
+                btn.setAttribute('aria-label', '재생');
+                if (audio.currentTime < 0.05) {
+                    fill.style.width = '0%';
+                    curEl.textContent = '0:00';
+                }
+            });
+
+            audio.addEventListener('ended', function () {
+                icon.className = 'fas fa-play pl-0.5';
+                audio.currentTime = 0;
+                fill.style.width = '0%';
+                curEl.textContent = '0:00';
+                track.setAttribute('aria-valuenow', '0');
+            });
+
+            btn.addEventListener('click', function () {
+                if (audio.paused) {
+                    audio.play().catch(function () {});
+                } else {
+                    audio.pause();
+                }
+            });
+
+            function seekFromClientX(clientX) {
+                var d = audio.duration;
+                if (!isFinite(d) || d <= 0) return;
+                var rect = track.getBoundingClientRect();
+                var ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+                audio.currentTime = ratio * d;
+                setProgressFromAudio();
+            }
+
+            track.addEventListener('click', function (e) {
+                seekFromClientX(e.clientX);
+            });
+
+            track.addEventListener('keydown', function (e) {
+                var d = audio.duration;
+                if (!isFinite(d) || d <= 0) return;
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    audio.currentTime = Math.max(0, audio.currentTime - 5);
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    audio.currentTime = Math.min(d, audio.currentTime + 5);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
