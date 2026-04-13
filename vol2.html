@@ -97,29 +97,6 @@
             }
         }
 
-        .cta-button {
-            background: linear-gradient(135deg, #1e3a5f 0%, #152a45 50%, #0f1f35 100%);
-            color: white;
-            font-weight: 800;
-            padding: 14px 34px;
-            border-radius: 50px;
-            box-shadow: 0 6px 0 #0a1628, 0 8px 24px rgba(15, 31, 53, 0.45);
-            transition: all 0.2s ease;
-            display: inline-block;
-            text-decoration: none;
-            font-size: 1.1rem;
-        }
-
-        .cta-button:hover {
-            filter: brightness(1.08);
-            box-shadow: 0 6px 0 #0a1628, 0 12px 32px rgba(15, 31, 53, 0.5);
-        }
-
-        .cta-button:active {
-            box-shadow: 0 0 0 #0a1628;
-            transform: translateY(6px);
-        }
-
         .audio-progress-track {
             touch-action: none;
         }
@@ -190,6 +167,58 @@
                 -webkit-filter: none;
             }
         }
+
+        .story-textarea {
+            width: 100%;
+            min-height: 4.5rem;
+            resize: vertical;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 0.85rem 1rem;
+            font-size: 0.9375rem;
+            line-height: 1.55;
+            color: #1e293b;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .story-textarea::placeholder {
+            color: rgb(148 163 184);
+        }
+
+        .story-textarea:focus {
+            outline: none;
+            border-color: rgba(13, 148, 136, 0.55);
+            box-shadow:
+                inset 0 1px 2px rgba(15, 23, 42, 0.04),
+                0 0 0 3px rgba(45, 212, 191, 0.25);
+        }
+
+        .btn-webtoon-create {
+            background: linear-gradient(135deg, #1e3a5f 0%, #152a45 50%, #0f1f35 100%);
+            color: white;
+            font-weight: 800;
+            padding: 14px 34px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #0a1628, 0 8px 24px rgba(15, 31, 53, 0.45);
+            transition: all 0.2s ease;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 20rem;
+        }
+
+        .btn-webtoon-create:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 6px 0 #0a1628, 0 12px 32px rgba(15, 31, 53, 0.5);
+        }
+
+        .btn-webtoon-create:active {
+            box-shadow: 0 0 0 #0a1628;
+            transform: translateY(6px);
+        }
     </style>
 </head>
 <body>
@@ -217,14 +246,29 @@
 
             <!-- 글래스 카드 -->
             <section class="glass-panel rounded-3xl px-6 sm:px-8 py-8 text-center mx-auto w-full max-w-2xl fade-in fade-in-d1">
-                <h2 class="text-[1rem] sm:text-[1.0625rem] md:text-[1.2rem] font-bold text-slate-900 mb-4 leading-snug">
-                    당신의 이야기를 <span class="webtoon-highlight">웹툰</span>으로 만들어보세요
+                <h2 class="text-[1rem] sm:text-[1.0625rem] md:text-[1.2rem] font-bold text-slate-900 mb-3 leading-snug">
+                    당신의 이야기를 <span class="webtoon-highlight">웹툰</span>으로 시작해보세요.
                 </h2>
-                <p class="text-[0.95rem] leading-relaxed text-slate-600">
-                    평범한 일상도 하나의 스토리가 됩니다.<br>
-                    AI로 쉽고 재미있게, 나만의 웹툰을 완성해보세요.
+                <p class="text-[0.95rem] leading-relaxed text-slate-600 mb-4">
+                    소소한 일상도 멋진 스토리가 될 수 있습니다.<br>
+                    AI로 쉽고 재미있게, 지금 바로 나만의 웹툰을 만들 수 있습니다.
                 </p>
-                <div class="mt-5 flex flex-wrap justify-center gap-2">
+                <div class="text-left max-w-lg mx-auto mb-4">
+                    <textarea
+                        id="landingStory"
+                        class="story-textarea"
+                        rows="3"
+                        placeholder="웹툰으로 만들고 싶은 이야기를 자유롭게 적어 보세요."
+                        autocomplete="off"
+                        aria-label="웹툰 스토리 입력"
+                    ></textarea>
+                </div>
+                <div class="flex justify-center">
+                    <button type="button" id="btnWebtoonCreate" class="btn-webtoon-create group">
+                        웹툰만들기 <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform inline-block" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="mt-6 flex flex-wrap justify-center gap-2">
                     <span class="tag-pill text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold">#AI초보환영</span>
                     <span class="tag-pill text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold">#스토리웹툰</span>
                     <span class="tag-pill text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold">#나만의스토리</span>
@@ -283,13 +327,6 @@
                 "당신은 어떤 이야기를 웹툰으로 표현하고 싶나요?"
             </p>
 
-            <!-- CTA -->
-            <div class="text-center mt-7 fade-in fade-in-d4">
-                <a href="./vol2.1.html" class="cta-button group">
-                     체험하기  <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform inline-block"></i>
-                </a>
-            </div>
-
             <!-- 푸터 -->
             <footer class="text-center mt-12 border-t border-white/30 pt-7">
                 <div class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1.5 text-xs md:text-sm font-bold text-white/90 drop-shadow-sm">
@@ -310,6 +347,17 @@
 
     <script>
         (function () {
+            var btnWebtoon = document.getElementById('btnWebtoonCreate');
+            var landingStory = document.getElementById('landingStory');
+            if (btnWebtoon && landingStory) {
+                btnWebtoon.addEventListener('click', function () {
+                    try {
+                        sessionStorage.setItem('PLAYDAY_TRANSFER_STORY', landingStory.value || '');
+                    } catch (e) {}
+                    window.location.href = './vol2.1.html';
+                });
+            }
+
             var audio = document.getElementById('playdayAudio');
             var btn = document.getElementById('audioPlayBtn');
             var icon = document.getElementById('audioPlayIcon');
