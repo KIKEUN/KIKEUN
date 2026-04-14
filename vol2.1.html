@@ -60,8 +60,20 @@
             opacity: 1;
         }
 
+        /* 스토리 입력란: 본문은 크게, 예시(placeholder)만 작게 */
+        #fStory::placeholder {
+            font-size: 0.75rem;
+            line-height: 1.45;
+        }
+        @media (min-width: 768px) {
+            #fStory::placeholder {
+                font-size: 0.8125rem;
+            }
+        }
+
         /* 스토리 입력 카드: 전체 블록이 눈에 띄도록 */
         .prompt-field-card {
+            container-type: inline-size;
             background: linear-gradient(
                 165deg,
                 rgba(224, 242, 254, 0.88) 0%,
@@ -72,6 +84,32 @@
             box-shadow:
                 0 4px 24px rgba(15, 118, 110, 0.12),
                 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        }
+
+        /* 스토리 안내 한 줄: 스크롤 없이 카드 너비에 맞게 글자만 축소 */
+        .story-helper-oneline {
+            white-space: nowrap;
+            overflow: visible;
+            max-width: 100%;
+            font-size: clamp(0.38rem, calc(0.15rem + 1.2vw), 1rem);
+            line-height: 1.4;
+        }
+        @supports (container-type: inline-size) {
+            .story-helper-oneline {
+                font-size: clamp(0.38rem, calc(100cqi / 50), 1rem);
+            }
+        }
+        /* 넓은 화면: 최대 17.5px(1.09375rem)까지 — 좁은 폭은 위 규칙 유지 */
+        @media (min-width: 768px) {
+            .story-helper-oneline {
+                font-size: clamp(0.875rem, calc(0.18rem + 1.1vw), 1.09375rem);
+                line-height: 1.4;
+            }
+            @supports (container-type: inline-size) {
+                .story-helper-oneline {
+                    font-size: clamp(0.875rem, calc(100cqi / 38), 1.09375rem);
+                }
+            }
         }
 
         /* 오른쪽 위: 글자만, 좌→우로 내려가는 사선(시계 방향 기울기) */
@@ -129,37 +167,35 @@
             </header>
 
             <section class="glass-panel rounded-3xl px-5 sm:px-6 py-5 md:py-6 mb-8 text-center max-w-2xl mx-auto w-full">
-                <p class="text-base md:text-lg font-extrabold text-slate-900 leading-snug">
+                <p class="text-lg md:text-xl font-extrabold text-slate-900 leading-snug">
                     자유롭게 나만의 이야기로 웹툰과 이미지를 만들어 보세요.
                 </p>
-                <p class="mt-3 text-sm md:text-base text-slate-600 leading-relaxed">
+                <p class="mt-4 text-base md:text-lg text-slate-600 leading-relaxed">
                     형식에 구애받지 않고, 원하는 방식으로 표현하셔도 좋습니다.<br>
-                    처음이라 어렵다면, 아래 프롬프트를 활용해 보세요. <i class="fas fa-arrow-down ml-0.5 text-[10px]" aria-hidden="true"></i>
+                    처음이라 어렵다면, 아래 프롬프트를 활용해 보세요. <i class="fas fa-arrow-down ml-0.5 text-xs md:text-sm align-middle" aria-hidden="true"></i>
                 </p>
             </section>
 
         <div class="mb-8 max-w-2xl mx-auto w-full border-t border-slate-200/90 pt-5">
-            <h1 class="text-center text-xl md:text-2xl font-extrabold text-slate-900 mb-2">웹툰 생성 가이드</h1>
+            <h1 class="text-center text-2xl md:text-3xl font-black text-slate-900 mb-6 tracking-tight leading-tight [text-shadow:0_1px_0_rgba(15,23,42,0.12)]">웹툰 생성 가이드</h1>
+            <div class="rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 shadow-[0_1px_3px_rgba(15,23,42,0.06)] p-4 sm:p-5 md:p-6 flex flex-col gap-6">
             <div class="glass-panel rounded-2xl px-4 py-4 text-left">
-            <p class="text-slate-700 text-xs md:text-sm leading-relaxed">
+            <p class="text-base md:text-lg text-slate-600 leading-relaxed">
                 <strong class="text-slate-800">스토리 내용</strong>만 채우면 <strong class="text-slate-800">복사해 쓸 안내 글</strong>이 만들어집니다. 제미나이에 붙여 넣으면, AI가 스토리를 보고 자동으로 웹툰을 만들어 줍니다.
             </p>
             </div>
-        </div>
 
-        <div class="mb-8 max-w-2xl mx-auto w-full">
             <div class="prompt-field-card relative rounded-2xl p-4 md:p-5 overflow-visible">
                 <span class="story-write-badge" aria-hidden="true">이것만 작성하세요!</span>
-                <label class="block text-base font-extrabold text-slate-900 mb-1.5 flex items-center gap-2 pr-20 sm:pr-24" for="fStory">
-                    <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white text-xs shadow-sm"><i class="fas fa-pen"></i></span>
-                    스토리 내용
+                <label class="block text-base md:text-lg font-extrabold text-slate-900 mb-2 flex items-center gap-2 pr-20 sm:pr-24" for="fStory">
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white text-base shadow-sm"><i class="fas fa-pen"></i></span>
+                    스토리 작성
                 </label>
-                <p class="text-xs sm:text-sm text-slate-600 mb-3 pl-0 sm:pl-9">컷 수·그림체는 적지 않아도 됩니다. <span class="text-slate-800 font-semibold">줄거리만</span> 적어 주면 AI가 분위기에 맞게 정합니다.</p>
-                <textarea id="fStory" class="input-field w-full bg-white border-2 border-teal-200/70 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none min-h-[14rem] shadow-sm"></textarea>
+                <p class="story-helper-oneline text-slate-600 mb-3">컷 수·그림체는 적지 않아도 됩니다. <span class="text-slate-800 font-semibold">줄거리만</span> 적어 주면 AI가 분위기에 맞게 정합니다.</p>
+                <textarea id="fStory" class="input-field w-full bg-white border-2 border-teal-200/70 rounded-xl px-3 py-2.5 text-base md:text-lg focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none min-h-[14rem] shadow-sm"></textarea>
             </div>
-        </div>
 
-        <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-xl overflow-hidden max-w-2xl mx-auto w-full">
+        <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-xl overflow-hidden w-full">
             <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-slate-800 border-b border-slate-700">
                 <span class="text-xs font-bold text-slate-400 tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 프롬프트</span>
                 <div class="flex gap-2">
@@ -173,52 +209,54 @@
         </div>
 
         <!-- 순서 안내 -->
-        <div class="mt-6 mb-4 max-w-2xl mx-auto w-full">
+        <div class="w-full">
             <div class="flex items-center justify-center gap-0 text-center">
-                <div class="flex flex-col items-center gap-1 min-w-[3.5rem] sm:min-w-[4.5rem]">
-                    <span class="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-slate-800 text-white text-sm shadow"><i class="fas fa-pen"></i></span>
-                    <span class="text-[10px] sm:text-xs font-bold text-slate-700 leading-tight">스토리 작성</span>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-slate-800 text-white text-base shadow"><i class="fas fa-pen"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">스토리 작성</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[10px] mx-1 sm:mx-2 shrink-0" aria-hidden="true"></i>
-                <div class="flex flex-col items-center gap-1 min-w-[3.5rem] sm:min-w-[4.5rem]">
-                    <span class="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-blue-500 text-white text-sm shadow"><i class="fas fa-copy"></i></span>
-                    <span class="text-[10px] sm:text-xs font-bold text-slate-700 leading-tight">프롬프트 복사</span>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-blue-500 text-white text-base shadow"><i class="fas fa-copy"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">프롬프트 복사</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[10px] mx-1 sm:mx-2 shrink-0" aria-hidden="true"></i>
-                <div class="flex flex-col items-center gap-1 min-w-[3.5rem] sm:min-w-[4.5rem]">
-                    <span class="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-teal-600 text-white text-sm shadow">✦</span>
-                    <span class="text-[10px] sm:text-xs font-bold text-slate-700 leading-tight">제미나이 열기</span>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-teal-600 text-white text-lg leading-none shadow">✦</span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">제미나이 열기</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[10px] mx-1 sm:mx-2 shrink-0" aria-hidden="true"></i>
-                <div class="flex flex-col items-center gap-1 min-w-[3.5rem] sm:min-w-[4.5rem]">
-                    <span class="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-indigo-700 text-white text-sm shadow"><i class="fas fa-paste"></i></span>
-                    <span class="text-[10px] sm:text-xs font-bold text-slate-700 leading-tight">붙여넣기</span>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-indigo-700 text-white text-base shadow"><i class="fas fa-paste"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">붙여넣기</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[10px] mx-1 sm:mx-2 shrink-0" aria-hidden="true"></i>
-                <div class="flex flex-col items-center gap-1 min-w-[3.5rem] sm:min-w-[4.5rem]">
-                    <span class="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-amber-500 text-white text-sm shadow"><i class="fas fa-magic"></i></span>
-                    <span class="text-[10px] sm:text-xs font-bold text-slate-700 leading-tight">웹툰 생성</span>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-amber-500 text-white text-base shadow"><i class="fas fa-magic"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">웹툰 생성</span>
                 </div>
             </div>
         </div>
 
         <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer"
-           class="mt-4 max-w-2xl mx-auto w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3 font-bold shadow-md transition hover:shadow-lg border border-teal-200/80 bg-gradient-to-r from-teal-100 via-emerald-100 to-sky-100 text-slate-800 text-xs md:text-sm hover:from-teal-50 hover:via-emerald-50 hover:to-sky-50">
-            <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/70 text-teal-700 text-sm shadow-sm" aria-hidden="true">✦</span>
+           class="w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-md transition hover:shadow-lg border border-teal-200/80 bg-gradient-to-r from-teal-100 via-emerald-100 to-sky-100 text-slate-800 text-[19px] md:text-[21px] hover:from-teal-50 hover:via-emerald-50 hover:to-sky-50">
+            <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/70 text-teal-700 text-[1.125rem] shadow-sm" aria-hidden="true">✦</span>
             <span class="text-center min-w-0">
-                <span class="block text-slate-800">브라우저에서 제미나이 열기(로그인 필수) <i class="fas fa-external-link-alt ml-1 text-[10px] opacity-80"></i></span>
+                <span class="block text-slate-800">브라우저에서 제미나이 열기(로그인 필수) <i class="fas fa-external-link-alt ml-1 text-[17px] opacity-80 align-middle"></i></span>
             </span>
         </a>
+            </div>
+        </div>
 
         <p id="copyToast" class="hidden mt-3 text-center text-xs font-bold text-slate-600">클립보드에 복사했습니다.</p>
 
         <footer class="mt-12 pt-8 border-t border-slate-200 text-center">
             <div class="max-w-2xl mx-auto w-full rounded-2xl border border-amber-200/90 bg-gradient-to-b from-amber-50 to-orange-50/60 shadow-sm mb-10 overflow-hidden">
                 <div class="px-3 sm:px-5 py-4 md:py-5 flex flex-col items-stretch gap-2.5 text-slate-800 leading-snug text-center max-w-full">
-                    <p class="text-[clamp(0.625rem,2.8vw,0.8125rem)] break-words">
-                        AI로 작업하고, 만드신 <strong>본인만의 스토리</strong>를 <a href="https://hmap.hdec.co.kr/HMAP/WorkSpace/Main/AiPicture.aspx" target="_blank" rel="noopener noreferrer" class="text-slate-900 font-bold underline underline-offset-2 hover:text-slate-950"><strong>PlayDay Gallery</strong> <i class="fas fa-external-link-alt text-[9px] opacity-70"></i></a><span class="text-slate-500 text-[11px] font-semibold">(로그인 필수)</span>에 업로드 해주세요.
+                    <p class="text-[clamp(0.6875rem,3vw,0.875rem)] break-words">
+                        AI로 작업하고, 만드신 <strong>본인만의 스토리</strong>를 <a href="https://hmap.hdec.co.kr/HMAP/WorkSpace/Main/AiPicture.aspx" target="_blank" rel="noopener noreferrer" class="text-slate-900 font-bold underline underline-offset-2 hover:text-slate-950"><strong>PlayDay Gallery</strong> <i class="fas fa-external-link-alt text-[10px] opacity-70"></i></a><span class="text-slate-500 text-[12px] font-semibold">(로그인 필수)</span>에 업로드 해주세요.
                     </p>
-                    <p class="text-[clamp(0.625rem,2.8vw,0.8125rem)] font-semibold text-slate-900 break-words">
+                    <p class="text-[clamp(0.6875rem,3vw,0.875rem)] font-semibold text-slate-900 break-words">
                         우수작을 선정하여 <strong class="text-amber-800">스타벅스 상품권</strong>을 보내 드립니다. (제출기한 : 26년 4월 30일)
                     </p>
                 </div>
