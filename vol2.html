@@ -110,6 +110,14 @@
             background: rgba(255, 255, 255, 0.85);
         }
 
+        /* 글래스 카드 메인 제목: 최대 굵기 + 살짝 입체(폰트 800 한계 보완) */
+        .glass-hero-title {
+            letter-spacing: -0.03em;
+            text-shadow:
+                0 1px 0 rgba(15, 23, 42, 0.14),
+                0 0.06em 0 rgba(15, 23, 42, 0.05);
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -144,21 +152,23 @@
             content: '';
             position: absolute;
             z-index: -1;
-            left: -0.14em;
-            right: -0.12em;
+            left: -0.2em;
+            right: -0.18em;
             top: 50%;
-            transform: translateY(-50%) rotate(-0.85deg);
-            height: 0.92em;
+            transform: translateY(-50%) rotate(-3.2deg) skewX(-4deg);
+            height: 1.02em;
             background: linear-gradient(
-                188deg,
-                rgba(254, 252, 232, 0.98) 0%,
-                rgba(254, 240, 138, 0.98) 28%,
-                rgba(253, 224, 71, 0.96) 58%,
-                rgba(250, 204, 21, 0.75) 100%
+                172deg,
+                rgba(254, 252, 232, 0.38) 0%,
+                rgba(254, 240, 138, 0.62) 18%,
+                rgba(253, 224, 71, 0.68) 45%,
+                rgba(250, 204, 21, 0.58) 72%,
+                rgba(234, 179, 8, 0.3) 100%
             );
-            border-radius: 42% 12% 52% 18% / 48% 38% 62% 42%;
-            filter: url(#highlight-rough);
-            -webkit-filter: url(#highlight-rough);
+            /* 붓 끝이 거친 타원 */
+            border-radius: 58% 22% 48% 38% / 42% 55% 45% 58%;
+            filter: url(#highlight-brush);
+            -webkit-filter: url(#highlight-brush);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -196,28 +206,72 @@
         }
 
         .btn-webtoon-create {
-            background: linear-gradient(135deg, #1e3a5f 0%, #152a45 50%, #0f1f35 100%);
-            color: white;
+            background: linear-gradient(
+                145deg,
+                #0d4a3a 0%,
+                #064e3b 28%,
+                #052e24 55%,
+                #022c22 100%
+            );
+            color: #ecfdf5;
             font-weight: 800;
-            padding: 14px 34px;
-            border-radius: 50px;
-            border: none;
+            padding: 15px 38px;
+            border-radius: 9999px;
+            border: 1px solid rgba(52, 211, 153, 0.25);
             cursor: pointer;
-            box-shadow: 0 6px 0 #0a1628, 0 8px 24px rgba(15, 31, 53, 0.45);
-            transition: all 0.2s ease;
-            font-size: 1.1rem;
+            box-shadow:
+                0 6px 0 #011a14,
+                0 8px 24px rgba(2, 44, 34, 0.55),
+                0 2px 12px rgba(6, 78, 59, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            transition:
+                transform 0.18s ease,
+                box-shadow 0.18s ease,
+                filter 0.18s ease,
+                border-color 0.18s ease;
+            font-size: 1.2rem;
             width: 100%;
             max-width: 20rem;
         }
 
         .btn-webtoon-create:hover {
-            filter: brightness(1.08);
-            box-shadow: 0 6px 0 #0a1628, 0 12px 32px rgba(15, 31, 53, 0.5);
+            filter: brightness(1.12) saturate(1.05);
+            transform: translateY(-2px);
+            border-color: rgba(110, 231, 183, 0.45);
+            box-shadow:
+                0 8px 0 #011a14,
+                0 14px 36px rgba(2, 44, 34, 0.5),
+                0 4px 16px rgba(16, 185, 129, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.18);
         }
 
         .btn-webtoon-create:active {
-            box-shadow: 0 0 0 #0a1628;
-            transform: translateY(6px);
+            filter: brightness(0.97);
+            box-shadow:
+                0 2px 0 #011a14,
+                0 4px 14px rgba(2, 44, 34, 0.45),
+                inset 0 2px 6px rgba(0, 0, 0, 0.25);
+            transform: translateY(5px);
+        }
+
+        .btn-webtoon-create:focus-visible {
+            outline: none;
+            box-shadow:
+                0 6px 0 #011a14,
+                0 8px 24px rgba(2, 44, 34, 0.55),
+                0 0 0 3px rgba(52, 211, 153, 0.55),
+                0 0 0 6px rgba(204, 251, 241, 0.35);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .btn-webtoon-create,
+            .btn-webtoon-create:hover,
+            .btn-webtoon-create:active {
+                transition: none;
+            }
+            .btn-webtoon-create:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
@@ -225,9 +279,13 @@
 
     <svg aria-hidden="true" width="0" height="0" style="position: absolute; overflow: hidden">
         <defs>
-            <filter id="highlight-rough" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
-                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="5" seed="17" result="noise" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="4.2" xChannelSelector="R" yChannelSelector="G" />
+            <!-- 붓 질감: 이중 노이즈 변위 + 가장자리 살짝 번짐 -->
+            <filter id="highlight-brush" x="-65%" y="-65%" width="230%" height="230%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.075 0.19" numOctaves="6" seed="23" result="n1" />
+                <feDisplacementMap in="SourceGraphic" in2="n1" scale="7.5" xChannelSelector="R" yChannelSelector="G" result="d1" />
+                <feTurbulence type="fractalNoise" baseFrequency="0.22 0.055" numOctaves="4" seed="61" result="n2" />
+                <feDisplacementMap in="d1" in2="n2" scale="3.2" xChannelSelector="G" yChannelSelector="R" result="d2" />
+                <feGaussianBlur in="d2" stdDeviation="0.35" />
             </filter>
         </defs>
     </svg>
@@ -239,22 +297,21 @@
             <div class="text-center fade-in relative">
                 <p class="tracking-[0.35em] text-sm mb-0 text-slate-700/80 leading-none inline-block translate-y-8">✦ ✦ ✦ ✦ ✦ ✦</p>
                 <h1 class="mt-0 mb-0 flex justify-center px-2">
-                    <img src="https://kikeun.github.io/KIKEUN/ai31.png" alt="PLAYDAY" class="playday-logo translate-y-4 h-20 sm:h-24 md:h-28 w-auto max-w-[min(100%,500px)] object-contain" width="500" height="125" decoding="async">
+                    <img src="https://kikeun.github.io/KIKEUN/ai31.png" alt="PLAYDAY" class="playday-logo translate-y-4 sm:translate-y-5 h-32 sm:h-36 md:h-40 w-auto max-w-[min(100%,680px)] object-contain" width="500" height="125" decoding="async">
                 </h1>
-                <hr class="border-0 border-t-2 border-slate-900/60 max-w-md mx-auto mb-1">
-                <p class="text-[0.8rem] sm:text-sm text-slate-700/60 font-bold mb-6 tracking-wide">Vol2. 일상 스토리를 웹툰으로 만들기</p>
+                <hr class="border-0 border-t-2 border-white/50 max-w-xl sm:max-w-2xl mx-auto -mt-2 sm:-mt-3 mb-8">
             </div>
 
             <!-- 글래스 카드 -->
             <section class="glass-panel rounded-3xl px-6 sm:px-8 py-8 text-center mx-auto w-full max-w-2xl fade-in fade-in-d1">
-                <h2 class="text-[1.35rem] sm:text-[1.5rem] md:text-[1.65rem] font-bold text-slate-900 mb-3 leading-snug">
+                <h2 class="glass-hero-title text-[1.5rem] sm:text-[1.7rem] md:text-[1.95rem] font-black text-slate-900 mb-3 leading-snug">
                     당신의 이야기를 <span class="webtoon-highlight">웹툰</span>으로 표현해보세요.
                 </h2>
                 <p class="text-[1.05rem] sm:text-[1.12rem] md:text-[1.2rem] leading-relaxed text-slate-600 font-semibold mb-4">
                     현장 소개부터 공법 소개, 개인의 일상까지.<br>
                     AI로 쉽고 재미있게, 지금 바로 나만의 웹툰을 만들어 보세요.
                 </p>
-                <div class="text-left max-w-lg mx-auto mb-4">
+                <div class="text-left max-w-xl mx-auto mb-4">
                     <textarea
                         id="landingStory"
                         class="story-textarea"
@@ -270,17 +327,17 @@
                     </button>
                 </div>
                 <div class="mt-6 flex flex-nowrap justify-center gap-1.5 overflow-x-auto">
-                    <span class="tag-pill text-slate-700 px-2.5 py-1 rounded-full text-[0.7rem] sm:text-xs font-bold whitespace-nowrap shrink-0">#TBM공법 웹툰으로 그려줘</span>
-                    <span class="tag-pill text-slate-700 px-2.5 py-1 rounded-full text-[0.7rem] sm:text-xs font-bold whitespace-nowrap shrink-0">#나의 일상 웹툰으로 소개하기</span>
-                    <span class="tag-pill text-slate-700 px-2.5 py-1 rounded-full text-[0.7rem] sm:text-xs font-bold whitespace-nowrap shrink-0">#우리팀 웹툰으로 소개하기</span>
+                    <span class="tag-pill text-slate-700 px-2.5 py-1.5 rounded-full text-[0.82rem] sm:text-[0.8125rem] font-bold whitespace-nowrap shrink-0">#TBM공법 웹툰으로 그려줘</span>
+                    <span class="tag-pill text-slate-700 px-2.5 py-1.5 rounded-full text-[0.82rem] sm:text-[0.8125rem] font-bold whitespace-nowrap shrink-0">#나의 일상 웹툰으로 소개하기</span>
+                    <span class="tag-pill text-slate-700 px-2.5 py-1.5 rounded-full text-[0.82rem] sm:text-[0.8125rem] font-bold whitespace-nowrap shrink-0">#우리팀 웹툰으로 소개하기</span>
                 </div>
             </section>
 
             <!-- 노동왕국 박스 -->
             <div class="max-w-2xl mx-auto mt-10 mb-2 rounded-2xl border border-white/30 bg-white/10 backdrop-blur-sm px-4 sm:px-6 py-5 fade-in fade-in-d2">
 
-                <h3 class="text-center text-xl sm:text-2xl md:text-[1.75rem] font-black text-white mb-1.5 px-2 drop-shadow-lg leading-tight">
-                    <i class="fas fa-film text-teal-100 mr-1"></i> '노동요 노동왕국 웹툰 버전'
+                <h3 class="text-center text-2xl sm:text-3xl md:text-[2.05rem] font-black text-white mb-1.5 px-2 drop-shadow-lg leading-tight">
+                    <i class="fas fa-film text-teal-100 mr-1.5 text-[1.1rem] sm:text-[1.35rem] md:text-[1.55rem] align-middle" aria-hidden="true"></i> '노동요 노동왕국 웹툰 버전'
                 </h3>
                 <p class="text-center text-xs sm:text-sm text-white/80 mb-4 px-2">
                     <strong class="text-white/95">노동왕국이란?</strong> PlayDay 1차에서 오현철 책임님께서 Suno AI를 활용해 제작한 노동요입니다.
@@ -298,8 +355,8 @@
 
                 <div class="music-strip mb-3 w-full">
                     <div class="flex flex-row items-center gap-2 sm:gap-3 rounded-xl border border-white/50 bg-white/75 backdrop-blur-sm px-3 sm:px-4 py-2 shadow-sm">
-                        <span class="text-[11px] sm:text-xs font-bold text-slate-700 whitespace-nowrap shrink-0 flex items-center gap-1">
-                            <i class="fas fa-music text-teal-600 text-[9px] sm:text-[10px]" aria-hidden="true"></i>
+                        <span class="text-xs sm:text-sm font-bold text-slate-700 whitespace-nowrap shrink-0 flex items-center gap-1.5">
+                            <i class="fas fa-music text-teal-600 text-[11px] sm:text-sm" aria-hidden="true"></i>
                             노동왕국 (디즈니 버전)
                         </span>
                         <div class="flex flex-1 min-w-0 flex-wrap items-center gap-x-2 gap-y-2">
@@ -336,7 +393,7 @@
             </div>
 
             <!-- 인용 -->
-            <p class="text-center text-lg md:text-xl font-bold italic text-white mt-7 px-3 drop-shadow-lg fade-in fade-in-d4">
+            <p class="text-center text-xl md:text-2xl font-bold italic text-white mt-7 px-3 drop-shadow-lg fade-in fade-in-d4 leading-snug">
                 "당신은 어떤 이야기를 웹툰으로 표현하고 싶나요?"
             </p>
 
