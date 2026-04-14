@@ -90,9 +90,7 @@
                     자유롭게 나만의 이야기로 웹툰과 이미지를 만들어 보세요.
                 </p>
                 <p class="mt-3 text-sm md:text-base text-slate-600 leading-relaxed">
-                    형식에 구애받지 않고, 원하는 방식으로 표현하셔도 좋습니다.
-                </p>
-                <p class="mt-2 text-xs text-slate-500 leading-relaxed">
+                    형식에 구애받지 않고, 원하는 방식으로 표현하셔도 좋습니다.<br>
                     처음이라 어렵다면, 아래 프롬프트를 활용해 보세요. <i class="fas fa-arrow-down ml-0.5 text-[10px]" aria-hidden="true"></i>
                 </p>
             </section>
@@ -108,15 +106,15 @@
 
         <div class="mb-8 max-w-2xl mx-auto w-full">
             <div class="prompt-field-card rounded-2xl shadow-sm p-3 md:p-4">
-                <label class="block text-xs font-extrabold text-slate-900 mb-1" for="fStory">스토리 내용</label>
-                <p class="text-[11px] text-slate-500 mb-1.5">컷 수·그림체는 적지 않아도 됩니다. <span class="text-slate-600 font-semibold">줄거리만</span> 적어 주면 AI가 분위기에 맞게 정합니다.</p>
+                <label class="block text-sm font-extrabold text-slate-900 mb-1" for="fStory">스토리 내용</label>
+                <p class="text-xs sm:text-sm text-slate-500 mb-1.5">컷 수·그림체는 적지 않아도 됩니다. <span class="text-slate-600 font-semibold">줄거리만</span> 적어 주면 AI가 분위기에 맞게 정합니다.</p>
                 <textarea id="fStory" class="input-field w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-slate-400 outline-none min-h-[14rem]"></textarea>
             </div>
         </div>
 
         <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-xl overflow-hidden max-w-2xl mx-auto w-full">
             <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-slate-800 border-b border-slate-700">
-                <span class="text-[10px] font-bold text-slate-400 tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 프롬프트</span>
+                <span class="text-xs font-bold text-slate-400 tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 프롬프트</span>
                 <div class="flex gap-2">
                     <button type="button" id="btnCopy" class="text-xs font-bold bg-slate-200 hover:bg-slate-300 text-slate-900 px-3 py-1.5 rounded-lg transition-colors">
                         <i class="fas fa-copy mr-1"></i>복사
@@ -257,7 +255,7 @@
         /** 빈 칸에만 보이는 회색 힌트(마크다운·복사에는 넣지 않음) */
         const PLACEHOLDER_HINTS = {
             fStory:
-                '컷 수·그림체는 쓰지 않아도 됩니다. 줄거리만 예시: 야근 직장인이 퇴근길 복권을 사서 1등 당첨 상상을 하다 잠드는 코미디. 동료들은 가정의 날에 퇴근하는데 나만 남아 서류 더미와 씨름…',
+                '예시: 월요일 아침, 출근길 지하철에서 졸다가 내릴 역을 놓친 직장인. 허겁지겁 반대편 열차를 타고 회사에 도착하니 이미 회의 시작. 숨 돌릴 틈도 없이 야근 돌입, 퇴근 시간은 까마득… 그래도 동료가 건넨 커피 한 잔에 힘을 내본다.',
         };
 
         function applyPlaceholderHints() {
