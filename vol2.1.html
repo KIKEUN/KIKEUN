@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>플레이데이 — 웹툰 자동 안내</title>
+    <title>플레이데이 — 웹툰 생성 가이드</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -60,15 +60,58 @@
             opacity: 1;
         }
 
-        /* 스토리 입력 카드: 연한 하늘색 틀 (작성란은 흰색 유지) */
+        /* 스토리 입력 카드: 전체 블록이 눈에 띄도록 */
         .prompt-field-card {
             background: linear-gradient(
                 165deg,
-                rgba(224, 242, 254, 0.42) 0%,
-                rgba(240, 249, 255, 0.28) 45%,
-                rgba(248, 250, 252, 0.9) 100%
+                rgba(224, 242, 254, 0.88) 0%,
+                rgba(186, 230, 253, 0.55) 38%,
+                rgba(240, 249, 255, 0.75) 100%
             );
-            border: 1px solid rgb(226 232 240);
+            border: 2px solid rgba(13, 148, 136, 0.35);
+            box-shadow:
+                0 4px 24px rgba(15, 118, 110, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        }
+
+        /* 오른쪽 위: 글자만, 좌→우로 내려가는 사선(시계 방향 기울기) */
+        .story-write-badge {
+            position: absolute;
+            z-index: 2;
+            top: 0.15rem;
+            right: -1.25rem;
+            padding: 0;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            color: rgb(15 118 110);
+            text-shadow:
+                0 0 1px rgba(255, 255, 255, 0.95),
+                0 1px 2px rgba(255, 255, 255, 0.85);
+            background: none;
+            border: none;
+            transform: rotate(15deg);
+            transform-origin: top right;
+            pointer-events: none;
+            user-select: none;
+            animation: storyBlink 1.25s ease-in-out infinite;
+        }
+
+        @keyframes storyBlink {
+            0%, 100% {
+                opacity: 1;
+                transform: rotate(15deg) scale(1);
+            }
+            50% {
+                opacity: 0.55;
+                transform: rotate(15deg) scale(1.03);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .story-write-badge {
+                animation: none;
+            }
         }
     </style>
 </head>
@@ -96,7 +139,7 @@
             </section>
 
         <div class="mb-8 max-w-2xl mx-auto w-full border-t border-slate-200/90 pt-5">
-            <h1 class="text-center text-xl md:text-2xl font-extrabold text-slate-900 mb-2">웹툰 자동 안내</h1>
+            <h1 class="text-center text-xl md:text-2xl font-extrabold text-slate-900 mb-2">웹툰 생성 가이드</h1>
             <div class="glass-panel rounded-2xl px-4 py-4 text-left">
             <p class="text-slate-700 text-xs md:text-sm leading-relaxed">
                 <strong class="text-slate-800">스토리 내용</strong>만 채우면 <strong class="text-slate-800">복사해 쓸 안내 글</strong>이 만들어집니다. 제미나이에 붙여 넣으면, AI가 스토리를 보고 자동으로 웹툰을 만들어 줍니다.
@@ -105,10 +148,14 @@
         </div>
 
         <div class="mb-8 max-w-2xl mx-auto w-full">
-            <div class="prompt-field-card rounded-2xl shadow-sm p-3 md:p-4">
-                <label class="block text-sm font-extrabold text-slate-900 mb-1" for="fStory">스토리 내용</label>
-                <p class="text-xs sm:text-sm text-slate-500 mb-1.5">컷 수·그림체는 적지 않아도 됩니다. <span class="text-slate-600 font-semibold">줄거리만</span> 적어 주면 AI가 분위기에 맞게 정합니다.</p>
-                <textarea id="fStory" class="input-field w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-slate-400 outline-none min-h-[14rem]"></textarea>
+            <div class="prompt-field-card relative rounded-2xl p-4 md:p-5 overflow-visible">
+                <span class="story-write-badge" aria-hidden="true">이것만 작성하세요!</span>
+                <label class="block text-base font-extrabold text-slate-900 mb-1.5 flex items-center gap-2 pr-20 sm:pr-24" for="fStory">
+                    <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white text-xs shadow-sm"><i class="fas fa-pen"></i></span>
+                    스토리 내용
+                </label>
+                <p class="text-xs sm:text-sm text-slate-600 mb-3 pl-0 sm:pl-9">컷 수·그림체는 적지 않아도 됩니다. <span class="text-slate-800 font-semibold">줄거리만</span> 적어 주면 AI가 분위기에 맞게 정합니다.</p>
+                <textarea id="fStory" class="input-field w-full bg-white border-2 border-teal-200/70 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none min-h-[14rem] shadow-sm"></textarea>
             </div>
         </div>
 
