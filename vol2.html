@@ -6,15 +6,32 @@
     <title>PLAYDAY VOL2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round:wght@400;700;800&display=swap');
-
         html {
             background: transparent;
         }
 
+        html,
         body {
-            font-family: 'Nanum Square Round', 'Malgun Gothic', sans-serif;
+            font-family:
+                'Pretendard',
+                -apple-system,
+                BlinkMacSystemFont,
+                'Segoe UI',
+                Roboto,
+                'Helvetica Neue',
+                'Apple SD Gothic Neo',
+                'Noto Sans KR',
+                'Malgun Gothic',
+                sans-serif !important;
+        }
+
+        body {
             color: #333;
             overflow-x: hidden;
             min-height: 100vh;
@@ -205,71 +222,220 @@
                 0 0 0 3px rgba(45, 212, 191, 0.25);
         }
 
-        .btn-webtoon-create {
-            background: linear-gradient(
-                145deg,
-                #0d4a3a 0%,
-                #064e3b 28%,
-                #052e24 55%,
-                #022c22 100%
-            );
-            color: #ecfdf5;
-            font-weight: 800;
-            padding: 15px 38px;
-            border-radius: 9999px;
-            border: 1px solid rgba(52, 211, 153, 0.25);
-            cursor: pointer;
-            box-shadow:
-                0 6px 0 #011a14,
-                0 8px 24px rgba(2, 44, 34, 0.55),
-                0 2px 12px rgba(6, 78, 59, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.12);
-            transition:
-                transform 0.18s ease,
-                box-shadow 0.18s ease,
-                filter 0.18s ease,
-                border-color 0.18s ease;
-            font-size: 1.2rem;
+        .btn-webtoon-create,
+        .btn-playgallery {
+            position: relative;
+            isolation: isolate;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
             width: 100%;
             max-width: 20rem;
+            font-size: 1.02rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #ecfdf5;
+            padding: 0.92rem 1.2rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            text-decoration: none;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                filter 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .btn-webtoon-create::before,
+        .btn-playgallery::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02) 42%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+        }
+
+        .btn-webtoon-create {
+            background: linear-gradient(145deg, #0d4a3a 0%, #065f46 35%, #064e3b 58%, #022c22 100%);
+            border: 1px solid rgba(74, 222, 128, 0.26);
+            box-shadow:
+                0 6px 0 #011a14,
+                0 12px 28px rgba(2, 44, 34, 0.42),
+                0 4px 16px rgba(5, 150, 105, 0.22);
         }
 
         .btn-webtoon-create:hover {
-            filter: brightness(1.12) saturate(1.05);
             transform: translateY(-2px);
-            border-color: rgba(110, 231, 183, 0.45);
+            filter: brightness(1.08) saturate(1.06);
+            border-color: rgba(110, 231, 183, 0.48);
             box-shadow:
                 0 8px 0 #011a14,
-                0 14px 36px rgba(2, 44, 34, 0.5),
-                0 4px 16px rgba(16, 185, 129, 0.35),
-                inset 0 1px 0 rgba(255, 255, 255, 0.18);
+                0 16px 34px rgba(2, 44, 34, 0.38),
+                0 6px 18px rgba(16, 185, 129, 0.24);
         }
 
         .btn-webtoon-create:active {
+            transform: translateY(4px);
             filter: brightness(0.97);
             box-shadow:
                 0 2px 0 #011a14,
-                0 4px 14px rgba(2, 44, 34, 0.45),
-                inset 0 2px 6px rgba(0, 0, 0, 0.25);
-            transform: translateY(5px);
+                0 5px 14px rgba(2, 44, 34, 0.4);
         }
 
         .btn-webtoon-create:focus-visible {
             outline: none;
             box-shadow:
                 0 6px 0 #011a14,
-                0 8px 24px rgba(2, 44, 34, 0.55),
+                0 12px 28px rgba(2, 44, 34, 0.42),
                 0 0 0 3px rgba(52, 211, 153, 0.55),
                 0 0 0 6px rgba(204, 251, 241, 0.35);
+        }
+
+        .hero-cta-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 34rem;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+
+        @media (max-width: 520px) {
+            .hero-cta-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hero-cta-row > .btn-webtoon-create,
+        .hero-cta-row > .btn-playgallery {
+            width: 100%;
+            min-width: 0;
+            max-width: none;
+        }
+
+        .hero-cta-emoji,
+        .hero-cta-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .hero-cta-emoji {
+            width: 1.85rem;
+            height: 1.85rem;
+            font-size: 1.2rem;
+            line-height: 1;
+            font-family:
+                "Apple Color Emoji",
+                "Segoe UI Emoji",
+                "Segoe UI Symbol",
+                "Noto Color Emoji",
+                sans-serif;
+            filter: none;
+        }
+
+        .hero-cta-arrow {
+            width: 1.95rem;
+            height: 1.95rem;
+            box-sizing: border-box;
+            padding: 0;
+            line-height: 1;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.14),
+                0 2px 8px rgba(1, 26, 20, 0.16);
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .hero-cta-arrow i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+            font-size: 0.8rem;
+            transform: translateX(0.06em);
+        }
+
+        .hero-cta-label {
+            position: relative;
+            z-index: 1;
+            flex: 0 1 auto;
+            text-align: center;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            min-width: 0;
+            font-size: clamp(0.82rem, 1.65vw, 1.02rem);
+        }
+
+        .btn-playgallery {
+            border: 1px solid rgba(110, 231, 183, 0.22);
+            background: linear-gradient(145deg, rgba(10, 54, 42, 0.96) 0%, rgba(6, 78, 59, 0.94) 56%, rgba(2, 44, 34, 0.96) 100%);
+            box-shadow:
+                0 6px 0 #011a14,
+                0 12px 28px rgba(2, 44, 34, 0.34),
+                0 4px 16px rgba(4, 120, 87, 0.18);
+        }
+
+        .btn-playgallery:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.04) saturate(1.03);
+            border-color: rgba(167, 243, 208, 0.34);
+            box-shadow:
+                0 8px 0 #011a14,
+                0 16px 34px rgba(2, 44, 34, 0.3),
+                0 6px 18px rgba(16, 185, 129, 0.16);
+        }
+
+        .btn-playgallery:active {
+            transform: translateY(4px);
+            filter: brightness(0.97);
+            box-shadow:
+                0 2px 0 #011a14,
+                0 5px 14px rgba(2, 44, 34, 0.34);
+        }
+
+        .btn-playgallery:focus-visible {
+            outline: none;
+            box-shadow:
+                0 6px 0 #011a14,
+                0 12px 28px rgba(2, 44, 34, 0.34),
+                0 0 0 3px rgba(110, 231, 183, 0.5),
+                0 0 0 6px rgba(204, 251, 241, 0.35);
+        }
+
+        .group:hover .hero-cta-arrow {
+            transform: translateX(3px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.14);
         }
 
         @media (prefers-reduced-motion: reduce) {
             .btn-webtoon-create,
             .btn-webtoon-create:hover,
-            .btn-webtoon-create:active {
+            .btn-webtoon-create:active,
+            .btn-playgallery,
+            .btn-playgallery:hover,
+            .btn-playgallery:active {
                 transition: none;
             }
-            .btn-webtoon-create:hover {
+            .btn-webtoon-create:hover,
+            .btn-playgallery:hover {
                 transform: none;
             }
         }
@@ -308,8 +474,8 @@
                     당신의 이야기를 <span class="webtoon-highlight">웹툰</span>으로 표현해보세요.
                 </h2>
                 <p class="text-[1.05rem] sm:text-[1.12rem] md:text-[1.2rem] leading-relaxed text-slate-600 font-semibold mb-4">
-                    현장 소개부터 공법 소개, 개인의 일상까지.<br>
-                    AI로 쉽고 재미있게, 지금 바로 나만의 웹툰을 만들어 보세요.
+                    현장공법 소개부터, 개인의 일상까지.<br>
+                    AI로 쉽고 재미있게, 지금 바로 나만의 웹툰으로 만들어 보세요!
                 </p>
                 <div class="text-left max-w-xl mx-auto mb-4">
                     <textarea
@@ -321,10 +487,17 @@
                         aria-label="웹툰 스토리 입력"
                     ></textarea>
                 </div>
-                <div class="flex justify-center">
+                <div class="hero-cta-row">
                     <button type="button" id="btnWebtoonCreate" class="btn-webtoon-create group">
-                        웹툰만들기 <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform inline-block" aria-hidden="true"></i>
+                        <span class="hero-cta-emoji" aria-hidden="true">🎨</span>
+                        <span class="hero-cta-label">웹툰 만들기</span>
+                        <span class="hero-cta-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                     </button>
+                    <a href="https://hmap.hdec.co.kr/HMAP/WorkSpace/Main/AiPicture.aspx" target="_blank" rel="noopener noreferrer" class="btn-playgallery group" aria-label="동료 웹툰 보러가기(PlayDay Gallery, 새 창, 로그인 필요)">
+                        <span class="hero-cta-emoji" aria-hidden="true">🖼️</span>
+                        <span class="hero-cta-label">동료 웹툰 보러가기</span>
+                        <span class="hero-cta-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                    </a>
                 </div>
                 <div class="mt-6 flex flex-nowrap justify-center gap-1.5 overflow-x-auto">
                     <span class="tag-pill text-slate-700 px-2.5 py-1.5 rounded-full text-[0.82rem] sm:text-[0.8125rem] font-bold whitespace-nowrap shrink-0">#TBM공법 웹툰으로 그려줘</span>
@@ -337,7 +510,7 @@
             <div class="max-w-2xl mx-auto mt-10 mb-2 rounded-2xl border border-white/30 bg-white/10 backdrop-blur-sm px-4 sm:px-6 py-5 fade-in fade-in-d2">
 
                 <h3 class="text-center text-2xl sm:text-3xl md:text-[2.05rem] font-black text-white mb-1.5 px-2 drop-shadow-lg leading-tight">
-                    <i class="fas fa-film text-teal-100 mr-1.5 text-[1.1rem] sm:text-[1.35rem] md:text-[1.55rem] align-middle" aria-hidden="true"></i> '노동요 노동왕국 웹툰 버전'
+                    <i class="fas fa-film text-teal-100 mr-1.5 text-[1.1rem] sm:text-[1.35rem] md:text-[1.55rem] align-middle" aria-hidden="true"></i>'노동왕국' 웹툰 버전
                 </h3>
                 <p class="text-center text-xs sm:text-sm text-white/80 mb-4 px-2">
                     <strong class="text-white/95">노동왕국이란?</strong> PlayDay 1차에서 오현철 책임님께서 Suno AI를 활용해 제작한 노동요입니다.
