@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAYDAY VOL2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <style>
+        html {
+            background: transparent;
+        }
+
+        html,
+        body {
+            font-family:
+                'Pretendard',
+                -apple-system,
+                BlinkMacSystemFont,
+                'Segoe UI',
+                Roboto,
+                'Helvetica Neue',
+                'Apple SD Gothic Neo',
+                'Noto Sans KR',
+                'Malgun Gothic',
+                sans-serif !important;
+        }
+
+        body {
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: transparent;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            min-width: 0;
+        }
+
+        img,
+        video,
+        canvas,
+        svg {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        iframe {
+            max-width: 100%;
+        }
+
+        /* 모바일에서 가로 오버플로우 방지 (안드로이드 크롬 대응) */
+        .glass-panel,
+        .ai97-surface,
+        main,
+        section {
+            max-width: 100%;
+        }
+
+        .ai97-surface {
+            position: relative;
+            background-color: #14b8a6;
+            background-image:
+                radial-gradient(ellipse 120% 90% at 50% -15%, rgba(204, 251, 241, 0.55) 0%, transparent 52%),
+                radial-gradient(ellipse 80% 60% at 100% 20%, rgba(13, 148, 136, 0.55) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 55% at 0% 40%, rgba(15, 118, 110, 0.45) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 40% at 50% 95%, rgba(6, 78, 59, 0.4) 0%, transparent 50%),
+                linear-gradient(165deg, #a7f3d0 0%, #5eead4 12%, #2dd4bf 28%, #14b8a6 46%, #0d9488 62%, #0f766e 78%, #115e59 92%, #0c4a3e 100%);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* 웹툰 이미지: 흰 매트 + 틸 그림자 */
+        .webtoon-frame {
+            position: relative;
+            border-radius: 1.35rem;
+            padding: 0.55rem;
+            background: linear-gradient(
+                165deg,
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(240, 253, 250, 0.94) 45%,
+                rgba(204, 251, 241, 0.35) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow:
+                0 0 0 1px rgba(19, 78, 74, 0.06),
+                0 2px 6px rgba(0, 0, 0, 0.05),
+                0 18px 44px -14px rgba(15, 118, 110, 0.42),
+                0 8px 22px -10px rgba(15, 23, 42, 0.16),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+        }
+
+        .webtoon-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            box-shadow: inset 0 0 0 1px rgba(45, 212, 191, 0.22);
+        }
+
+        .webtoon-frame:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 0 0 1px rgba(19, 78, 74, 0.08),
+                0 4px 12px rgba(0, 0, 0, 0.07),
+                0 26px 56px -14px rgba(15, 118, 110, 0.5),
+                0 12px 28px -10px rgba(15, 23, 42, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+
+        .webtoon-frame img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 0.9rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .webtoon-frame:hover {
+                transform: none;
+            }
+        }
+
+        .audio-progress-track {
+            touch-action: none;
+        }
+
+        .tag-pill {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: background 0.2s;
+        }
+        .tag-pill:hover {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 글래스 카드 메인 제목: 최대 굵기 + 살짝 입체(폰트 800 한계 보완) */
+        .glass-hero-title {
+            letter-spacing: -0.03em;
+            text-shadow:
+                0 1px 0 rgba(15, 23, 42, 0.14),
+                0 0.06em 0 rgba(15, 23, 42, 0.05);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeInUp 0.7s ease both; }
+        .fade-in-d1 { animation-delay: 0.15s; }
+        .fade-in-d2 { animation-delay: 0.3s; }
+        .fade-in-d3 { animation-delay: 0.45s; }
+        .fade-in-d4 { animation-delay: 0.6s; }
+
+        /* 로고 PNG가 흰 배경(mat)일 때: 배경만 그라데이션과 섞여 사라지고 글자(어두운 색)는 유지 */
+        .playday-logo {
+            mix-blend-mode: multiply;
+            vertical-align: middle;
+        }
+
+        /* '웹툰': 동일 글자 크기 + 굵게, 노란 형광 음영(거친 가장자리) */
+        .webtoon-highlight {
+            position: relative;
+            display: inline-block;
+            font-size: 1em;
+            font-weight: 900;
+            line-height: inherit;
+            color: #0f172a;
+            letter-spacing: -0.03em;
+            z-index: 0;
+            padding: 0 0.08em;
+            vertical-align: baseline;
+        }
+
+        .webtoon-highlight::before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            left: -0.2em;
+            right: -0.18em;
+            top: 50%;
+            transform: translateY(-50%) rotate(-3.2deg) skewX(-4deg);
+            height: 1.02em;
+            background: linear-gradient(
+                172deg,
+                rgba(254, 252, 232, 0.38) 0%,
+                rgba(254, 240, 138, 0.62) 18%,
+                rgba(253, 224, 71, 0.68) 45%,
+                rgba(250, 204, 21, 0.58) 72%,
+                rgba(234, 179, 8, 0.3) 100%
+            );
+            /* 붓 끝이 거친 타원 */
+            border-radius: 58% 22% 48% 38% / 42% 55% 45% 58%;
+            filter: url(#highlight-brush);
+            -webkit-filter: url(#highlight-brush);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .webtoon-highlight::before {
+                filter: none;
+                -webkit-filter: none;
+            }
+        }
+
+        .story-textarea {
+            width: 100%;
+            min-height: 4.5rem;
+            resize: vertical;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 0.85rem 1rem;
+            font-size: 0.9375rem;
+            line-height: 1.55;
+            color: #1e293b;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .story-textarea::placeholder {
+            color: rgb(148 163 184);
+        }
+
+        .story-textarea:focus {
+            outline: none;
+            border-color: rgba(13, 148, 136, 0.55);
+            box-shadow:
+                inset 0 1px 2px rgba(15, 23, 42, 0.04),
+                0 0 0 3px rgba(45, 212, 191, 0.25);
+        }
+
+        .btn-webtoon-create,
+        .btn-playgallery {
+            position: relative;
+            isolation: isolate;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            width: 100%;
+            max-width: 20rem;
+            font-size: 1.02rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #ecfdf5;
+            padding: 0.92rem 1.2rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            text-decoration: none;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                filter 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .btn-webtoon-create::before,
+        .btn-playgallery::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02) 42%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+        }
+
+        .btn-webtoon-create {
+            background: linear-gradient(145deg, #0d4a3a 0%, #065f46 35%, #064e3b 58%, #022c22 100%);
+            border: 1px solid rgba(74, 222, 128, 0.26);
+            box-shadow:
+                0 6px 0 #011a14,
+                0 12px 28px rgba(2, 44, 34, 0.42),
+                0 4px 16px rgba(5, 150, 105, 0.22);
+        }
+
+        .btn-webtoon-create:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08) saturate(1.06);
+            border-color: rgba(110, 231, 183, 0.48);
+            box-shadow:
+                0 8px 0 #011a14,
+                0 16px 34px rgba(2, 44, 34, 0.38),
+                0 6px 18px rgba(16, 185, 129, 0.24);
+        }
+
+        .btn-webtoon-create:active {
+            transform: translateY(4px);
+            filter: brightness(0.97);
+            box-shadow:
+                0 2px 0 #011a14,
+                0 5px 14px rgba(2, 44, 34, 0.4);
+        }
+
+        .btn-webtoon-create:focus-visible {
+            outline: none;
+            box-shadow:
+                0 6px 0 #011a14,
+                0 12px 28px rgba(2, 44, 34, 0.42),
+                0 0 0 3px rgba(52, 211, 153, 0.55),
+                0 0 0 6px rgba(204, 251, 241, 0.35);
+        }
+
+        .hero-cta-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 34rem;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+
+        @media (max-width: 520px) {
+            .hero-cta-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hero-cta-row > .btn-webtoon-create,
+        .hero-cta-row > .btn-playgallery {
+            width: 100%;
+            min-width: 0;
+            max-width: none;
+        }
+
+        .hero-cta-emoji,
+        .hero-cta-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .hero-cta-emoji {
+            width: 1.85rem;
+            height: 1.85rem;
+            font-size: 1.2rem;
+            line-height: 1;
+            font-family:
+                "Apple Color Emoji",
+                "Segoe UI Emoji",
+                "Segoe UI Symbol",
+                "Noto Color Emoji",
+                sans-serif;
+            filter: none;
+        }
+
+        .hero-cta-arrow {
+            width: 1.95rem;
+            height: 1.95rem;
+            box-sizing: border-box;
+            padding: 0;
+            line-height: 1;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.14),
+                0 2px 8px rgba(1, 26, 20, 0.16);
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .hero-cta-arrow i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+            font-size: 0.8rem;
+            transform: translateX(0.06em);
+        }
+
+        .hero-cta-label {
+            position: relative;
+            z-index: 1;
+            flex: 0 1 auto;
+            text-align: center;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            min-width: 0;
+            font-size: clamp(0.82rem, 1.65vw, 1.02rem);
+        }
+
+        .btn-playgallery {
+            border: 1px solid rgba(110, 231, 183, 0.22);
+            background: linear-gradient(145deg, rgba(10, 54, 42, 0.96) 0%, rgba(6, 78, 59, 0.94) 56%, rgba(2, 44, 34, 0.96) 100%);
+            box-shadow:
+                0 6px 0 #011a14,
+                0 12px 28px rgba(2, 44, 34, 0.34),
+                0 4px 16px rgba(4, 120, 87, 0.18);
+        }
+
+        .btn-playgallery:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.04) saturate(1.03);
+            border-color: rgba(167, 243, 208, 0.34);
+            box-shadow:
+                0 8px 0 #011a14,
+                0 16px 34px rgba(2, 44, 34, 0.3),
+                0 6px 18px rgba(16, 185, 129, 0.16);
+        }
+
+        .btn-playgallery:active {
+            transform: translateY(4px);
+            filter: brightness(0.97);
+            box-shadow:
+                0 2px 0 #011a14,
+                0 5px 14px rgba(2, 44, 34, 0.34);
+        }
+
+        .btn-playgallery:focus-visible {
+            outline: none;
+            box-shadow:
+                0 6px 0 #011a14,
+                0 12px 28px rgba(2, 44, 34, 0.34),
+                0 0 0 3px rgba(110, 231, 183, 0.5),
+                0 0 0 6px rgba(204, 251, 241, 0.35);
+        }
+
+        .group:hover .hero-cta-arrow {
+            transform: translateX(3px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .btn-webtoon-create,
+            .btn-webtoon-create:hover,
+            .btn-webtoon-create:active,
+            .btn-playgallery,
+            .btn-playgallery:hover,
+            .btn-playgallery:active {
+                transition: none;
+            }
+            .btn-webtoon-create:hover,
+            .btn-playgallery:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <svg aria-hidden="true" width="0" height="0" style="position: absolute; overflow: hidden">
+        <defs>
+            <!-- 붓 질감: 이중 노이즈 변위 + 가장자리 살짝 번짐 -->
+            <filter id="highlight-brush" x="-65%" y="-65%" width="230%" height="230%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.075 0.19" numOctaves="6" seed="23" result="n1" />
+                <feDisplacementMap in="SourceGraphic" in2="n1" scale="7.5" xChannelSelector="R" yChannelSelector="G" result="d1" />
+                <feTurbulence type="fractalNoise" baseFrequency="0.22 0.055" numOctaves="4" seed="61" result="n2" />
+                <feDisplacementMap in="d1" in2="n2" scale="3.2" xChannelSelector="G" yChannelSelector="R" result="d2" />
+                <feGaussianBlur in="d2" stdDeviation="0.35" />
+            </filter>
+        </defs>
+    </svg>
+
+    <main class="max-w-3xl mx-auto px-4 pt-2 pb-6">
+        <div class="ai97-surface rounded-3xl px-5 sm:px-8 pt-0 sm:pt-1 pb-14">
+
+            <!-- 헤더 -->
+            <div class="text-center fade-in relative">
+                <p class="tracking-[0.35em] text-sm mb-0 text-slate-700/80 leading-none inline-block translate-y-8">✦ ✦ ✦ ✦ ✦ ✦</p>
+                <h1 class="mt-0 mb-0 flex justify-center px-2">
+                    <img src="https://kikeun.github.io/KIKEUN/ai31.png" alt="PLAYDAY" class="playday-logo translate-y-4 sm:translate-y-5 h-32 sm:h-36 md:h-40 w-auto max-w-[min(100%,680px)] object-contain" width="500" height="125" decoding="async">
+                </h1>
+                <hr class="border-0 border-t-2 border-white/50 max-w-xl sm:max-w-2xl mx-auto -mt-2 sm:-mt-3 mb-8">
+            </div>
+
+            <!-- 글래스 카드 -->
+            <section class="glass-panel rounded-3xl px-6 sm:px-8 py-8 text-center mx-auto w-full max-w-2xl fade-in fade-in-d1">
+                <h2 class="glass-hero-title text-[1.5rem] sm:text-[1.7rem] md:text-[1.95rem] font-black text-slate-900 mb-3 leading-snug">
+                    당신의 이야기를 <span class="webtoon-highlight">웹툰</span>으로 표현해보세요.
+                </h2>
+                <p class="text-[1.05rem] sm:text-[1.12rem] md:text-[1.2rem] leading-relaxed text-slate-600 font-semibold mb-4">
+                    현장공법 소개부터, 개인의 일상까지.<br>
+                    AI로 쉽고 재미있게, 지금 바로 나만의 웹툰으로 만들어 보세요!
+                </p>
+                <div class="text-left max-w-xl mx-auto mb-4">
+                    <textarea
+                        id="landingStory"
+                        class="story-textarea"
+                        rows="3"
+                        placeholder="예시)아파트 기준층 골조 4일 공정을 웹툰으로 표현해줘."
+                        autocomplete="off"
+                        aria-label="웹툰 스토리 입력"
+                    ></textarea>
+                </div>
+                <div class="hero-cta-row">
+                    <button type="button" id="btnWebtoonCreate" class="btn-webtoon-create group">
+                        <span class="hero-cta-emoji" aria-hidden="true">🎨</span>
+                        <span class="hero-cta-label">웹툰 만들기</span>
+                        <span class="hero-cta-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                    </button>
+                    <a href="https://hmap.hdec.co.kr/HMAP/WorkSpace/Main/AiPicture.aspx" target="_blank" rel="noopener noreferrer" class="btn-playgallery group" aria-label="동료 웹툰 보러가기(PlayDay Gallery, 새 창, 로그인 필요)">
+                        <span class="hero-cta-emoji" aria-hidden="true">🖼️</span>
+                        <span class="hero-cta-label">동료 웹툰 보러가기</span>
+                        <span class="hero-cta-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                    </a>
+                </div>
+                <div class="mt-6 w-full max-w-full overflow-x-auto px-1 [touch-action:pan-x] [-webkit-overflow-scrolling:touch]">
+                    <div class="inline-flex flex-nowrap justify-center gap-1.5 w-max mx-auto">
+                        <span class="tag-pill text-slate-700 px-2.5 py-1.5 rounded-full text-[0.82rem] sm:text-[0.8125rem] font-bold whitespace-nowrap shrink-0">#TBM공법 웹툰으로 그려줘</span>
+                        <span class="tag-pill text-slate-700 px-2.5 py-1.5 rounded-full text-[0.82rem] sm:text-[0.8125rem] font-bold whitespace-nowrap shrink-0">#나의 일상 웹툰으로 소개하기</span>
+                        <span class="tag-pill text-slate-700 px-2.5 py-1.5 rounded-full text-[0.82rem] sm:text-[0.8125rem] font-bold whitespace-nowrap shrink-0">#우리팀 웹툰으로 소개하기</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 노동왕국 박스 -->
+            <div class="max-w-2xl mx-auto mt-10 mb-2 rounded-2xl border border-white/30 bg-white/10 backdrop-blur-sm px-4 sm:px-6 py-5 fade-in fade-in-d2">
+
+                <h3 class="text-center text-2xl sm:text-3xl md:text-[2.05rem] font-black text-white mb-1.5 px-2 drop-shadow-lg leading-tight">
+                    <i class="fas fa-film text-teal-100 mr-1.5 text-[1.1rem] sm:text-[1.35rem] md:text-[1.55rem] align-middle" aria-hidden="true"></i>'노동왕국' 웹툰 버전
+                </h3>
+                <p class="text-center text-xs sm:text-sm text-white/80 mb-4 px-2">
+                    <strong class="text-white/95">노동왕국이란?</strong> PlayDay 1차에서 오현철 책임님께서 Suno AI를 활용해 제작한 노동요입니다.
+                </p>
+
+                <div class="webtoon-frame mb-4">
+                    <img
+                        src="https://kikeun.github.io/KIKEUN/ai32.png?v=2"
+                        alt="노동요 노동왕국 웹툰 버전"
+                        width="800"
+                        height="auto"
+                        decoding="async"
+                    >
+                </div>
+
+                <div class="music-strip mb-3 w-full">
+                    <div class="flex flex-row items-center gap-2 sm:gap-3 rounded-xl border border-white/50 bg-white/75 backdrop-blur-sm px-3 sm:px-4 py-2 shadow-sm">
+                        <span class="text-xs sm:text-sm font-bold text-slate-700 whitespace-nowrap shrink-0 flex items-center gap-1.5">
+                            <i class="fas fa-music text-teal-600 text-[11px] sm:text-sm" aria-hidden="true"></i>
+                            노동왕국 (디즈니 버전)
+                        </span>
+                        <div class="flex flex-1 min-w-0 flex-wrap items-center gap-x-2 gap-y-2">
+                            <button type="button" id="audioPlayBtn" class="shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-teal-600 text-white text-xs hover:bg-teal-700 transition-colors shadow-sm" aria-label="재생">
+                                <i class="fas fa-play pl-0.5" id="audioPlayIcon"></i>
+                            </button>
+                            <div class="flex-1 min-w-0 flex flex-col gap-1 justify-center">
+                                <div id="audioProgressTrack" class="audio-progress-track h-1.5 rounded-full bg-slate-200 cursor-pointer" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                                    <div id="audioProgressFill" class="h-full w-0 bg-teal-600 rounded-full transition-[width] duration-75 ease-linear pointer-events-none"></div>
+                                </div>
+                                <div class="flex justify-between text-[9px] text-slate-500 tabular-nums leading-none select-none">
+                                    <span id="audioCurrent">0:00</span>
+                                    <span id="audioDuration">--:--</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0 min-w-[5.5rem] sm:min-w-[6.5rem]">
+                                <i class="fas fa-volume-up text-slate-500 text-[10px]" id="audioVolIcon" aria-hidden="true"></i>
+                                <input type="range" id="audioVolume" min="0" max="100" value="100" step="1" aria-label="볼륨" class="w-14 sm:w-20 h-1.5 accent-teal-600 cursor-pointer align-middle">
+                            </div>
+                        </div>
+                        <audio id="playdayAudio" preload="none" playsinline class="hidden">
+                            <source src="https://kikeun.github.io/KIKEUN/%EB%85%B8%EB%8F%99%EC%99%95%EA%B5%AD(%EB%94%94%EC%A6%88%EB%8B%88%EB%B2%84%EC%A0%84).mp3" type="audio/mpeg">
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="https://autoway.hyundai.net/board/H147/Lists/H14700013/DispForm.aspx?ID=5647&isDlg=1" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 rounded-full bg-white/25 hover:bg-white/40 border border-white/30 px-5 py-2.5 text-sm sm:text-base font-bold text-white transition shadow-sm">
+                        <i class="fas fa-music text-teal-200 text-xs sm:text-sm"></i> 나도 작곡해보고 싶다면? PlayDay 1차 바로가기 <i class="fas fa-external-link-alt text-[10px] sm:text-xs opacity-70"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- 인용 -->
+            <p class="text-center text-xl md:text-2xl font-bold italic text-white mt-7 px-3 drop-shadow-lg fade-in fade-in-d4 leading-snug">
+                "당신은 어떤 이야기를 웹툰으로 표현하고 싶나요?"
+            </p>
+
+            <!-- 푸터 -->
+            <footer class="text-center mt-12 border-t border-white/30 pt-7">
+                <div class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1.5 text-xs md:text-sm font-bold text-white/90 drop-shadow-sm">
+                    <span class="text-white/50 font-semibold">워크이노베이션센터</span>
+                    <span class="text-white/60" aria-hidden="true">│</span>
+                    <span class="inline-flex items-center gap-1.5">
+                        <svg class="h-5 w-5 shrink-0 text-white" width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M12 45L28 35V80L12 90V45Z" fill="currentColor" />
+                            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z" fill="currentColor" />
+                        </svg>
+                        <span>AI디자인랩</span>
+                    </span>
+                </div>
+                <p class="text-xs text-white/60 mt-3">© PLAYDAY VOL2 · AI Webtoon Concept</p>
+            </footer>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            var btnWebtoon = document.getElementById('btnWebtoonCreate');
+            var landingStory = document.getElementById('landingStory');
+            if (btnWebtoon && landingStory) {
+                btnWebtoon.addEventListener('click', function () {
+                    try {
+                        sessionStorage.setItem('PLAYDAY_TRANSFER_STORY', landingStory.value || '');
+                    } catch (e) {}
+                    window.location.href = './vol2.1.html';
+                });
+            }
+
+            var audio = document.getElementById('playdayAudio');
+            var btn = document.getElementById('audioPlayBtn');
+            var icon = document.getElementById('audioPlayIcon');
+            var fill = document.getElementById('audioProgressFill');
+            var track = document.getElementById('audioProgressTrack');
+            var curEl = document.getElementById('audioCurrent');
+            var durEl = document.getElementById('audioDuration');
+            var volInput = document.getElementById('audioVolume');
+            var volIcon = document.getElementById('audioVolIcon');
+
+            audio.volume = 1;
+
+            function syncVolumeIcon() {
+                var v = audio.volume;
+                if (!volIcon) return;
+                volIcon.className = 'text-slate-500 text-[10px] fas ' + (v === 0 ? 'fa-volume-off' : v < 0.45 ? 'fa-volume-down' : 'fa-volume-up');
+            }
+
+            volInput.addEventListener('input', function () {
+                audio.volume = volInput.value / 100;
+                syncVolumeIcon();
+            });
+
+            syncVolumeIcon();
+
+            function fmt(t) {
+                if (!isFinite(t) || t < 0) return '0:00';
+                var m = Math.floor(t / 60);
+                var s = Math.floor(t % 60);
+                return m + ':' + (s < 10 ? '0' : '') + s;
+            }
+
+            function setProgressFromAudio() {
+                var d = audio.duration;
+                var c = audio.currentTime;
+                if (!isFinite(d) || d <= 0) {
+                    fill.style.width = '0%';
+                    return;
+                }
+                fill.style.width = Math.min(100, (c / d) * 100) + '%';
+                curEl.textContent = fmt(c);
+                track.setAttribute('aria-valuenow', String(Math.round((c / d) * 100)));
+            }
+
+            audio.addEventListener('loadedmetadata', function () {
+                durEl.textContent = fmt(audio.duration);
+            });
+
+            audio.addEventListener('timeupdate', setProgressFromAudio);
+
+            audio.addEventListener('play', function () {
+                icon.className = 'fas fa-pause';
+                btn.setAttribute('aria-label', '일시정지');
+            });
+
+            audio.addEventListener('pause', function () {
+                icon.className = 'fas fa-play pl-0.5';
+                btn.setAttribute('aria-label', '재생');
+                if (audio.currentTime < 0.05) {
+                    fill.style.width = '0%';
+                    curEl.textContent = '0:00';
+                }
+            });
+
+            audio.addEventListener('ended', function () {
+                icon.className = 'fas fa-play pl-0.5';
+                audio.currentTime = 0;
+                fill.style.width = '0%';
+                curEl.textContent = '0:00';
+                track.setAttribute('aria-valuenow', '0');
+            });
+
+            btn.addEventListener('click', function () {
+                if (audio.paused) {
+                    audio.play().catch(function () {});
+                } else {
+                    audio.pause();
+                }
+            });
+
+            function seekFromClientX(clientX) {
+                var d = audio.duration;
+                if (!isFinite(d) || d <= 0) return;
+                var rect = track.getBoundingClientRect();
+                var ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+                audio.currentTime = ratio * d;
+                setProgressFromAudio();
+            }
+
+            track.addEventListener('click', function (e) {
+                seekFromClientX(e.clientX);
+            });
+
+            track.addEventListener('keydown', function (e) {
+                var d = audio.duration;
+                if (!isFinite(d) || d <= 0) return;
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    audio.currentTime = Math.max(0, audio.currentTime - 5);
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    audio.currentTime = Math.min(d, audio.currentTime + 5);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
