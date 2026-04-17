@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly AI VOL.3 — 마크다운 카드뉴스</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .deck {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      padding: 48px 16px 64px;
+    }
+
+    .card {
+      width: 540px;
+      height: 720px;
+      aspect-ratio: 3 / 4;
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.35);
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, #d4e8a0 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 15%, #a8e6c1 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, #5ccfb1 0%, transparent 55%),
+        radial-gradient(ellipse at 30% 70%, #3cc4a7 0%, transparent 50%),
+        radial-gradient(ellipse at 75% 80%, #1a8f8f 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 95%, #0d6b6e 0%, transparent 50%),
+        linear-gradient(180deg, #c8e6a0 0%, #4dc9a0 40%, #1a8888 80%, #0a5a5e 100%);
+      z-index: 0;
+    }
+
+    .card-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255,255,255,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 90% 60% at 100% 100%, rgba(0,30,40,0.18) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 50% at 0% 100%, rgba(0,40,35,0.12) 0%, transparent 45%);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 32px 28px;
+    }
+
+    .card-content--inner {
+      padding-top: 40px;
+    }
+
+    /* 2페이지: 전체 폭 더 넓게 */
+    .card-content--wide {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    /* ─── 표지 ─── */
+    .card--cover .card-content--cover {
+      padding: 24px 24px 22px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .cover-inner {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cover-hero-wrap {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .cover-hero {
+      align-self: flex-start;
+      width: 100%;
+      text-align: left;
+    }
+
+    .cover-figure {
+      margin: 10px 0 14px;
+      padding: 0;
+      max-width: 100%;
+      line-height: 0;
+    }
+
+    .cover-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 220px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 8px 16px;
+      margin-bottom: 10px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #063532;
+      background: rgba(6,53,50,0.14);
+      border: 1px solid rgba(6,53,50,0.2);
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px rgba(0,40,45,0.08);
+    }
+
+    .cover-headline {
+      margin: 0;
+      font-size: clamp(1.65rem, 4.2vw, 2.2rem);
+      font-weight: 900;
+      line-height: 1.18;
+      letter-spacing: -0.045em;
+      color: #0a1211;
+      text-shadow:
+        0 1px 0 rgba(255,255,255,0.45),
+        0 14px 40px rgba(0,0,0,0.1);
+    }
+
+    .cover-headline strong {
+      font-weight: 900;
+    }
+
+    .cover-headline__mark {
+      font-size: 1.18em;
+    }
+
+    .cover-strapline {
+      margin: 14px 0 0;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.65;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+
+    .cover-inner__bottom {
+      flex-shrink: 0;
+      padding-top: 12px;
+    }
+
+    .cover-swipe {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 0;
+    }
+
+    .cover-swipe__line {
+      width: 48px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #0a5a5e 0%, rgba(10,90,94,0.15) 100%);
+    }
+
+    .cover-swipe__label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(10,30,28,0.42);
+    }
+
+    @keyframes cover-rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .cover-animate-1  { opacity: 0; animation: cover-rise 0.55s ease forwards; }
+    .cover-animate-1b { opacity: 0; animation: cover-rise 0.55s ease 0.06s forwards; }
+    .cover-animate-2  { opacity: 0; animation: cover-rise 0.55s ease 0.14s forwards; }
+    .cover-animate-2b { opacity: 0; animation: cover-rise 0.55s ease 0.2s forwards; }
+    .cover-animate-3  { opacity: 0; animation: cover-rise 0.55s ease 0.24s forwards; }
+
+    /* ─── 공통: 슬라이드 본문 ─── */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .card:not(.card--cover) .slide-body {
+      padding: 22px 20px 20px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.38);
+      backdrop-filter: blur(14px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.45),
+        0 12px 36px rgba(0,40,45,0.08);
+    }
+
+    /* 2페이지: 겉(가장 큰) 패널 제거 */
+    .slide-body--no-panel {
+      padding: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 2페이지: 스크롤 방지(카드 내 스크롤 제거) */
+    .slide-body--no-scroll {
+      overflow-y: hidden !important;
+    }
+
+    /* 2페이지: 겉 큰 박스는 없애되, 콘텐츠 인셋/배치는 유지 */
+    .slide-body--hook-layout {
+      padding: 22px 14px 18px !important;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* 카드 메인 제목 — slide-h2 / p2-heading / p3-title 전면 동일 타이포 */
+    .slide-h2,
+    .p2-heading,
+    .p3-title {
+      font-size: 29px;
+      font-weight: 900;
+      color: #0a1211;
+      line-height: 1.28;
+      word-break: keep-all;
+      letter-spacing: -0.035em;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+    }
+
+    .slide-p {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(0,0,0,0.72);
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .slide-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .slide-list li {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1.55;
+      padding-left: 18px;
+      position: relative;
+      word-break: keep-all;
+    }
+
+    .slide-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0.25em;
+      font-size: 10px;
+      font-weight: 900;
+      color: #064a45;
+    }
+
+    .emph {
+      font-weight: 900;
+      color: #062a26;
+      border-bottom: 2px solid rgba(6,42,38,0.25);
+    }
+
+    /* ─── 글래스 박스 ─── */
+    .glass {
+      background: rgba(255,255,255,0.32);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 16px;
+      padding: 18px 18px 16px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.55),
+        0 8px 22px rgba(0,35,40,0.08);
+    }
+
+    .glass-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.42);
+      margin-bottom: 10px;
+    }
+
+    .glass pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: #111;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* ─── 슬라이드 6: 마크다운 보고서 예시 ─── */
+    .slide-body--report-save {
+      gap: 12px;
+    }
+
+    .slide-body--report-save .doc-window {
+      flex: 1 1 auto;
+      min-height: 0;
+      border-color: rgba(13, 107, 110, 0.18);
+    }
+
+    .slide-body--report-save .doc-window__bar {
+      background: rgba(13, 107, 110, 0.06);
+      border-bottom-color: rgba(13, 107, 110, 0.12);
+    }
+
+    .slide-body--report-save .doc-window__title {
+      color: #065a5c;
+    }
+
+    .slide-body--report-save .doc-window__body--md {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .slide-body--report-save .md-report-pre {
+      margin: 0;
+      padding: 10px 12px 12px;
+      font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.55;
+      color: #14221f;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* ─── 슬라이드 7: 마크다운 자가 점검 ─── */
+    .slide-body--md-selfcheck {
+      gap: 10px;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    .md-selfcheck-hero {
+      margin: 0;
+      padding: 0;
+      flex-shrink: 0;
+      width: 100%;
+      height: 232px;
+      border-radius: 14px;
+      overflow: hidden;
+      line-height: 0;
+      background: #0a1520;
+    }
+
+    .md-selfcheck-hero img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .md-selfcheck-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .md-selfcheck-list li {
+      display: block;
+      margin: 0;
+      padding: 0;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.42;
+      color: #0f1715;
+      word-break: keep-all;
+    }
+
+    .md-selfcheck-list li::before {
+      display: none;
+    }
+
+    .md-selfcheck-label {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      cursor: pointer;
+      width: 100%;
+      margin: 0;
+    }
+
+    .md-selfcheck__input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .md-selfcheck__cb {
+      flex-shrink: 0;
+      width: 17px;
+      height: 17px;
+      margin-top: 3px;
+      border: 2px solid rgba(10, 30, 28, 0.38);
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.45);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .md-selfcheck__input:checked + .md-selfcheck__cb {
+      background: linear-gradient(180deg, #12948c 0%, #0d6b6e 100%);
+      border-color: #065a5c;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .md-selfcheck__input:checked + .md-selfcheck__cb::after {
+      content: "✓";
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+      color: #fff;
+    }
+
+    .md-selfcheck__input:focus-visible + .md-selfcheck__cb {
+      outline: 2px solid #0d6b6e;
+      outline-offset: 2px;
+    }
+
+    .md-selfcheck__text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .md-selfcheck-banner {
+      margin-top: auto;
+      flex-shrink: 0;
+      margin-bottom: 0;
+      padding: 14px 16px 16px;
+      border-radius: 14px;
+      background: linear-gradient(165deg, #1a3a5c 0%, #0f2744 55%, #0a1f38 100%);
+      color: #f0f7ff;
+      font-size: 15.25px;
+      font-weight: 700;
+      line-height: 1.48;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+      box-shadow:
+        0 4px 14px rgba(5, 25, 45, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    /* ─── 인용 ─── */
+    .quote {
+      font-size: 17px;
+      font-weight: 800;
+      font-style: italic;
+      color: #0c1413;
+      line-height: 1.55;
+      word-break: keep-all;
+      border-left: 4px solid rgba(0,0,0,0.55);
+      padding: 14px 16px 14px 18px;
+      border-radius: 0 14px 14px 0;
+      background: rgba(0,0,0,0.06);
+    }
+
+    .quote--fin {
+      font-size: 19px;
+      border-left-width: 5px;
+    }
+
+    .inline-md {
+      font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0a1614;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(0,0,0,0.08);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* ─── 오해 vs 진실 그리드 ─── */
+    .insight-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .insight {
+      border-radius: 16px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+    }
+
+    .insight--bad { background: rgba(255,235,235,0.55); }
+    .insight--good { background: rgba(225,250,245,0.65); }
+
+    .insight-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .insight--bad .insight-badge {
+      color: #6b1c1c;
+      background: rgba(255,255,255,0.55);
+    }
+
+    .insight--good .insight-badge {
+      color: #064a45;
+      background: rgba(255,255,255,0.55);
+    }
+
+    .insight p {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a2221;
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+
+    /* ─── 슬라이드 5: 마크다운 시작 — 세로 4박스 (심볼 | 설명) ─── */
+    .slide-body--md-start {
+      gap: 10px;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    .md-start-wrap {
+      margin-top: 2px;
+      padding: 11px 9px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      background-color: #f1f5f9;
+      background-image:
+        linear-gradient(rgba(30, 58, 95, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 58, 95, 0.06) 1px, transparent 1px);
+      background-size: 11px 11px;
+      background-position: -1px -1px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+
+    .md-start-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .md-tip-card {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      background: #fff;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.07);
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .md-tip-card__glyph {
+      flex: 0 0 3.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.35rem, 4.2vw, 1.85rem);
+      font-weight: 900;
+      color: #1e3a5f;
+      background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .md-tip-card__glyph--dash {
+      font-size: clamp(1rem, 3.2vw, 1.35rem);
+      letter-spacing: -0.06em;
+    }
+
+    .md-tip-card__rule {
+      width: 1px;
+      flex-shrink: 0;
+      background: rgba(15, 23, 42, 0.12);
+    }
+
+    .md-tip-card__body {
+      flex: 1;
+      padding: 9px 11px 10px 10px;
+      min-width: 0;
+    }
+
+    /* 슬라이드 4 `.p3-tools__kicker`와 동일 타이포(Inter 14px / 800) */
+    .md-tip-card__title {
+      margin: 0 0 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #0a1211;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .md-tip-card__syntax {
+      margin: 0 0 5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.5;
+      color: #1e40af;
+      word-break: keep-all;
+    }
+
+    .md-tip-card__desc {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.5;
+      color: #0a1211;
+      word-break: keep-all;
+    }
+
+    /* ─── 훅 ─── */
+    .hook-divider {
+      width: 100%;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.06) 100%);
+    }
+
+    .hook-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: rgba(0,0,0,0.38);
+    }
+
+    .hook-big {
+      font-size: 29px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #0a1211;
+      letter-spacing: -0.03em;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+    }
+
+    .hook-big .hl {
+      color: #166534;
+      font-weight: 900;
+    }
+
+    /* ─── 2페이지: 상단 텍스트 박스 ─── */
+    .hook-textbox {
+      border-radius: 18px;
+      padding: 18px 16px 16px;
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.42);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
+    }
+
+    .hook-textbox .hook-divider {
+      margin: 14px 0 12px;
+      opacity: 0.7;
+    }
+
+    /* ─── 2페이지(원본) 스타일 → 3페이지용 ─── */
+    .slide-body--p2 {
+      gap: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .p2-heading {
+      margin: 0;
+      padding-top: 6px;
+    }
+
+    .p2-lead {
+      margin: 0 0 4px;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: rgba(12, 35, 32, 0.82);
+      letter-spacing: -0.02em;
+    }
+
+    .p2-lead__hl {
+      font-weight: 900;
+      color: #062a26;
+      border-bottom: 2px solid #0a6b63;
+      padding-bottom: 1px;
+    }
+
+    .p2-feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .p2-feature {
+      padding: 14px 16px 14px 14px;
+      border-radius: 16px;
+      border-left: 4px solid;
+      border-top: 1px solid rgba(255,255,255,0.35);
+      border-right: 1px solid rgba(255,255,255,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.45);
+    }
+
+    .p2-feature--a {
+      border-left-color: #0d6b6e;
+      background: linear-gradient(90deg, rgba(13,107,110,0.12) 0%, rgba(255,255,255,0.12) 100%);
+    }
+
+    .p2-feature--b {
+      border-left-color: #6366a8;
+      background: linear-gradient(90deg, rgba(99,102,168,0.14) 0%, rgba(255,255,255,0.1) 100%);
+    }
+
+    .p2-feature--c {
+      border-left-color: #0e9aa8;
+      background: linear-gradient(90deg, rgba(14,154,168,0.18) 0%, rgba(255,255,255,0.12) 100%);
+    }
+
+    .p2-feature__head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .p2-feature--a .p2-feature__tick { color: #0a6b63; }
+    .p2-feature--b .p2-feature__tick { color: #6366a8; }
+    .p2-feature--c .p2-feature__tick { color: #0e9aa8; }
+
+    .p2-feature__tick {
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .p2-feature__title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      color: #0a1614;
+      letter-spacing: -0.02em;
+    }
+
+    .p2-feature__desc {
+      margin: 0;
+      padding-left: 24px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: rgba(10, 25, 24, 0.55);
+      word-break: keep-all;
+    }
+
+    .p2-banner {
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 1 1 0%;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      border-radius: 14px;
+      padding: 14px 14px 16px;
+      box-sizing: border-box;
+      text-align: center;
+      background-color: rgba(252, 253, 252, 0.72);
+      background-image:
+        linear-gradient(rgba(0, 40, 45, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 40, 45, 0.07) 1px, transparent 1px);
+      background-size: 10px 10px;
+      background-position: center center;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.75),
+        0 5px 16px rgba(0, 35, 40, 0.07);
+      overflow: hidden;
+    }
+
+    .p2-banner__inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .p2-banner__kicker {
+      margin: 0;
+      max-width: 100%;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.45;
+      color: rgba(12, 38, 35, 0.76);
+      word-break: keep-all;
+    }
+
+    .p2-banner__main {
+      margin: 0;
+      width: 100%;
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: -0.035em;
+      color: #0a1211;
+      word-break: keep-all;
+    }
+
+    .p2-banner__main-line { display: block; }
+
+    .p2-banner__main-line--hl {
+      margin-top: 2px;
+      font-size: 24px;
+      line-height: 1.3;
+    }
+
+    .p2-banner__grad {
+      background: linear-gradient(125deg, #02302c 0%, #0d6b6e 45%, #1fa89a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .p2-banner__paren {
+      font-weight: 800;
+      font-size: 0.92em;
+      color: rgba(10, 30, 28, 0.75);
+    }
+
+    .p2-banner__cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.05em;
+      margin-left: 3px;
+      vertical-align: -0.12em;
+      background: #6d28d9;
+      border-radius: 1px;
+      animation: p2-cursor-blink 1s steps(1, end) infinite;
+    }
+
+    @keyframes p2-cursor-blink {
+      50% { opacity: 0; }
+    }
+
+    /* ─── (weekly-ai-card.html) 3페이지 스타일 추가 ─── */
+    .slide-body--p3 {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* 슬라이드 4: 다이어그램 세로 압축 */
+    .slide-body--p3-tight {
+      gap: 8px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .app-network {
+      min-height: 268px;
+      padding: 12px 8px 14px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .app-network__layout {
+      min-height: 236px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .app-network__tier--1 {
+      gap: 4px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .app-network__tier--2 {
+      margin: 10px auto 0;
+      gap: 6px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .app-network__hub-wrap {
+      padding-top: 14px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .svc-box {
+      min-height: 32px;
+      padding: 4px 6px;
+      gap: 4px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .svc-box__logo {
+      width: 20px;
+      height: 20px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .svc-box__name {
+      font-size: 11px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .md-hub__screen {
+      min-height: 76px;
+      padding: 14px 12px 12px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .md-hub__line1 {
+      font-size: 15px;
+    }
+
+    .slide-body--p3-tight .p3-hero--network .md-hub__line2 {
+      margin-top: 5px;
+      font-size: 12px;
+    }
+
+    .slide-body--p3-tight .p3-checks {
+      gap: 6px;
+    }
+
+    .slide-body--p3-tight .p3-checks__row {
+      padding: 9px 12px;
+    }
+
+    .slide-body--p3-tight .p3-tools {
+      margin-top: 0;
+      padding: 10px 12px 12px;
+    }
+
+    .slide-body--p3-tight .p3-tools .p3-tools__kicker + .p3-tools__kicker {
+      margin-top: 8px;
+    }
+
+    .p3-hero {
+      flex-shrink: 0;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.48),
+        0 4px 14px rgba(0, 35, 40, 0.06);
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    /* 직계 img만(예: ai52) — .app-network 안 로고는 제외 */
+    .p3-hero > img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      object-fit: contain;
+    }
+
+    /* 슬라이드 4: app-network — 겉 프레임만 제거 */
+    .p3-hero--network {
+      line-height: normal;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .p3-hero--network .app-network {
+      margin: 6px auto 0;
+    }
+
+    .p3-title {
+      margin: 0 0 2px;
+    }
+
+    .p3-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .p3-checks__row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border-left: 4px solid #6366a8;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      border-right: 1px solid rgba(255, 255, 255, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+      background: linear-gradient(90deg, rgba(99, 102, 168, 0.16) 0%, rgba(255, 255, 255, 0.12) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    .p3-checks__tick {
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 3px;
+      color: #0a6b63;
+    }
+
+    .p3-checks__label {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: rgba(10, 22, 20, 0.92);
+      word-break: keep-all;
+    }
+
+    .p3-tools {
+      margin-top: 2px;
+      padding: 14px 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: linear-gradient(155deg, rgba(13, 107, 110, 0.14) 0%, rgba(255, 255, 255, 0.16) 55%, rgba(99, 102, 168, 0.08) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48);
+      text-align: center;
+    }
+
+    .p3-tools__names {
+      margin: 0 0 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      line-height: 1.5;
+      color: rgba(10, 28, 26, 0.68);
+      word-break: keep-all;
+    }
+
+    .p3-tools__kicker {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.5;
+      color: #0a1211;
+      word-break: keep-all;
+    }
+
+    .p3-tools .p3-tools__kicker + .p3-tools__kicker {
+      margin-top: 10px;
+    }
+
+    .p3-tools__hl {
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      /* 청록/민트 제외 — 남색·파랑만 */
+      background: linear-gradient(125deg, #1e293b 0%, #1e40af 42%, #2563eb 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ─── 프롬프트 비교 다이어그램 (2페이지 하단) ─── */
+    .compare-wrap {
+      margin-top: auto;
+      border-radius: 18px;
+      padding: 12px 6px 10px;
+      background-color: rgba(252, 253, 252, 0.72);
+      background-image:
+        linear-gradient(rgba(0, 40, 45, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 40, 45, 0.07) 1px, transparent 1px);
+      background-size: 10px 10px;
+      background-position: center center;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.75),
+        0 5px 16px rgba(0, 35, 40, 0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .compare-wrap__title {
+      margin: 2px 2px 2px;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #0a1211;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+    }
+
+    .compare-diagram {
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 6px;
+      align-items: stretch;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .compare-diagram__col {
+      display: flex;
+      flex-direction: column;
+      border-radius: 0;
+      overflow: visible;
+      min-height: 0;
+    }
+
+    .compare-diagram__col--left {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .compare-diagram__col--right {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .compare-diagram__col-body {
+      flex: 1;
+      padding: 6px 2px 6px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.6;
+      color: rgba(10,20,18,0.72);
+      word-break: keep-all;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    /* 박스 안의 헤더 스트립(=박스 안 박스) 느낌 제거: 본문 상단 텍스트로 처리 */
+    .compare-diagram__kicker {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: rgba(10,18,17,0.82);
+    }
+
+    .compare-diagram__col--right .compare-diagram__kicker {
+      color: #065a5c;
+    }
+
+    /* (요청) 그리드는 아이콘이 아니라 '박스 배경'으로 처리 */
+
+    /* 문서(창) UI */
+    .doc-window {
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.75);
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .doc-window__bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 8px;
+      background: rgba(0,0,0,0.04);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .doc-window__title {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: rgba(10, 18, 17, 0.82);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+
+    .doc-window__body {
+      padding: 8px 9px 8px;
+      font-size: 10.5px;
+      line-height: 1.5;
+      color: rgba(10, 22, 20, 0.86);
+      word-break: keep-all;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .compare-diagram__col--right .doc-window {
+      border-color: rgba(13,107,110,0.18);
+    }
+
+    .compare-diagram__col--right .doc-window__bar {
+      background: rgba(13,107,110,0.06);
+      border-bottom-color: rgba(13,107,110,0.12);
+    }
+
+    .compare-diagram__col--right .doc-window__title {
+      color: #065a5c;
+    }
+
+    .compare-diagram__col--right .doc-window__body {
+      font-size: 10.5px;
+      line-height: 1.5;
+      color: #0a1614;
+    }
+
+    .compare-diagram__col-body .md-hash { color: #0d6b6e; font-weight: 700; }
+    .compare-diagram__col-body .md-dash { color: #6366a8; }
+
+    .compare-diagram__col-result {
+      padding: 6px 2px 0;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.45;
+      color: rgba(10,20,18,0.68);
+      border-top: 0;
+      background: transparent;
+      flex-shrink: 0;
+    }
+
+    .compare-diagram__col--right .compare-diagram__col-result {
+      border-top-color: rgba(13,107,110,0.08);
+      color: #065a5c;
+    }
+
+    .compare-diagram__arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+    }
+
+    .compare-diagram__arrow svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* 브라우저 윈도우 틀 */
+    .win-dots {
+      display: flex;
+      gap: 4px;
+      padding: 0 0 6px;
+    }
+
+    .win-dots span {
+      display: block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.15);
+    }
+
+    /* ─── 오해 vs 진실 다이어그램 (4페이지 하단) ─── */
+    .myth-diagram {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 6px;
+      align-items: stretch;
+      border-radius: 14px;
+      padding: 14px 10px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      background-image:
+        linear-gradient(rgba(0,40,45,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,40,45,0.03) 1px, transparent 1px);
+      background-size: 12px 12px;
+    }
+
+    .myth-diagram__side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+    }
+
+    .myth-diagram__icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .myth-diagram__label {
+      font-size: 15px;
+      font-weight: 900;
+      color: #0a1211;
+    }
+
+    .myth-diagram__desc {
+      font-size: 11.5px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: rgba(10,20,18,0.65);
+      word-break: keep-all;
+    }
+
+    .myth-diagram__center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .myth-diagram__blob {
+      flex: 1;
+      width: 100%;
+      min-width: 120px;
+      border-radius: 10px;
+      padding: 10px 8px;
+      font-size: 9px;
+      font-weight: 600;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.7);
+      background: rgba(10,18,17,0.82);
+      word-break: keep-all;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .myth-diagram__blob::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(10,18,17,0.9));
+      pointer-events: none;
+    }
+
+    .myth-diagram__arrow-down {
+      display: flex;
+      justify-content: center;
+    }
+
+    .myth-diagram__arrow-down svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .myth-diagram__structured {
+      width: 100%;
+      min-width: 120px;
+      border-radius: 10px;
+      padding: 8px 8px;
+      background: rgba(255,255,255,0.5);
+      border: 1.5px solid rgba(13,107,110,0.25);
+      font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+      font-size: 9.5px;
+      line-height: 1.55;
+      color: #0a1614;
+    }
+
+    .myth-diagram__structured .mh { color: #0d6b6e; font-weight: 700; }
+    .myth-diagram__structured .md { color: #6366a8; }
+
+    /* ─── 하이라이트 박스 ─── */
+    .highlight-box {
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.55;
+      color: rgba(10,28,26,0.82);
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.38);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.45);
+      word-break: keep-all;
+    }
+
+    .highlight-box strong {
+      font-weight: 900;
+      color: #062a26;
+    }
+
+    /* ─── 포인트 카드(체크리스트) ─── */
+    .point-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .point-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.45);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+
+    .point-card__icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      background: rgba(0,0,0,0.08);
+      color: #0a1614;
+    }
+
+    .point-card__text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a2221;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    /* ─── 그리드 + 3·2 서비스 + 연결선 + Markdown 허브 (슬라이드 4) ─── */
+    .app-network {
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 400px;
+      margin: 6px auto 0;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background-color: #f7f8fa;
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+      background-size: 14px 14px;
+      background-position: -1px -1px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      overflow: hidden;
+      padding: 16px 8px 18px;
+      min-height: 320px;
+    }
+
+    .app-network__lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .app-network__lines path {
+      stroke: #1a2f4a;
+      stroke-width: 2.25;
+      fill: none;
+      stroke-linecap: square;
+      stroke-linejoin: miter;
+      opacity: 0.92;
+    }
+
+    /* Perplexity / 커서 — 목업 빨간 펜 느낌 */
+    .app-network__line--hot {
+      stroke: #e11d48;
+      stroke-width: 2.85;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.98;
+    }
+
+    .app-network__layout {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      min-height: 288px;
+    }
+
+    /* 한 줄에 3칸 / 한 줄에 2칸 — 각 칸에 상자 하나만 */
+    .app-network__tier--1 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+      padding: 2px 2px 0;
+      align-items: stretch;
+    }
+
+    .app-network__tier--2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+      max-width: 260px;
+      margin: 14px auto 0;
+      padding: 0 4px;
+      align-items: stretch;
+    }
+
+    .app-network__hub-wrap {
+      margin-top: auto;
+      display: flex;
+      justify-content: center;
+      padding-top: 22px;
+    }
+
+    .svc-box {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      min-width: 0;
+      min-height: 38px;
+      margin: 0;
+      padding: 6px 7px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background: #fff;
+      border: 1.5px solid #1e293b;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+    }
+
+    .svc-box__logo {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .svc-box__name {
+      flex: 0 1 auto;
+      min-width: 0;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #0f172a;
+      line-height: 1.25;
+      word-break: keep-all;
+      text-align: center;
+      display: block;
+    }
+
+    .md-hub {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 168px;
+      position: relative;
+    }
+
+    .md-hub__screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 88px;
+      padding: 20px 14px 18px;
+      background: linear-gradient(180deg, #1e3a5f 0%, #0f1f33 100%);
+      border: 2px solid #0a1520;
+      border-bottom: 0;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(10, 20, 40, 0.35);
+    }
+
+    .md-hub__line1 {
+      display: block;
+      font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #f8fafc;
+      line-height: 1.25;
+    }
+
+    .md-hub__line2 {
+      display: block;
+      margin-top: 8px;
+      font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(248, 250, 252, 0.92);
+    }
+
+    .md-hub__base {
+      width: 100%;
+      box-sizing: border-box;
+      height: 9px;
+      background: #0c1828;
+      border: 2px solid #0a1520;
+      border-top: 0;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .md-hub__stand {
+      width: 50%;
+      height: 7px;
+      margin-top: -1px;
+      background: #060d14;
+      border-radius: 0 0 5px 5px;
+    }
+
+    /* ─── 푸터 ─── */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 18px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .footer-logo {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .footer-logo path { fill: #111; }
+
+    .footer-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: 1px;
+    }
+</style>
+</head>
+<body>
+  <main class="deck">
+
+    <!-- 1/7 표지 -->
+    <section class="card card--cover" aria-label="슬라이드 1 표지">
+      <div class="card-bg"></div>
+      <div class="card-content card-content--cover">
+        <div class="cover-inner">
+          <div class="cover-hero-wrap">
+            <div class="cover-hero">
+              <span class="cover-badge cover-animate-1">VOL.3</span>
+              <figure class="cover-figure cover-animate-1b">
+                <img
+                  src="https://kikeun.github.io/KIKEUN/ai54.png"
+                  alt="마크다운 로고와 기호 일러스트"
+                  loading="eager"
+                  decoding="async"
+                  referrerpolicy="no-referrer-when-downgrade"
+                />
+              </figure>
+              <h1 class="cover-headline cover-animate-2">
+                <strong class="cover-headline__mark">'마크다운'</strong><br>
+                <strong>AI</strong> 소통하는<br>
+                기본 언어
+              </h1>
+              <p class="cover-strapline cover-animate-2b">간단한 구조화만으로도 답변의 수준이 달라집니다.</p>
+            </div>
+          </div>
+          <div class="cover-inner__bottom cover-animate-3">
+            <div class="cover-swipe">
+              <div class="cover-swipe__line" aria-hidden="true"></div>
+              <span class="cover-swipe__label">총 7장 · Swipe to explore</span>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 45L28 35V80L12 90V45Z"/>
+            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+          </svg>
+          <span class="footer-text">AI디자인랩</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2/7 공감 유도 (훅) -->
+    <section class="card" aria-label="슬라이드 2 공감 유도">
+      <div class="card-bg"></div>
+      <div class="card-content card-content--inner card-content--wide">
+        <div class="slide-body slide-body--no-panel slide-body--no-scroll slide-body--hook-layout">
+          <!-- 상단 텍스트 박스 (1번 박스) -->
+          <div class="hook-textbox">
+            <h2 class="slide-h2">"AI한테 시켰는데,<br>왜 결과물이 엉망일까?"</h2>
+            <p class="slide-p">프롬프트를 길게 썼는데도<br>AI가 원하는 대로 답하지 않는다면?</p>
+            <div class="hook-divider"></div>
+            <p class="hook-big">문제는 내용이 아니라 <span class="hl">구조</span>입니다.</p>
+  </div>
+
+          <!-- 비교 박스 -->
+          <div class="compare-wrap" role="group" aria-label="프롬프트 비교">
+            <p class="compare-wrap__title">똑같은 내용, 완전히 다른 결과물</p>
+            <div class="compare-diagram">
+              <div class="compare-diagram__col compare-diagram__col--left">
+                <div class="compare-diagram__col-body">
+                  <div class="doc-window" role="group" aria-label="구조 없이 쓴 프롬프트 예시">
+                    <div class="doc-window__bar" aria-hidden="true">
+                      <span class="doc-window__title">구조 없이 쓴 프롬프트</span>
+                    </div>
+                    <div class="doc-window__body">
+                      우리 회사 제품 소개서를 만들어줘.<br>
+                      타겟은 30대 직장인이고 톤은 친근하게 해줘.<br>
+                      제품 특징은 3가지야. 경쟁사 대비 차별점도 넣어줘.<br>
+                      마지막엔 “지금 사야 하는 이유”까지 정리해줘.
+                    </div>
+                  </div>
+                </div>
+                <div class="compare-diagram__col-result">→ AI가 맥락을 혼동하거나 조건 누락</div>
+              </div>
+
+              <div class="compare-diagram__arrow" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 20H30M30 20L22 13M30 20L22 27" stroke="#1a7a7d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+
+              <div class="compare-diagram__col compare-diagram__col--right">
+                <div class="compare-diagram__col-body">
+                  <div class="doc-window" role="group" aria-label="마크다운으로 구조화한 프롬프트 예시">
+                    <div class="doc-window__bar" aria-hidden="true">
+                      <span class="doc-window__title">마크다운으로 구조화</span>
+                    </div>
+                    <div class="doc-window__body">
+                      <span class="md-hash">#</span> 요청: 제품 소개서 작성<br>
+                      <span class="md-hash">##</span> 타겟: 30대 직장인<br>
+                      <span class="md-hash">##</span> 톤: 친근 + 신뢰<br>
+                      <span class="md-hash">##</span> 특징 (3가지)<br>
+                      <span class="md-dash">&nbsp;&nbsp;-</span> 특징 1: (한 줄)<br>
+                      <span class="md-dash">&nbsp;&nbsp;-</span> 특징 2: (한 줄)<br>
+                      <span class="md-dash">&nbsp;&nbsp;-</span> 특징 3: (한 줄)<br>
+                      <span class="md-hash">##</span> 차별점 (2가지)<br>
+                      <span class="md-dash">&nbsp;&nbsp;-</span> 차별점 1<br>
+                      <span class="md-dash">&nbsp;&nbsp;-</span> 차별점 2<br>
+                      <span class="md-hash">##</span> 마지막: “지금 사야 하는 이유” 1문장
+                    </div>
+                  </div>
+                </div>
+                <div class="compare-diagram__col-result">→ AI가 항목을 명확히 구분하여 처리</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 45L28 35V80L12 90V45Z"/>
+            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+          </svg>
+          <span class="footer-text">AI디자인랩</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3/7 마크다운이란? (weekly-ai-card.html 2페이지 디자인) -->
+    <section class="card" aria-label="슬라이드 3 마크다운이란">
+      <div class="card-bg"></div>
+      <div class="card-content card-content--inner">
+        <div class="slide-body slide-body--p2">
+          <h2 class="p2-heading">마크다운이란?</h2>
+          <p class="p2-lead">
+            텍스트에 간단한 기호를 사용해<br>
+            문서의 <span class="p2-lead__hl">구조</span>를 만드는 문법입니다.
+          </p>
+          <div class="p2-feature-list">
+            <div class="p2-feature p2-feature--a">
+              <div class="p2-feature__head">
+                <span class="p2-feature__tick" aria-hidden="true">✔</span>
+                <h3 class="p2-feature__title">AI가 더 잘 이해하는 구조</h3>
+              </div>
+              <p class="p2-feature__desc">제목·강조·목록으로 의도를 명확하게 전달</p>
+            </div>
+            <div class="p2-feature p2-feature--b">
+              <div class="p2-feature__head">
+                <span class="p2-feature__tick" aria-hidden="true">✔</span>
+                <h3 class="p2-feature__title">간단한 기호로 바로 구현</h3>
+              </div>
+              <p class="p2-feature__desc">'#', '**'만으로 빠르게 구조화</p>
+            </div>
+            <div class="p2-feature p2-feature--c">
+              <div class="p2-feature__head">
+                <span class="p2-feature__tick" aria-hidden="true">✔</span>
+                <h3 class="p2-feature__title">어디서든 통하는 공통 언어</h3>
+              </div>
+              <p class="p2-feature__desc">노션·이메일·AI까지 동일하게 사용</p>
+            </div>
+          </div>
+          <div class="p2-banner" role="group" aria-label="마크다운 강조 메시지">
+            <div class="p2-banner__inner">
+              <p class="p2-banner__kicker">바이브 코딩 시대, 툴보다 먼저 배워야 할 단 하나의 기본기</p>
+              <p class="p2-banner__main">
+                <span class="p2-banner__main-line">AI를 지배하는 보이지 않는 언어:</span>
+                <span class="p2-banner__main-line p2-banner__main-line--hl">
+                  <span class="p2-banner__grad">마크다운</span><span class="p2-banner__paren">(Markdown)</span><span class="p2-banner__cursor" aria-hidden="true"></span>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 45L28 35V80L12 90V45Z"/>
+            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+          </svg>
+          <span class="footer-text">AI디자인랩</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4/7 AI 도구와 마크다운 (weekly-ai-card.html 3페이지) -->
+    <section class="card" aria-label="슬라이드 4 AI 도구와 마크다운">
+      <div class="card-bg"></div>
+      <div class="card-content card-content--inner">
+        <div class="slide-body slide-body--p3 slide-body--p3-tight">
+          <h2 class="p3-title">
+            매일 쏟아지는 새로운 AI 도구들,<br>전부 다 배우시겠습니까?
+          </h2>
+          <figure class="p3-hero p3-hero--network" aria-label="AI 도구가 마크다운 허브로 연결되는 구조">
+            <div class="app-network" role="img" aria-label="Markdown 허브에서 연결된 claude, Copilot, Genspark, Perplexity, Cursor">
+              <svg class="app-network__lines" viewBox="0 0 400 320" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <path d="M 67 40 L 67 242 L 128 242 L 128 288" />
+                <path class="app-network__line--hot" d="M 133 88 L 133 168 L 186 168 L 186 288" />
+                <path d="M 200 40 L 200 288" />
+                <path class="app-network__line--hot" d="M 267 88 L 267 168 L 214 168 L 214 288" />
+                <path d="M 333 40 L 333 242 L 272 242 L 272 288" />
+              </svg>
+              <div class="app-network__layout">
+                <div class="app-network__tier--1">
+                  <div class="svc-box">
+                    <img class="svc-box__logo" src="https://kikeun.github.io/aidesign/ai1.png" width="24" height="24" alt="Claude 로고" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" />
+                    <span class="svc-box__name">claude</span>
+                  </div>
+                  <div class="svc-box">
+                    <img class="svc-box__logo" src="https://kikeun.github.io/aidesign/ai2.png" width="24" height="24" alt="Copilot 로고" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" />
+                    <span class="svc-box__name">Copilot</span>
+                  </div>
+                  <div class="svc-box">
+                    <img class="svc-box__logo" src="https://kikeun.github.io/aidesign/ai3.png" width="24" height="24" alt="Genspark logo" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" />
+                    <span class="svc-box__name">Genspark</span>
+                  </div>
+                </div>
+                <div class="app-network__tier--2">
+                  <div class="svc-box">
+                    <img class="svc-box__logo" src="https://kikeun.github.io/aidesign/ai4.png" width="24" height="24" alt="Perplexity 로고" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" />
+                    <span class="svc-box__name">Perplexity</span>
+                  </div>
+                  <div class="svc-box">
+                    <img class="svc-box__logo" src="https://kikeun.github.io/aidesign/ai5.png" width="24" height="24" alt="Cursor logo" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" />
+                    <span class="svc-box__name">Cursor</span>
+                  </div>
+                </div>
+                <div class="app-network__hub-wrap">
+                  <div class="md-hub">
+                    <div class="md-hub__screen">
+                      <span class="md-hub__line1">Markdown</span>
+                      <span class="md-hub__line2">(.md)</span>
+                    </div>
+                    <div class="md-hub__base" aria-hidden="true"></div>
+                    <div class="md-hub__stand" aria-hidden="true"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </figure>
+          <div class="p3-checks">
+            <div class="p3-checks__row">
+              <span class="p3-checks__tick" aria-hidden="true">✔</span>
+              <span class="p3-checks__label">실무 경쟁력은 ‘앱의 종류’가 아니라 <strong class="emph">프롬프트의 치밀함</strong>에서 나옵니다.</span>
+            </div>
+            <div class="p3-checks__row">
+              <span class="p3-checks__tick" aria-hidden="true">✔</span>
+              <span class="p3-checks__label">도구는 바뀌어도, 규칙은 변하지 않습니다.</span>
+            </div>
+          </div>
+          <div class="p3-tools" role="note">
+            <p class="p3-tools__kicker">이미 우리들 주변 어디에서나 마크다운은 사용되고 있습니다.</p>
+            <p class="p3-tools__kicker">우리가 쓰는 모든 AI의 기본 프롬프트 형식은 <span class="p3-tools__hl">마크다운</span>입니다.</p>
+          </div>
+        </div>
+        <div class="footer">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 45L28 35V80L12 90V45Z"/>
+            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+          </svg>
+          <span class="footer-text">AI디자인랩</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5/7 마크다운, 어디서부터 — 4포인트 -->
+    <section class="card" aria-label="슬라이드 5 마크다운, 어디서부터 시작하면 될까요">
+      <div class="card-bg"></div>
+      <div class="card-content card-content--inner">
+        <div class="slide-body slide-body--md-start">
+          <h2 class="slide-h2">마크다운,<br>어디서부터 시작하면 될까요?</h2>
+          <div class="md-start-wrap">
+            <div class="md-start-cards">
+              <article class="md-tip-card">
+                <div class="md-tip-card__glyph" aria-hidden="true">#</div>
+                <div class="md-tip-card__rule" aria-hidden="true"></div>
+                <div class="md-tip-card__body">
+                  <h3 class="md-tip-card__title">제목 만들기</h3>
+                  <p class="md-tip-card__syntax"># 대제목, ## 중제목, ### 소제목</p>
+                  <p class="md-tip-card__desc">AI에게 정보의 위계와 구조를 전달합니다. 보고서 목차를 떠올리면 쉽습니다.</p>
+                </div>
+              </article>
+              <article class="md-tip-card">
+                <div class="md-tip-card__glyph" aria-hidden="true">**</div>
+                <div class="md-tip-card__rule" aria-hidden="true"></div>
+                <div class="md-tip-card__body">
+                  <h3 class="md-tip-card__title">강조 표현</h3>
+                  <p class="md-tip-card__syntax">**핵심 단어**, *기울임*</p>
+                  <p class="md-tip-card__desc">프롬프트에서 AI에게 “이 부분이 가장 중요해”라고 짚어 줍니다.</p>
+                </div>
+              </article>
+              <article class="md-tip-card">
+                <div class="md-tip-card__glyph" aria-hidden="true">-</div>
+                <div class="md-tip-card__rule" aria-hidden="true"></div>
+                <div class="md-tip-card__body">
+                  <h3 class="md-tip-card__title">목록 정리</h3>
+                  <p class="md-tip-card__syntax">순서가 있으면 1. 2. 3. · 순서가 없으면 - 로 나열</p>
+                  <p class="md-tip-card__desc">복잡한 조건·단계를 나누어 전달할 때 자주 씁니다.</p>
+                </div>
+              </article>
+              <article class="md-tip-card">
+                <div class="md-tip-card__glyph md-tip-card__glyph--dash" aria-hidden="true">---</div>
+                <div class="md-tip-card__rule" aria-hidden="true"></div>
+                <div class="md-tip-card__body">
+                  <h3 class="md-tip-card__title">구분선 / 코드 블록</h3>
+                  <p class="md-tip-card__syntax">--- 로 구역을 나누고, ``` 로 예시·코드를 감쌉니다</p>
+                  <p class="md-tip-card__desc">프롬프트 안에서 “여기부터는 예시야”라고 구분해 줄 때 유용합니다.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 45L28 35V80L12 90V45Z"/>
+            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+          </svg>
+          <span class="footer-text">AI디자인랩</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6/7 문서·보고서도 마크다운으로 -->
+    <section class="card" aria-label="슬라이드 6 마크다운으로 문서 작성">
+      <div class="card-bg"></div>
+      <div class="card-content card-content--inner">
+        <div class="slide-body slide-body--report-save">
+          <h2 class="slide-h2">앞으로의 문서도 마크다운으로<br>작성하고 저장하자.</h2>
+          <div class="doc-window" role="group" aria-label="마크다운 보고서 예시">
+            <div class="doc-window__bar" aria-hidden="true">
+              <span class="doc-window__title">월간업무보고서.md</span>
+            </div>
+            <div class="doc-window__body doc-window__body--md">
+              <pre class="md-report-pre"># 월간 업무 보고서
+
+## 요약
+- **핵심**: 목표 달성
+- 이슈: 일정 조정
+- 리스크: 인력 부족 (완화안 검토 중)
+
+---
+
+## 다음 단계
+1. 검토
+2. 배포
+3. 주간 회고 공유
+
+---
+
+## 첨부 이미지
+![당월 실적 추이 차트](attachments/fig01_kpi_trend.png)
+![일정·리스크 요약 캡처](attachments/fig02_schedule_risk.png)
+
+---
+
+## 결론 및 제안
+- 당월 실적은 계획 대비 **목표 범위 내**로 마감.
+- 차월 일정은 리스크 완화안 확정 후 **재조정** 예정.
+- 인력 충원은 경영지원팀과 협의해 **다음 주까지** 방향 합의.
+
+---
+
+## 참고자료
+- **내부**: `회의록.md`, `요구사항.pdf`, `간트.xlsx`
+- **외부**: 가이드라인(2024) 3장, 월간 브리핑</pre>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 45L28 35V80L12 90V45Z"/>
+            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+          </svg>
+          <span class="footer-text">AI디자인랩</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7/7 마크다운 자가 점검 -->
+    <section class="card" aria-label="슬라이드 7 마크다운을 얼마나 알고 계시나요">
+      <div class="card-bg"></div>
+      <div class="card-content card-content--inner">
+        <div class="slide-body slide-body--md-selfcheck">
+          <h2 class="slide-h2">마크다운을 얼마나<br>알고 계시나요?</h2>
+          <figure class="md-selfcheck-hero">
+            <img
+              src="https://kikeun.github.io/KIKEUN/ai55.png"
+              alt="마크다운 로고와 기호 일러스트"
+              loading="lazy"
+              decoding="async"
+              referrerpolicy="no-referrer-when-downgrade"
+            />
+          </figure>
+          <ul class="md-selfcheck-list">
+            <li>
+              <label class="md-selfcheck-label">
+                <input type="checkbox" class="md-selfcheck__input" />
+                <span class="md-selfcheck__cb" aria-hidden="true"></span>
+                <span class="md-selfcheck__text">마크다운에서 제목을 만드는 기호를 알고 있다.</span>
+              </label>
+            </li>
+            <li>
+              <label class="md-selfcheck-label">
+                <input type="checkbox" class="md-selfcheck__input" />
+                <span class="md-selfcheck__cb" aria-hidden="true"></span>
+                <span class="md-selfcheck__text">순서 있는 목록(1. 2. 3.)과 순서 없는 목록(-, )을 구분할 수 있다.</span>
+              </label>
+            </li>
+            <li>
+              <label class="md-selfcheck-label">
+                <input type="checkbox" class="md-selfcheck__input" />
+                <span class="md-selfcheck__cb" aria-hidden="true"></span>
+                <span class="md-selfcheck__text">AI 프롬프트에 마크다운 구조를 직접 적용해 본 적이 있다.</span>
+              </label>
+            </li>
+            <li>
+              <label class="md-selfcheck-label">
+                <input type="checkbox" class="md-selfcheck__input" />
+                <span class="md-selfcheck__cb" aria-hidden="true"></span>
+                <span class="md-selfcheck__text">마크다운 문서를 다른 형식(PDF, 워드 등)으로 변환할 수 있다.</span>
+              </label>
+            </li>
+            <li>
+              <label class="md-selfcheck-label">
+                <input type="checkbox" class="md-selfcheck__input" />
+                <span class="md-selfcheck__cb" aria-hidden="true"></span>
+                <span class="md-selfcheck__text">문서들을 마크다운으로 전환하는 이유를 설명할 수 있다.</span>
+              </label>
+            </li>
+          </ul>
+          <p class="md-selfcheck-banner">
+            3개 이하이신가요? 지금이 바로 흔들리지 않는 AI 프롬프트의 ‘기본 체력’을 기를 최적의 타이밍입니다.
+          </p>
+        </div>
+        <div class="footer">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 45L28 35V80L12 90V45Z"/>
+            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+          </svg>
+          <span class="footer-text">AI디자인랩</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
