@@ -641,7 +641,7 @@
 
     .md-convert-note {
       margin-top: 6px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
       line-height: 1.35;
       color: #111;
@@ -1248,14 +1248,21 @@
       flex-direction: column;
       justify-content: center;
       align-items: stretch;
-      border-radius: 0;
-      padding: 0;
+      border-radius: 14px;
+      padding: 14px 14px 16px;
       box-sizing: border-box;
       text-align: center;
-      background: transparent;
-      border: 0;
-      box-shadow: none;
-      overflow: visible;
+      background-color: rgba(252, 253, 252, 0.72);
+      background-image:
+        linear-gradient(rgba(0, 40, 45, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 40, 45, 0.07) 1px, transparent 1px);
+      background-size: 10px 10px;
+      background-position: center center;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.75),
+        0 5px 16px rgba(0, 35, 40, 0.07);
+      overflow: hidden;
     }
 
     .p2-banner__inner {
@@ -1267,8 +1274,7 @@
       width: 100%;
     }
 
-    /* 3페이지 표 — 살짝 축소 */
-    .p2-banner .p4-format-table { width: 100%; }
+    /* (3페이지) 배너는 격자 박스 */
 
     .p2-banner .p4-format-intro {
       font-size: 13px;
@@ -1722,7 +1728,7 @@
       min-height: 0;
       object-fit: contain;
       object-position: left top;
-      border-radius: 0;
+      border-radius: 12px;
       box-shadow: none;
       position: relative;
       z-index: 1;
@@ -2474,7 +2480,7 @@
           <div class="cover-inner__bottom cover-animate-3">
             <div class="cover-swipe">
               <div class="cover-swipe__line" aria-hidden="true"></div>
-              <span class="cover-swipe__label">총 7장 · Swipe to explore</span>
+              <span class="cover-swipe__label">총 6장 · Swipe to explore</span>
             </div>
           </div>
         </div>
@@ -2576,42 +2582,13 @@
           </div>
           <div class="p2-banner" role="group" aria-label="마크다운 강조 메시지">
             <div class="p2-banner__inner">
-              <table class="p4-format-table" aria-label="효율성 요인별 문서 형식 비교: 구문 분석 속도, 토큰 효율성, AI 호환성">
-                <thead>
-                  <tr>
-                    <th scope="col">형식</th>
-                    <th scope="col">구문 분석 속도</th>
-                    <th scope="col">토큰 효율성</th>
-                    <th scope="col">AI 호환성</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="p4-format-table__row--md">
-                    <th scope="row">마크다운</th>
-                    <td>우수</td>
-                    <td>높음</td>
-                    <td>우수</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">PDF</th>
-                    <td>나쁨</td>
-                    <td>낮음</td>
-                    <td>나쁨</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">DOCX</th>
-                    <td>보통</td>
-                    <td>낮음</td>
-                    <td>보통</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">한글</th>
-                    <td>나쁨</td>
-                    <td>낮음</td>
-                    <td>나쁨</td>
-                  </tr>
-                </tbody>
-              </table>
+                <p class="p2-banner__kicker">AI 시대, 툴보다 먼저 이해해야 할 단 하나의 기본기</p>
+                <p class="p2-banner__main">
+                  <span class="p2-banner__main-line">AI를 지배하는 보이지 않는 언어:</span>
+                  <span class="p2-banner__main-line p2-banner__main-line--hl">
+                    <span class="p2-banner__grad">마크다운</span><span class="p2-banner__paren">(Markdown)</span><span class="p2-banner__cursor" aria-hidden="true"></span>
+                  </span>
+                </p>
             </div>
           </div>
         </div>
