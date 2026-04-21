@@ -44,6 +44,9 @@
       /* 기본 본문 (slide-p, 훅은 위 --font-hook-slide-p로 덮음) */
       --font-slide-p: 15px;
 
+      /* 5페이지 변환 슬라이드 하단 안내(형식·변환 안내 문단) — 본문보다 살짝 작게 */
+      --font-md-convert-note: 14px;
+
       /* 마지막 자가 점검 */
       --font-md-selfcheck: 15px;
       --font-md-selfcheck-banner: 15.25px;
@@ -171,8 +174,7 @@
     #wai-nav-2:checked ~ .carousel-row #wai-card-2,
     #wai-nav-3:checked ~ .carousel-row #wai-card-3,
     #wai-nav-4:checked ~ .carousel-row #wai-card-4,
-    #wai-nav-5:checked ~ .carousel-row #wai-card-5,
-    #wai-nav-6:checked ~ .carousel-row #wai-card-6 {
+    #wai-nav-5:checked ~ .carousel-row #wai-card-5 {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -202,8 +204,7 @@
     #wai-nav-2:checked ~ .carousel-row .nav-prev-from-2,
     #wai-nav-3:checked ~ .carousel-row .nav-prev-from-3,
     #wai-nav-4:checked ~ .carousel-row .nav-prev-from-4,
-    #wai-nav-5:checked ~ .carousel-row .nav-prev-from-5,
-    #wai-nav-6:checked ~ .carousel-row .nav-prev-from-6 {
+    #wai-nav-5:checked ~ .carousel-row .nav-prev-from-5 {
       display: inline-flex;
     }
     /* 첫 카드일 때 — 비활성 이전 버튼 */
@@ -215,12 +216,11 @@
     #wai-nav-1:checked ~ .carousel-row .nav-next-from-1,
     #wai-nav-2:checked ~ .carousel-row .nav-next-from-2,
     #wai-nav-3:checked ~ .carousel-row .nav-next-from-3,
-    #wai-nav-4:checked ~ .carousel-row .nav-next-from-4,
-    #wai-nav-5:checked ~ .carousel-row .nav-next-from-5 {
+    #wai-nav-4:checked ~ .carousel-row .nav-next-from-4 {
       display: inline-flex;
     }
     /* 마지막 카드일 때 — 비활성 다음 버튼 */
-    #wai-nav-6:checked ~ .carousel-row .nav-next-disabled {
+    #wai-nav-5:checked ~ .carousel-row .nav-next-disabled {
       display: inline-flex;
     }
 
@@ -230,14 +230,13 @@
       pointer-events: none;
     }
 
-    /* 카운터: 7개 span 중 현재 인덱스만 보이게 */
+    /* 카운터: 각 슬라이드 번호 span 중 현재 인덱스만 보이게 */
     .carousel__counter .cnt-num { display: none; }
     #wai-nav-1:checked ~ .carousel__counter .cnt-1,
     #wai-nav-2:checked ~ .carousel__counter .cnt-2,
     #wai-nav-3:checked ~ .carousel__counter .cnt-3,
     #wai-nav-4:checked ~ .carousel__counter .cnt-4,
-    #wai-nav-5:checked ~ .carousel__counter .cnt-5,
-    #wai-nav-6:checked ~ .carousel__counter .cnt-6 {
+    #wai-nav-5:checked ~ .carousel__counter .cnt-5 {
       display: inline;
     }
 
@@ -637,7 +636,7 @@
       height: 100% !important;
     }
 
-    /* 6페이지 좌측(이미지)만 살짝 확대 */
+    /* 5페이지(변환 슬라이드) 좌측(이미지)만 살짝 확대 */
     .md-convert .doc-window--nl .doc-window__body--image img {
       transform: scale(1.06);
       transform-origin: center;
@@ -659,9 +658,10 @@
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.65),
         0 8px 20px rgba(0, 35, 40, 0.07);
-      font-size: 16px;
+      font-size: var(--font-md-convert-note);
       font-weight: 800;
-      line-height: 1.45;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
       color: #111;
       text-align: left;
       word-break: keep-all;
@@ -2530,7 +2530,6 @@
     <input class="wai-nav" type="radio" name="wai-nav" id="wai-nav-3">
     <input class="wai-nav" type="radio" name="wai-nav" id="wai-nav-4">
     <input class="wai-nav" type="radio" name="wai-nav" id="wai-nav-5">
-    <input class="wai-nav" type="radio" name="wai-nav" id="wai-nav-6">
 
     <div class="carousel-row">
       <div class="nav-stack nav-stack--prev">
@@ -2539,13 +2538,12 @@
         <label class="nav-btn nav-btn--prev nav-prev-from-3" for="wai-nav-2" aria-label="이전 슬라이드">←</label>
         <label class="nav-btn nav-btn--prev nav-prev-from-4" for="wai-nav-3" aria-label="이전 슬라이드">←</label>
         <label class="nav-btn nav-btn--prev nav-prev-from-5" for="wai-nav-4" aria-label="이전 슬라이드">←</label>
-        <label class="nav-btn nav-btn--prev nav-prev-from-6" for="wai-nav-5" aria-label="이전 슬라이드">←</label>
       </div>
       <div class="carousel__viewport" id="carousel-viewport">
         <div class="carousel__inner" id="carousel-inner">
         <div class="deck" id="deck" role="main">
 
-    <!-- 1/6 표지 -->
+    <!-- 1/5 표지 -->
     <section class="card card--cover" id="wai-card-1" aria-label="슬라이드 1 표지">
       <div class="card-bg"></div>
       <div class="card-content card-content--cover">
@@ -2573,7 +2571,7 @@
           <div class="cover-inner__bottom cover-animate-3">
             <div class="cover-swipe">
               <div class="cover-swipe__line" aria-hidden="true"></div>
-              <span class="cover-swipe__label">총 6장 · Swipe to explore</span>
+              <span class="cover-swipe__label">총 5장 · Swipe to explore</span>
             </div>
           </div>
         </div>
@@ -2587,7 +2585,7 @@
       </div>
     </section>
 
-    <!-- 2/6 마크다운이란? (이전 3페이지) -->
+    <!-- 2/5 마크다운이란? (이전 3페이지) -->
     <section class="card" id="wai-card-2" aria-label="슬라이드 2 마크다운이란">
       <div class="card-bg"></div>
       <div class="card-content card-content--inner card-content--wide">
@@ -2673,7 +2671,7 @@
       </div>
     </section>
 
-    <!-- 3/6 공감 유도 (훅) (이전 2페이지) -->
+    <!-- 3/5 공감 유도 (훅) (이전 2페이지) -->
     <section class="card" id="wai-card-3" aria-label="슬라이드 3 공감 유도">
       <div class="card-bg"></div>
       <div class="card-content card-content--inner card-content--wide">
@@ -2722,7 +2720,7 @@
       </div>
     </section>
 
-    <!-- 4/6 마크다운, 어디서부터 — 4포인트 -->
+    <!-- 4/5 마크다운, 어디서부터 — 4포인트 -->
     <section class="card" id="wai-card-4" aria-label="슬라이드 4 마크다운, 어디서부터 시작하면 될까요">
       <div class="card-bg"></div>
       <div class="card-content card-content--inner">
@@ -2779,7 +2777,7 @@
       </div>
     </section>
 
-    <!-- 5/6 문서·보고서도 마크다운으로 -->
+    <!-- 5/5 문서·보고서도 마크다운으로 -->
     <section class="card" id="wai-card-5" aria-label="슬라이드 5 마크다운으로 문서 작성">
       <div class="card-bg"></div>
       <div class="card-content card-content--inner">
@@ -2798,77 +2796,11 @@
               </div>
             </div>
             <p class="md-convert-note" role="note" aria-label="활용 안내">
-              <span class="md-convert-note__line">마크다운은 AI에게 정보를 전달할 때</span>
-              <span class="md-convert-note__line">구조를 명확하게 만들어주는 방법 중 하나입니다.</span>
-              <span class="md-convert-note__line">기존 파일을 마크다운으로 먼저 변환하여 AI에 입력해보세요.</span>
+              <span class="md-convert-note__line">형식이 다양하거나 분량이 많은 자료는 원본 그대로 넣기보다,</span>
+              <span class="md-convert-note__line">AI나 전용 변환기를 활용해 마크다운으로 먼저 변환한 뒤 입력해보세요.</span>
+              <span class="md-convert-note__line">AI가 내용을 더 잘 이해해, 원하는 결과를 훨씬 효율적으로 얻을 수 있습니다.</span>
             </p>
           </div>
-        </div>
-        <div class="footer">
-          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M12 45L28 35V80L12 90V45Z"/>
-            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
-          </svg>
-          <span class="footer-text">AI디자인랩</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6/6 마크다운 자가 점검 -->
-    <section class="card" id="wai-card-6" aria-label="슬라이드 6 마크다운을 얼마나 알고 계시나요">
-      <div class="card-bg"></div>
-      <div class="card-content card-content--inner">
-        <div class="slide-body slide-body--md-selfcheck">
-          <h2 class="slide-h2">마크다운을 얼마나<br>알고 계시나요?</h2>
-          <figure class="md-selfcheck-hero">
-            <img
-              src="https://kikeun.github.io/KIKEUN/ai55.png"
-              alt="마크다운 로고와 기호 일러스트"
-              loading="lazy"
-              decoding="async"
-              referrerpolicy="no-referrer-when-downgrade"
-            />
-          </figure>
-          <ul class="md-selfcheck-list">
-            <li>
-              <label class="md-selfcheck-label">
-                <input type="checkbox" class="md-selfcheck__input" />
-                <span class="md-selfcheck__cb" aria-hidden="true"></span>
-                <span class="md-selfcheck__text">마크다운에서 제목을 만드는 기호를 알고 있다.</span>
-              </label>
-            </li>
-            <li>
-              <label class="md-selfcheck-label">
-                <input type="checkbox" class="md-selfcheck__input" />
-                <span class="md-selfcheck__cb" aria-hidden="true"></span>
-                <span class="md-selfcheck__text">순서 있는 목록(1. 2. 3.)과 순서 없는 목록(-, )을 구분할 수 있다.</span>
-              </label>
-            </li>
-            <li>
-              <label class="md-selfcheck-label">
-                <input type="checkbox" class="md-selfcheck__input" />
-                <span class="md-selfcheck__cb" aria-hidden="true"></span>
-                <span class="md-selfcheck__text">AI 프롬프트에 마크다운 구조를 직접 적용해 본 적이 있다.</span>
-              </label>
-            </li>
-            <li>
-              <label class="md-selfcheck-label">
-                <input type="checkbox" class="md-selfcheck__input" />
-                <span class="md-selfcheck__cb" aria-hidden="true"></span>
-                <span class="md-selfcheck__text">마크다운 문서를 다른 형식(PDF, 워드 등)으로 변환할 수 있다.</span>
-              </label>
-            </li>
-            <li>
-              <label class="md-selfcheck-label">
-                <input type="checkbox" class="md-selfcheck__input" />
-                <span class="md-selfcheck__cb" aria-hidden="true"></span>
-                <span class="md-selfcheck__text">문서들을 마크다운으로 전환하는 이유를 설명할 수 있다.</span>
-              </label>
-            </li>
-          </ul>
-          <p class="md-selfcheck-banner">
-            3개 이하이신가요? 지금이 바로 흔들리지 않는 AI 프롬프트의 ‘기본 체력’을 기를 최적의 타이밍입니다.
-          </p>
         </div>
         <div class="footer">
           <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2888,12 +2820,11 @@
         <label class="nav-btn nav-btn--next nav-next-from-2" for="wai-nav-3" aria-label="다음 슬라이드">→</label>
         <label class="nav-btn nav-btn--next nav-next-from-3" for="wai-nav-4" aria-label="다음 슬라이드">→</label>
         <label class="nav-btn nav-btn--next nav-next-from-4" for="wai-nav-5" aria-label="다음 슬라이드">→</label>
-        <label class="nav-btn nav-btn--next nav-next-from-5" for="wai-nav-6" aria-label="다음 슬라이드">→</label>
         <span class="nav-btn nav-btn--next nav-next-disabled is-disabled" aria-hidden="true">→</span>
       </div>
     </div>
     <div class="carousel__counter" aria-live="polite">
-      <span class="cnt-num cnt-1">1</span><span class="cnt-num cnt-2">2</span><span class="cnt-num cnt-3">3</span><span class="cnt-num cnt-4">4</span><span class="cnt-num cnt-5">5</span><span class="cnt-num cnt-6">6</span> / 6
+      <span class="cnt-num cnt-1">1</span><span class="cnt-num cnt-2">2</span><span class="cnt-num cnt-3">3</span><span class="cnt-num cnt-4">4</span><span class="cnt-num cnt-5">5</span> / 5
     </div>
   </div>
 </body>
