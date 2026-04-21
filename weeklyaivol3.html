@@ -1165,6 +1165,16 @@
       align-items: stretch;
     }
 
+    /* 2페이지=마크다운이란(p2): 가로·본문 안쪽 여백 (구 3페이지 스타일) */
+    #wai-card-2 .slide-body.slide-body--p2 {
+      padding: 18px 12px 16px;
+      gap: 13px;
+    }
+
+    #wai-card-2 .p2-heading {
+      padding-top: 0;
+    }
+
     .p2-heading {
       margin: 0;
       padding-top: 6px;
@@ -2577,59 +2587,10 @@
       </div>
     </section>
 
-    <!-- 2/6 공감 유도 (훅) -->
-    <section class="card" id="wai-card-2" aria-label="슬라이드 2 공감 유도">
+    <!-- 2/6 마크다운이란? (이전 3페이지) -->
+    <section class="card" id="wai-card-2" aria-label="슬라이드 2 마크다운이란">
       <div class="card-bg"></div>
       <div class="card-content card-content--inner card-content--wide">
-        <div class="slide-body slide-body--no-panel slide-body--no-scroll slide-body--hook-layout">
-          <!-- 상단 텍스트 박스 (1번 박스) -->
-          <div class="hook-textbox">
-            <h2 class="slide-h2">왜 마크다운이 중요한가?</h2>
-            <p class="slide-p">AI는 길고 자세한 자연어도<br>구조화하여 답합니다.</p>
-            <div class="hook-divider"></div>
-            <p class="hook-big">마크다운은 구조를 만드는 기본적인 방법입니다.
-  </div>
-
-          <!-- 비교 박스: ai60 프레임 기준 ai61은 세로 가운데·우측 -->
-          <div class="compare-wrap" role="group" aria-label="프롬프트 비교">
-            <div class="compare-wrap__media">
-              <div class="hook-image-stack">
-                <div class="hook-image-stack__frame">
-                  <img class="hook-image-stack__base"
-                    src="https://kikeun.github.io/KIKEUN/ai62.png"
-                    alt="마크다운 변환 안내 이미지"
-                    loading="lazy" decoding="async"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </div>
-              </div>
-              <div class="hook-image-stack__over hook-image-stack__over--html" role="note" aria-label="마크다운 설명">
-                반면 마크다운(Markdown)은 복잡한 서식 없이 제목, 문단, 목차 등 문서의 구조를 단순한 기호로 표현해 사람과 AI 모두 읽기 쉬운 문서 작성 방식이다. 국제적으로 널리 쓰이며, 특히 AI 학습 데이터 및 개발 환경에서 표준적으로 활용되고 있다.
-                <span class="hook-image-stack__over-footnote" aria-hidden="true">기사 내용 발췌</span>
-              </div>
-            </div>
-            <div class="compare-wrap__caption" role="note">
-              <p class="compare-wrap__caption-line">정부에서도 기존의 한글(HWP) 대신 마크다운을 선택하고 있습니다.</p>
-              <p class="compare-wrap__caption-line">데이터가 많을수록, 마크다운이 AI의 이해도를 높입니다.</p>
-              <p class="compare-wrap__source">
-                (기사 출처 : <a href="https://kitpa.org/news/1175" target="_blank" rel="noopener noreferrer">https://kitpa.org/news/1175</a>)
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="footer">
-          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M12 45L28 35V80L12 90V45Z"/>
-            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
-          </svg>
-          <span class="footer-text">AI디자인랩</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3/6 마크다운이란? (weekly-ai-card.html 2페이지 디자인) -->
-    <section class="card" id="wai-card-3" aria-label="슬라이드 3 마크다운이란">
-      <div class="card-bg"></div>
-      <div class="card-content card-content--inner">
         <div class="slide-body slide-body--p2">
           <h2 class="p2-heading">마크다운이란?</h2>
           <p class="p2-lead">
@@ -2712,6 +2673,55 @@
       </div>
     </section>
 
+    <!-- 3/6 공감 유도 (훅) (이전 2페이지) -->
+    <section class="card" id="wai-card-3" aria-label="슬라이드 3 공감 유도">
+      <div class="card-bg"></div>
+      <div class="card-content card-content--inner card-content--wide">
+        <div class="slide-body slide-body--no-panel slide-body--no-scroll slide-body--hook-layout">
+          <!-- 상단 텍스트 박스 (1번 박스) -->
+          <div class="hook-textbox">
+            <h2 class="slide-h2">왜 마크다운이 중요한가?</h2>
+            <p class="slide-p">AI는 길고 자세한 자연어도<br>구조화하여 읽고 답합니다.</p>
+            <div class="hook-divider"></div>
+            <p class="hook-big">마크다운은 구조를 만드는 기본적인 방법입니다.</p>
+          </div>
+
+          <!-- 비교 박스: ai60 프레임 기준 ai61은 세로 가운데·우측 -->
+          <div class="compare-wrap" role="group" aria-label="프롬프트 비교">
+            <div class="compare-wrap__media">
+              <div class="hook-image-stack">
+                <div class="hook-image-stack__frame">
+                  <img class="hook-image-stack__base"
+                    src="https://kikeun.github.io/KIKEUN/ai62.png"
+                    alt="마크다운 변환 안내 이미지"
+                    loading="lazy" decoding="async"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </div>
+              </div>
+              <div class="hook-image-stack__over hook-image-stack__over--html" role="note" aria-label="마크다운 설명">
+                반면 마크다운(Markdown)은 복잡한 서식 없이 제목, 문단, 목차 등 문서의 구조를 단순한 기호로 표현해 사람과 AI 모두 읽기 쉬운 문서 작성 방식이다. 국제적으로 널리 쓰이며, 특히 AI 학습 데이터 및 개발 환경에서 표준적으로 활용되고 있다.
+                <span class="hook-image-stack__over-footnote" aria-hidden="true">기사 내용 발췌</span>
+              </div>
+            </div>
+            <div class="compare-wrap__caption" role="note">
+              <p class="compare-wrap__caption-line">정부에서도 기존의 한글(HWP) 대신 마크다운을 선택하고 있습니다.</p>
+              <p class="compare-wrap__caption-line">데이터가 많을수록, 마크다운이 AI의 이해도를 높입니다.</p>
+              <p class="compare-wrap__source">
+                (기사 출처 : <a href="https://kitpa.org/news/1175" target="_blank" rel="noopener noreferrer">https://kitpa.org/news/1175</a>)
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 45L28 35V80L12 90V45Z"/>
+            <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+          </svg>
+          <span class="footer-text">AI디자인랩</span>
+        </div>
+      </div>
+    </section>
+
     <!-- 4/6 마크다운, 어디서부터 — 4포인트 -->
     <section class="card" id="wai-card-4" aria-label="슬라이드 4 마크다운, 어디서부터 시작하면 될까요">
       <div class="card-bg"></div>
@@ -2774,7 +2784,7 @@
       <div class="card-bg"></div>
       <div class="card-content card-content--inner">
         <div class="slide-body slide-body--report-save">
-          <h2 class="slide-h2">데이터가 복잡할수록<br>마크다운을 활용해 보세요.</h2>
+          <h2 class="slide-h2">데이터가 용량이 크고 복잡할수록<br>마크다운을 활용해 보세요.</h2>
           <div class="md-convert">
             <div class="doc-window doc-window--nl" role="group" aria-label="문서 포맷 변환 예시">
               <div class="doc-window__body doc-window__body--image">
@@ -2789,8 +2799,8 @@
             </div>
             <p class="md-convert-note" role="note" aria-label="활용 안내">
               <span class="md-convert-note__line">마크다운은 AI에게 정보를 전달할 때</span>
-              <span class="md-convert-note__line">구조를 조금 더 명확하게 만들어주는 방법 중 하나입니다.</span>
-              <span class="md-convert-note__line">기존 파일을 마크다운으로 먼저 변환해 보세요.</span>
+              <span class="md-convert-note__line">구조를 명확하게 만들어주는 방법 중 하나입니다.</span>
+              <span class="md-convert-note__line">기존 파일을 마크다운으로 먼저 변환하여 AI에 입력해보세요.</span>
             </p>
           </div>
         </div>
