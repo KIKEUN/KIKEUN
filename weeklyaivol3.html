@@ -25,7 +25,11 @@
 
       /* 2페이지 훅 */
       --font-hook-slide-p: 20px;
-      --font-hook-big: 24px;
+      --font-hook-big: 23px;
+      /* ▼ 2페이지 ai62 위 설명 박스 — 격자박스 상단 고정 ▼ */
+      --hook-over-left: 50%;
+      --hook-over-top: 0px;
+      --hook-over-nudge-y: 0px;
       --font-compare-result: 14px;
       /* 2페이지 격자박스 캡션(본문·출처) */
       --font-compare-caption: 17px;
@@ -640,18 +644,35 @@
     }
 
     .md-convert-note {
-      margin-top: 6px;
-      font-size: 17px;
+      margin-top: 14px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 22px 18px 18px;
+      border-radius: 14px;
+      background-color: rgba(252, 253, 252, 0.78);
+      background-image:
+        linear-gradient(rgba(0, 40, 45, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 40, 45, 0.08) 1px, transparent 1px);
+      background-size: 10px 10px;
+      background-position: center center;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        0 8px 20px rgba(0, 35, 40, 0.07);
+      font-size: 16px;
       font-weight: 800;
-      line-height: 1.35;
+      line-height: 1.45;
       color: #111;
-      text-align: center;
+      text-align: left;
       word-break: keep-all;
     }
 
     .md-convert-note__line {
       display: block;
-      white-space: nowrap;
+    }
+
+    .md-convert-note__line + .md-convert-note__line {
+      margin-top: 0.35em;
     }
 
     .md-convert-cta {
@@ -1202,6 +1223,34 @@
       background: linear-gradient(90deg, rgba(37,99,235,0.16) 0%, rgba(255,255,255,0.12) 100%);
     }
 
+    .p2-feature--table {
+      /* 표는 컨테이너 박스 없이, 표 자체만 보이게 */
+      border-left: 0;
+      border-top: 0;
+      border-right: 0;
+      border-bottom: 0;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
+    }
+
+    .p2-feature--table .p4-format-table {
+      width: 100%;
+      font-size: 10.5px;
+      line-height: 1.35;
+    }
+
+    .p2-feature--table .p4-format-table th,
+    .p2-feature--table .p4-format-table td {
+      padding: 7px 6px;
+    }
+
+    .p2-feature--table .p4-format-table thead th {
+      padding: 8px 6px;
+      font-size: 9.75px;
+    }
+
     .p2-feature__head {
       display: flex;
       align-items: center;
@@ -1686,6 +1735,18 @@
       min-height: 0;
     }
 
+    /* 이미지(ai62)는 예전처럼 cqmin 정사각 — 박스만 옆 래퍼에서 가로 풀 */
+    .compare-wrap__media {
+      position: relative;
+      width: 100%;
+      flex: 0 0 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
     /* 2페이지 비교 박스: 1:1 스택 안에 ai60 프레임 + ai61은 ai60 오른쪽·세로 중앙 */
     .hook-image-stack {
       position: relative;
@@ -1741,39 +1802,61 @@
     /* ai62는 이제 base로 들어가므로 under는 숨김 */
     .hook-image-stack__under { display: none; }
 
-    /* ai61: ai60(.frame) 오른쪽 가장자리 기준, 세로 가운데 */
-    .hook-image-stack__over {
+    /* ai61: 오른쪽에 붙이고 왼쪽으로는 짧게(왼쪽 여백 넓게). 세로만 translateY */
+    .compare-wrap__media .hook-image-stack__over {
       position: absolute;
-      left: 100%;
-      top: 52%;
-      right: auto;
+      left: auto;
+      right: 2%;
+      top: 38%;
       bottom: auto;
-      /* ai60 위로 살짝 겹치도록 더 왼쪽으로 당김 */
-      margin-left: -92%;
-      max-width: 118%;
-      max-height: 82%;
-      width: auto;
+      margin-left: 0;
+      width: 76%;
+      max-width: 76%;
+      box-sizing: border-box;
+      max-height: none;
       height: auto;
-      border-radius: 8px;
-      box-shadow: 0 10px 24px rgba(0, 30, 35, 0.22);
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(0, 30, 35, 0.2);
       border: 2px solid rgba(22, 101, 52, 0.95);
       z-index: 2;
-      transform: translateY(-50%) scale(1.08);
-      transform-origin: left center;
+      transform: translateY(-50%);
+      margin-top: 0;
+      transform-origin: right center;
     }
 
-    /* ai61(이미지) → HTML 박스 */
+    /* ai61(이미지) → HTML 박스
+       주의: 같은 요소에 .hook-image-stack__over(absolute)와 함께 쓰임.
+       여기서 position:relative를 주면 absolute가 덮여서 박스가 이미지 아래로 깔림 */
     .hook-image-stack__over--html {
-      width: min(118%, 420px);
-      background: rgba(255,255,255,0.96);
+      width: 100%;
+      max-width: none;
+      box-sizing: border-box;
+      background: #fff;
       color: rgba(10, 18, 17, 0.9);
-      border-radius: 10px;
+      border-radius: 18px;
       padding: 14px 16px;
       line-height: 1.55;
       font-size: 11px;
       font-weight: 600;
       letter-spacing: -0.02em;
       word-break: keep-all;
+      text-align: left;
+    }
+
+    .hook-image-stack__over-footnote {
+      position: absolute;
+      right: 8px;
+      bottom: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: rgba(10, 18, 17, 0.45);
+      background: rgba(255, 255, 255, 0.75);
+      padding: 1px 5px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.06);
+      pointer-events: none;
+      white-space: nowrap;
     }
 
     .hook-image-stack__over--html strong {
@@ -2474,7 +2557,7 @@
                 기본 구조<br>
                 <strong class="cover-headline__mark">'마크다운(Markdown)'</strong>
               </h1>
-              <p class="cover-strapline cover-animate-2b">간단한 구조화만으로도 답변의 수준이 달라집니다.</p>
+              <p class="cover-strapline cover-animate-2b">간단한 구조화만으로도 AI의 효율이 달라집니다.</p>
             </div>
           </div>
           <div class="cover-inner__bottom cover-animate-3">
@@ -2501,24 +2584,27 @@
         <div class="slide-body slide-body--no-panel slide-body--no-scroll slide-body--hook-layout">
           <!-- 상단 텍스트 박스 (1번 박스) -->
           <div class="hook-textbox">
-            <h2 class="slide-h2">왜 마크다운이 선택되고 있을까?</h2>
-            <p class="slide-p">자연어로 길고 자세하게 설명해도<br>AI는 의도를 정확히 이해하지 못할 때가 있습니다.</p>
+            <h2 class="slide-h2">왜 마크다운이 중요한가?</h2>
+            <p class="slide-p">AI는 길고 자세한 자연어도<br>구조화하여 답합니다.</p>
             <div class="hook-divider"></div>
-            <p class="hook-big">차이를 만드는 건 내용이 아니라 <span class="hl">구조</span>입니다.</p>
+            <p class="hook-big">마크다운은 구조를 만드는 기본적인 방법입니다.
   </div>
 
           <!-- 비교 박스: ai60 프레임 기준 ai61은 세로 가운데·우측 -->
           <div class="compare-wrap" role="group" aria-label="프롬프트 비교">
-            <div class="hook-image-stack">
-              <div class="hook-image-stack__frame">
-                <img class="hook-image-stack__base"
-                  src="https://kikeun.github.io/KIKEUN/ai62.png"
-                  alt="마크다운 변환 안내 이미지"
-                  loading="lazy" decoding="async"
-                  referrerpolicy="no-referrer-when-downgrade">
-                <div class="hook-image-stack__over hook-image-stack__over--html" role="note" aria-label="마크다운 설명">
-                  반면 마크다운(Markdown)은 복잡한 서식 없이 제목, 문단, 목차 등 문서의 구조를 단순한 기호로 표현해 사람과 AI 모두 읽기 쉬운 문서 작성 방식이다. 국제적으로 널리 쓰이며, 특히 AI 학습 데이터 및 개발 환경에서 표준적으로 활용되고 있다.
+            <div class="compare-wrap__media">
+              <div class="hook-image-stack">
+                <div class="hook-image-stack__frame">
+                  <img class="hook-image-stack__base"
+                    src="https://kikeun.github.io/KIKEUN/ai62.png"
+                    alt="마크다운 변환 안내 이미지"
+                    loading="lazy" decoding="async"
+                    referrerpolicy="no-referrer-when-downgrade">
                 </div>
+              </div>
+              <div class="hook-image-stack__over hook-image-stack__over--html" role="note" aria-label="마크다운 설명">
+                반면 마크다운(Markdown)은 복잡한 서식 없이 제목, 문단, 목차 등 문서의 구조를 단순한 기호로 표현해 사람과 AI 모두 읽기 쉬운 문서 작성 방식이다. 국제적으로 널리 쓰이며, 특히 AI 학습 데이터 및 개발 환경에서 표준적으로 활용되고 있다.
+                <span class="hook-image-stack__over-footnote" aria-hidden="true">기사 내용 발췌</span>
               </div>
             </div>
             <div class="compare-wrap__caption" role="note">
@@ -2548,7 +2634,7 @@
           <h2 class="p2-heading">마크다운이란?</h2>
           <p class="p2-lead">
             텍스트에 간단한 기호를 사용해<br>
-            문서의 <span class="p2-lead__hl">구조</span>를 만드는 문법입니다.
+            데이터를 <span class="p2-lead__hl">구조</span>화 하는 문서 작성 방식입니다.
           </p>
           <div class="p2-feature-list">
             <div class="p2-feature p2-feature--a">
@@ -2561,23 +2647,47 @@
             <div class="p2-feature p2-feature--b">
               <div class="p2-feature__head">
                 <span class="p2-feature__tick" aria-hidden="true">✔</span>
-                <h3 class="p2-feature__title">가볍고 효율적인 용량</h3>
+                <h3 class="p2-feature__title">간단한 기호로 바로 구현</h3>
               </div>
-              <p class="p2-feature__desc">같은 내용도 훨씬 작은 크기로 저장됩니다.</p>
+              <p class="p2-feature__desc">'#', '**'만으로 빠르게 구조화</p>
             </div>
-            <div class="p2-feature p2-feature--c">
-              <div class="p2-feature__head">
-                <span class="p2-feature__tick" aria-hidden="true">✔</span>
-                <h3 class="p2-feature__title">환각(Hallucination) 감소</h3>
-              </div>
-              <p class="p2-feature__desc">명확한 구조가 주제 이탈을 줄여줍니다.</p>
-            </div>
-            <div class="p2-feature p2-feature--d">
-              <div class="p2-feature__head">
-                <span class="p2-feature__tick" aria-hidden="true">✔</span>
-                <h3 class="p2-feature__title">토큰화의 이점</h3>
-              </div>
-              <p class="p2-feature__desc">## 헤더 구조가 섹션 구분을 명확하게 전달합니다.</p>
+            <div class="p2-feature p2-feature--table" role="region" aria-label="형식별 효율성 요인 표">
+              <table class="p4-format-table" aria-label="형식별 효율성 요인: 데이터 분석 속도, 토큰 효율성, AI 호환성">
+                <thead>
+                  <tr>
+                    <th scope="col">형식</th>
+                    <th scope="col">데이터 분석 속도</th>
+                    <th scope="col">토큰 효율성</th>
+                    <th scope="col">AI 호환성</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="p4-format-table__row--md">
+                    <th scope="row">마크다운</th>
+                    <td>우수</td>
+                    <td>높음</td>
+                    <td>우수</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">PDF</th>
+                    <td>나쁨</td>
+                    <td>낮음</td>
+                    <td>나쁨</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">DOCX</th>
+                    <td>보통</td>
+                    <td>낮음</td>
+                    <td>보통</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">HWP</th>
+                    <td>나쁨</td>
+                    <td>낮음</td>
+                    <td>나쁨</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           <div class="p2-banner" role="group" aria-label="마크다운 강조 메시지">
@@ -2678,11 +2788,9 @@
               </div>
             </div>
             <p class="md-convert-note" role="note" aria-label="활용 안내">
-              <span class="md-convert-note__line">마크다운을 배우는 것도 좋지만 꼭 처음부터 익힐 필요는 없습니다</span>
-              <span class="md-convert-note__line">AI로 변환하고 활용하는 것만으로도 충분히 결과는 달라집니다</span>
-            </p>
-            <p class="md-convert-cta" role="note" aria-label="마크다운 강조">
-              같은 내용도 더 정확한 결과로 만드는 구조 <strong>'마크다운'</strong>
+              <span class="md-convert-note__line">마크다운은 AI에게 정보를 전달할 때</span>
+              <span class="md-convert-note__line">구조를 조금 더 명확하게 만들어주는 방법 중 하나입니다.</span>
+              <span class="md-convert-note__line">기존 파일을 마크다운으로 먼저 변환해 보세요.</span>
             </p>
           </div>
         </div>
