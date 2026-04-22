@@ -123,9 +123,9 @@
 
     #hcn-nav-1:checked ~ .carousel-row #hcn-card-1,
     #hcn-nav-2:checked ~ .carousel-row #hcn-card-2,
-    #hcn-nav-3:checked ~ .carousel-row #hcn-card-3,
-    #hcn-nav-4:checked ~ .carousel-row #hcn-card-4,
-    #hcn-nav-5:checked ~ .carousel-row #hcn-card-5,
+    #hcn-nav-3:checked ~ .carousel-row #hcn-card-5,
+    #hcn-nav-4:checked ~ .carousel-row #hcn-card-3,
+    #hcn-nav-5:checked ~ .carousel-row #hcn-card-4,
     #hcn-nav-6:checked ~ .carousel-row #hcn-card-6,
     #hcn-nav-7:checked ~ .carousel-row #hcn-card-7,
     #hcn-nav-8:checked ~ .carousel-row #hcn-card-8 {
@@ -409,7 +409,7 @@
       margin: 0 auto 8px;
       width: 96%;
       max-width: 100%;
-      height: 242px;
+      height: 258px;
       position: relative;
       border-radius: 16px;
       background: rgba(255,255,255,0.22);
@@ -448,6 +448,12 @@
       table-layout: auto;
     }
 
+    #hcn-card-2 .compare-table tbody td {
+      font-size: 12px;
+      white-space: nowrap;
+      line-height: 1.25;
+    }
+
     #hcn-card-2 .compare-table th,
     #hcn-card-2 .compare-table td {
       padding: 6px 10px;
@@ -455,6 +461,19 @@
       vertical-align: top;
       word-break: keep-all;
       overflow-wrap: break-word;
+    }
+
+    #hcn-card-8 .page8-demo__note {
+      position: relative;
+      z-index: 3;
+      margin: 8px 0 0;
+      font-size: calc(var(--p8-fs-1) * 0.96);
+      font-weight: 650;
+      line-height: 1.45;
+      letter-spacing: -0.02em;
+      text-align: center;
+      color: rgba(30, 41, 59, 0.78);
+      word-break: keep-all;
     }
 
     .cover-title-stack {
@@ -1069,7 +1088,6 @@
       height: auto;
       margin: 0;
       border-radius: 12px;
-      vertical-align: top;
     }
 
     /* 6페이지: HTML+CSS+JS 미리보기 */
@@ -2549,8 +2567,8 @@
                       referrerpolicy="no-referrer-when-downgrade"
                     />
                   </div>
-                  <p class="slide-p">HTML은 <span class="emph">Hypertext Markup Language</span>의 약자로, 웹 페이지를 만드는 데 쓰는 언어입니다. 웹 페이지는 모두 HTML으로 작성 되며, <span class="emph">HTML</span>, <span class="emph">CSS</span>, <span class="emph">JavaScript</span>로 구성되어 있습니다.</p>
-                  <p class="slide-p">HTML은 <span class="emph">마크업</span> 언어로, <span class="emph">&lt;h1&gt;, &lt;p&gt;</span> 같은<span class="emph"> 태그</span>를 사용해 제목과 문단을 나눕니다. 이를 통해 웹 페이지의 구조를 만듭니다.</p>
+                  <p class="slide-p">HTML은 <span class="emph">Hypertext Markup Language</span>의 약자로, 웹 페이지를 만드는 데 쓰는 언어입니다. 웹 페이지는 모두 HTML로 작성 되며, <span class="emph">HTML</span>, <span class="emph">CSS</span>, <span class="emph">JavaScript</span>로 구성되어 있습니다.</p>
+                  <p class="slide-p">HTML은 <span class="emph">마크업</span> 언어로, <span class="emph">&lt;h1&gt;, &lt;p&gt;</span> 같은<span class="emph"> 태그</span>를 사용해 각 구성요소를 나눕니다. 이를 통해 웹 페이지가 구조화 됩니다.</p>
                   <div class="compare-table-wrap">
                     <table class="compare-table">
                       <thead>
@@ -2558,22 +2576,73 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td>개념</td>
-                          <td>태그로 구조를 만드는 방식</td>
-                          <td>기호로 글을 쉽게 정리하는 방식</td>
+                          <td>개념 목적</td>
+                          <td>태그로 웹페이지를 구조화 하는 방식</td>
+                          <td>기호로 문서를 구조화 하는 방식</td>
                         </tr>
+
                         <tr>
-                          <td>사용 목적</td>
-                          <td>웹 페이지의 구조 구성</td>
-                          <td>문서 작성 및 정리</td>
-                        </tr>
-                        <tr>
-                          <td>문법 형태</td>
+                          <td>작성 방식</td>
                           <td>&lt;h1&gt;, &lt;p&gt; 같은 태그 사용</td>
                           <td>#, -, ** 같은 기호 사용</td>
                         </tr>
                       </tbody>
                     </table>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- 5/8 HTML·CSS·JS 한눈에 -->
+            <section class="card" id="hcn-card-5" aria-label="슬라이드 5">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight slide-body--no-scroll">
+                  <h2 class="slide-h2">웹 사이트의 구성요소</h2>
+                  <div class="page7-hero" data-slot="page7-triangle">
+                    <img
+                      src="https://kikeun.github.io/KIKEUN/ai69.webp"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      referrerpolicy="no-referrer-when-downgrade"
+                    />
+                    <p class="page7-hero__caption" role="note">
+                      ※로고는 WWW(월드와이드웹)의 공식 로고로, 방패 모양은 보호, 신뢰성, 안정성을 의미합니다.
+                    </p>
+                  </div>
+                  <div class="tri-grid">
+                    <div class="tri-item">
+                      <span class="tri-item__icon" aria-hidden="true">🏗️</span>
+                      <div class="tri-item__body">
+                        <strong>HTML = 뼈대</strong>
+                        <p>웹페이지의 구조를 만든다</p>
+                        <p>제목, 문단, 이미지 등 기본 틀을 구성</p>
+                      </div>
+                    </div>
+                    <div class="tri-item">
+                      <span class="tri-item__icon" aria-hidden="true">🎨</span>
+                      <div class="tri-item__body">
+                        <strong>CSS = 옷</strong>
+                        <p>웹페이지의 스타일을 꾸민다</p>
+                        <p>색상, 크기, 배치로 보기 좋게 만듦</p>
+                      </div>
+                    </div>
+                    <div class="tri-item">
+                      <span class="tri-item__icon" aria-hidden="true">⚙️</span>
+                      <div class="tri-item__body">
+                        <strong>JavaScript = 움직임</strong>
+                        <p>웹페이지를 동작하게 만든다</p>
+                        <p>클릭, 입력, 스크롤에 반응하는 기능 구현</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="footer">
@@ -2592,7 +2661,7 @@
               <div class="card-content card-content--inner">
                 <div class="slide-body slide-body--tight">
                   <h2 class="slide-h2">HTML의 기본 구조</h2>
-                  <p class="slide-p">HTML의 기본 구조는 웹페이지의 뼈대입니다.<br />가장 단순한 형태는 아래처럼 구성됩니다.</p>
+                  <p class="slide-p">HTML의 기본 구조는 웹페이지의 뼈대가 됩니다.<br />가장 단순한 형태는 아래처럼 구성됩니다.</p>
                   <div class="glass page3-example">
                     <pre>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -2613,7 +2682,7 @@
                         <span class="p3tag-card__check" aria-hidden="true">✓</span>
                         <div class="p3tag-card__copy">
                           <strong class="p3tag-card__title">&lt;!DOCTYPE html&gt;</strong>
-                          <span class="p3tag-card__desc">이 문서가 HTML라는 선언</span>
+                          <span class="p3tag-card__desc">이 문서가 HTML이라는 선언</span>
                         </div>
                       </div>
                     </div>
@@ -2633,7 +2702,7 @@
                         <span class="p3tag-card__check" aria-hidden="true">✓</span>
                         <div class="p3tag-card__copy">
                           <strong class="p3tag-card__title">&lt;head&gt;</strong>
-                          <span class="p3tag-card__desc">형식 설정 영역 (제목, 인코딩, 스타일 등)</span>
+                          <span class="p3tag-card__desc">문서의 설정 정보 영역 (제목, 문자 인코딩, 스타일 등)</span>
                         </div>
                       </div>
                     </div>
@@ -2748,61 +2817,6 @@
               </div>
             </section>
 
-            <!-- 5/8 HTML·CSS·JS 한눈에 -->
-            <section class="card" id="hcn-card-5" aria-label="슬라이드 5">
-              <div class="card-bg"></div>
-              <div class="card-content card-content--inner">
-                <div class="slide-body slide-body--tight slide-body--no-scroll">
-                  <h2 class="slide-h2">웹 사이트의 구성요소</h2>
-                  <div class="page7-hero" data-slot="page7-triangle">
-                    <img
-                      src="https://kikeun.github.io/KIKEUN/ai69.webp"
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      referrerpolicy="no-referrer-when-downgrade"
-                    />
-                    <p class="page7-hero__caption" role="note">
-                      ※로고는 WWW(월드와이드웹)의 공식 로고로, 방패 모양은 보호, 신뢰성, 안정성을 의미합니다.
-                    </p>
-                  </div>
-                  <div class="tri-grid">
-                    <div class="tri-item">
-                      <span class="tri-item__icon" aria-hidden="true">🏗️</span>
-                      <div class="tri-item__body">
-                        <strong>HTML = 뼈대</strong>
-                        <p>웹페이지의 구조를 만든다</p>
-                        <p>제목, 문단, 이미지 등 기본 틀을 구성</p>
-                      </div>
-                    </div>
-                    <div class="tri-item">
-                      <span class="tri-item__icon" aria-hidden="true">🎨</span>
-                      <div class="tri-item__body">
-                        <strong>CSS = 옷</strong>
-                        <p>웹페이지의 스타일을 꾸민다</p>
-                        <p>색상, 크기, 배치로 보기 좋게 만듦</p>
-                      </div>
-                    </div>
-                    <div class="tri-item">
-                      <span class="tri-item__icon" aria-hidden="true">⚙️</span>
-                      <div class="tri-item__body">
-                        <strong>JavaScript = 움직임</strong>
-                        <p>웹페이지를 동작하게 만든다</p>
-                        <p>클릭, 입력, 스크롤에 반응하는 기능 구현</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="footer">
-                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M12 45L28 35V80L12 90V45Z"/>
-                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
-                  </svg>
-                  <span class="footer-text">AI디자인랩</span>
-                </div>
-              </div>
-            </section>
-
             <!-- 6/8 CSS -->
             <section class="card" id="hcn-card-6" aria-label="슬라이드 6">
               <div class="card-bg"></div>
@@ -2882,7 +2896,7 @@
                     </div>
                   </div>
                   <div class="page6-capabilities">
-                    <h3 class="page6-capabilities__title">JavaScript로 구현할 수 있는 기능들(예시)</h3>
+                    <h3 class="page6-capabilities__title">JavaScript로 구현할 수 있는 기능들 (예시)</h3>
                     <ul class="page6-capabilities__list">
                       <li class="page6-cap-card">
                         <span class="page6-cap-card__accent" aria-hidden="true"></span>
@@ -2930,7 +2944,7 @@
               <div class="card-bg"></div>
               <div class="card-content card-content--inner">
                 <div class="slide-body slide-body--tight slide-body--no-scroll page8-slide">
-                  <h2 class="slide-h2 page8-slide__h2">AI와 함께 HTML CSS JS로 구성된<br />멋진 웹 페이지를 만들어 보세요</h2>
+                  <h2 class="slide-h2 page8-slide__h2">복잡하게만 보였던 HTML,<br />AI와 함께라면 웹페이지도 어렵지 않습니다.</h2>
                   <div class="page8-stack" aria-label="HTML+CSS+JS 라이브 데모">
                     <div class="page8-demo-chrome" aria-hidden="true">
                       <div class="page8-demo-chrome__dots">
@@ -2965,10 +2979,14 @@
                         <span class="page8-demo__greet" id="page8-demo-greet">안녕하세요</span><br aria-hidden="true" />
                         <span class="page8-demo__brand" id="page8-demo-brand">AI디자인랩 입니다!</span>
                       </p>
+                      <p class="page8-demo__note">
+                        AI 관련 문의사항이 있으시면<br aria-hidden="true" />
+                        PLAYGROUND 자유게시판에 언제든지 남겨주세요.
+                      </p>
                       <a
                         class="page8-cta"
                         id="page8-playground-link"
-                        href="https://o365hdec.sharepoint.com/sites/Playground"
+                        href="https://teams.microsoft.com/l/channel/19%3A1b51738e3b8448fab35322050c0047b2%40thread.tacv2/%F0%9F%8F%80%20%EC%9E%90%EC%9C%A0%EA%B2%8C%EC%8B%9C%ED%8C%90?groupId=43c83ad4-1ac0-44ad-8ab1-6729a6279fcb&tenantId=5fcb0def-a698-40ce-a73a-ea61130c13c6"
                         target="_blank"
                         rel="noopener noreferrer"
                       >PLAYGROUND 접속하기</a>
@@ -3206,6 +3224,15 @@
           if (!nav8.checked) return;
           likeCount += 1;
           likeCountEl.textContent = likeCount + "회";
+          if (brand8) {
+            step = (step + 1) % palettes.length;
+            var pal2 = palettes[step];
+            brand8.style.color = pal2.brand;
+            brand8.classList.add("is-pulse");
+            window.setTimeout(function () {
+              brand8.classList.remove("is-pulse");
+            }, 200);
+          }
           var w = logicalW;
           var h = logicalH;
           burst(w * 0.35, h * 0.42, 72);
