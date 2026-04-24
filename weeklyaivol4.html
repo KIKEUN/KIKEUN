@@ -434,8 +434,8 @@
     }
 
     #hcn-card-2 .slide-p {
-      font-size: 16px;
-      line-height: 1.58;
+      font-size: 14px;
+      line-height: 1.52;
     }
 
     #hcn-card-2 .compare-table-wrap {
@@ -450,20 +450,20 @@
     }
 
     #hcn-card-2 .compare-table {
-      font-size: 11px;
+      font-size: 11.5px;
       table-layout: fixed;
       width: 100%;
       border-collapse: collapse;
     }
 
     #hcn-card-2 .compare-table tbody td {
-      font-size: 10.5px;
-      line-height: 1.28;
+      font-size: 11px;
+      line-height: 1.3;
     }
 
     #hcn-card-2 .compare-table th,
     #hcn-card-2 .compare-table td {
-      padding: 5px 6px;
+      padding: 6px 7px;
       text-align: center;
       vertical-align: middle;
       word-break: keep-all;
@@ -488,7 +488,7 @@
     }
 
     #hcn-card-2 .compare-table thead .compare-table__subhead {
-      font-size: 10.5px;
+      font-size: 11px;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: #0a1211;
@@ -639,6 +639,11 @@
       line-height: 1.25;
     }
 
+    #hcn-card-5 .slide-body.slide-body--tri-fill > .slide-h2:first-of-type {
+      font-size: calc(var(--font-slide-title) + 2px);
+      line-height: 1.22;
+    }
+
     .slide-p {
       font-size: var(--font-slide-p);
       font-weight: 500;
@@ -705,30 +710,34 @@
     #hcn-card-3 .slide-body > .slide-p:first-of-type {
       flex-shrink: 0;
       margin: 0 0 2px;
-      font-size: clamp(13px, 1.9vmin, 15px);
+      font-size: clamp(14px, 2vmin, 16px);
       line-height: 1.45;
     }
 
     /* 위: 코드 박스만 남은 높이를 채움 · 아래: 설명은 내용 높이만(빈 여백 없음) */
     #hcn-card-3 .page3-example {
-      flex: 1 1 0;
+      flex: 0 1 auto;
       min-height: 0;
+      max-height: 46%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: clamp(8px, 1.4vmin, 12px) clamp(10px, 1.9vmin, 15px);
+      justify-content: flex-start;
+      padding: clamp(6px, 1.2vmin, 10px) clamp(8px, 1.6vmin, 12px);
     }
 
     #hcn-card-3 .page3-key {
-      flex: 0 0 auto;
+      flex: 1 1 0;
+      min-height: 0;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
       padding: 0;
       background: none;
       border: 0;
       box-shadow: none;
       backdrop-filter: none;
+      scrollbar-width: thin;
     }
 
     /* 태그 설명: 왼쪽 컬러 바 + 체크 + 제목/부제 카드 */
@@ -762,15 +771,15 @@
     #hcn-card-3 .p3tag-card__body {
       display: flex;
       align-items: flex-start;
-      gap: 6px;
-      padding: 6px 8px 6px 7px;
+      gap: 8px;
+      padding: 8px 10px 8px 9px;
       flex: 1;
       min-width: 0;
     }
 
     #hcn-card-3 .p3tag-card__check {
       flex-shrink: 0;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 900;
       line-height: 1.35;
       color: #16a34a;
@@ -787,7 +796,7 @@
     /* 태그명은 왼쪽 바·체크와 같은 액센트 색 */
     #hcn-card-3 .p3tag-card__title {
       display: block;
-      font-size: clamp(11.5px, 2.1vmin, 14px);
+      font-size: clamp(13px, 2.35vmin, 15.5px);
       font-weight: 850;
       letter-spacing: -0.02em;
       color: var(--p3-accent);
@@ -798,7 +807,7 @@
 
     #hcn-card-3 .p3tag-card__desc {
       display: block;
-      font-size: clamp(10.5px, 1.95vmin, 13px);
+      font-size: clamp(12.5px, 2.15vmin, 14.5px);
       font-weight: 500;
       line-height: 1.4;
       color: rgba(15, 23, 42, 0.55);
@@ -808,16 +817,17 @@
     /* 3페이지 예시 코드: --font-code 유지, 크기만 .glass pre 보다 살짝 크게 */
     #hcn-card-3 .page3-example pre {
       font-family: var(--font-code);
-      font-size: clamp(12px, 2.05vmin, 14px);
+      font-size: clamp(10.5px, 1.75vmin, 12.5px);
       font-weight: 600;
-      line-height: 1.5;
+      line-height: 1.38;
       white-space: pre-wrap;
       word-break: break-all;
       color: #0b6fd6;
       margin: 0;
       flex: 0 1 auto;
       min-height: 0;
-      overflow: auto;
+      overflow-x: hidden;
+      overflow-y: auto;
       scrollbar-width: thin;
     }
 
@@ -944,68 +954,178 @@
       text-shadow: none;
     }
 
-    /* 5페이지 좌측: 미리보기가 들어갈 때 슬롯 정리 */
-    #hcn-card-6 .image-slot--split > .image-slot[data-slot="page5-before"] {
-      padding: 0;
-      align-items: stretch;
-      justify-content: stretch;
-      border-style: solid;
-      border-color: rgba(6, 53, 50, 0.28);
-      background: transparent;
-      overflow: hidden;
-    }
-
-    #hcn-card-6 .image-slot--split > .image-slot[data-slot="page5-before"] > .glass.page3-live {
+    /* 6페이지: 단계별 패널 — 남는 높이 균등 분배, 슬라이드 스크롤 없음 */
+    #hcn-card-6 .slide-body.slide-body--tight {
       flex: 1;
       display: flex;
       flex-direction: column;
       min-height: 0;
-      border-radius: 12px;
+      gap: 6px;
+      overflow: hidden;
+    }
+
+    #hcn-card-6 .slide-body.slide-body--tight > .slide-h2 {
+      flex-shrink: 0;
+    }
+
+    #hcn-card-6 .page6-block {
+      flex: 1 1 0;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      padding: 8px 10px 10px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.48);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 8px 22px rgba(0, 40, 45, 0.08);
+    }
+
+    #hcn-card-6 .page6-block .page6-live-wide {
+      border: 0;
+    }
+
+    /* 6페이지: 상단·CSS 안내 문장 동일 글자 크기 */
+    #hcn-card-6 .page6-vibe-lead,
+    #hcn-card-6 .page6-css-lead {
+      font-size: clamp(14px, 2vmin, 16px);
+    }
+
+    /* 6페이지: 바이브 코딩 프롬프트 + 가로 미리보기 */
+    #hcn-card-6 .page6-vibe-lead {
       margin: 0;
+      flex-shrink: 0;
+      font-weight: 800;
+      color: #0a1211;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
     }
 
-    #hcn-card-6 .image-slot--split > .image-slot[data-slot="page5-before"] .page3-live__inner {
+    #hcn-card-6 .page6-prompt {
+      flex-shrink: 0;
+    }
+
+    #hcn-card-6 .page6-prompt,
+    #hcn-card-7 .page6-prompt {
+      width: 100%;
+      padding: 8px 10px 9px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.06);
+      border: 1px solid rgba(15, 23, 42, 0.1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+
+    #hcn-card-6 .page6-prompt__label,
+    #hcn-card-7 .page6-prompt__label {
+      display: inline-block;
+      margin-bottom: 5px;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #4338ca;
+      background: rgba(99, 102, 241, 0.14);
+      border-radius: 6px;
+    }
+
+    #hcn-card-6 .page6-prompt__text,
+    #hcn-card-7 .page6-prompt__text {
+      margin: 0;
+      font-size: clamp(11px, 1.85vmin, 13px);
+      font-weight: 600;
+      line-height: 1.45;
+      color: rgba(15, 23, 42, 0.88);
+      word-break: keep-all;
+    }
+
+    #hcn-card-6 .page6-css-lead {
+      margin: 0;
+      flex-shrink: 0;
+      font-weight: 800;
+      line-height: 1.28;
+      color: rgba(10, 18, 17, 0.94);
+      letter-spacing: -0.032em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #hcn-card-6 .page6-live-wide {
+      width: 100%;
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: none;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(6, 53, 50, 0.22);
+    }
+
+    #hcn-card-6 .page6-live-wide .glass.page3-live,
+    #hcn-card-6 .page6-live-wide .glass.page5-after-live {
+      height: 100%;
+      max-height: none;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      border-radius: 12px;
+    }
+
+    #hcn-card-6 .page6-live-wide .page3-live__inner {
       flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      padding: 10px 12px 12px;
     }
 
-    /* 좌측: CSS 없을 때 기본처럼 본문 왼쪽 정렬(.image-slot의 text-align:center 상속 제거) */
-    #hcn-card-6 .image-slot[data-slot="page5-before"] {
+    #hcn-card-6 .page6-live-wide--html .page3-live__inner {
       text-align: left;
     }
 
-    #hcn-card-6 .image-slot[data-slot="page5-before"] .page3-live__inner {
+    #hcn-card-6 .page6-live-wide--html .page3-live__inner h1 {
+      margin: 0 0 6px;
+      font-size: clamp(15px, 2.6vmin, 18px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: rgba(15, 23, 42, 0.92);
       text-align: left;
     }
 
-    #hcn-card-6 .image-slot[data-slot="page5-before"] .page3-live__inner h1,
-    #hcn-card-6 .image-slot[data-slot="page5-before"] .page3-live__inner p {
+    #hcn-card-6 .page6-live-wide--html .page3-live__inner p {
+      margin: 0 0 6px;
+      font-size: clamp(12px, 2vmin, 14px);
+      font-weight: 650;
+      color: rgba(15, 23, 42, 0.78);
       text-align: left;
     }
 
-    #hcn-card-6 .image-slot[data-slot="page5-before"] .page3-live__inner button {
+    #hcn-card-6 .page6-live-wide--html .page3-live__inner button {
       align-self: flex-start;
     }
 
-    /* 5페이지 우측: HTML+CSS만으로 꾸민 미리보기(스크립트 없음) */
-    #hcn-card-6 .image-slot--split > .image-slot[data-slot="page5-after"] {
-      padding: 0;
-      align-items: stretch;
-      justify-content: stretch;
-      border-style: solid;
-      border-color: rgba(6, 53, 50, 0.28);
-      background: transparent;
-      overflow: hidden;
+    #hcn-card-6 .page6-live-wide--combo .page5-after-live__inner {
+      padding: 12px 12px 14px;
+      gap: 7px;
     }
 
-    #hcn-card-6 .image-slot--split > .image-slot[data-slot="page5-after"] > .glass.page5-after-live {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      border-radius: 12px;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
+    #hcn-card-6 .page6-live-wide--combo .page5-after-live__greet {
+      font-size: clamp(14px, 2.85vmin, 18px);
+    }
+
+    #hcn-card-6 .page6-live-wide--combo .page5-after-live__brand {
+      font-size: clamp(12px, 2.15vmin, 14.5px);
+    }
+
+    #hcn-card-6 .page6-live-wide--combo .page5-after-live__cta {
+      padding: 8px 16px;
+      font-size: clamp(10px, 1.65vmin, 12px);
     }
 
     #hcn-card-6 .page5-after-live__inner {
@@ -1018,6 +1138,7 @@
       padding: 12px 10px 14px;
       text-align: center;
       min-height: 0;
+      overflow: hidden;
       background:
         radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255, 255, 255, 0.9) 0%, transparent 55%),
         linear-gradient(165deg, #eff6ff 0%, #e0e7ff 42%, #faf5ff 100%);
@@ -1082,48 +1203,6 @@
     #hcn-card-6 .page5-after-live__cta:focus-visible {
       outline: 2px solid rgba(99, 102, 241, 0.75);
       outline-offset: 3px;
-    }
-
-    /* 5페이지: 슬라이드 안 스크롤 없음 */
-    #hcn-card-6 .slide-body.slide-body--no-scroll {
-      overflow-y: hidden !important;
-      min-height: 0;
-    }
-
-    #hcn-card-6 .page5-brace {
-      font-family: var(--font-code);
-    }
-
-    #hcn-card-6 .page5-grammar-h2 {
-      margin-top: 2px;
-    }
-
-    #hcn-card-6 .page5-grammar-h2 + .slide-p {
-      font-size: 12.5px;
-      line-height: 1.52;
-    }
-
-    #hcn-card-6 .page5-css-figure {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      margin: 6px auto 0;
-      padding: 0;
-      flex-shrink: 0;
-      border: 0;
-      border-radius: 12px;
-      background: transparent;
-      box-shadow: none;
-      overflow: hidden;
-      line-height: 0;
-    }
-
-    #hcn-card-6 .page5-css-figure img {
-      display: block;
-      width: 100%;
-      height: auto;
-      margin: 0;
-      border-radius: 12px;
     }
 
     /* 6페이지: HTML+CSS+JS 미리보기 */
@@ -1349,7 +1428,7 @@
 
     #hcn-card-7 .page6-js-demo__note {
       margin: 2px 0 0;
-      font-size: clamp(10px, 1.55vmin, 12.5px);
+      font-size: clamp(11px, 1.72vmin, 14px);
       font-weight: 600;
       color: rgba(67, 56, 120, 0.82);
       line-height: 1.4;
@@ -2233,7 +2312,7 @@
       color: #0a1211;
     }
 
-    /* 4페이지(태그 예시): 2열 그리드 · 카드 박스 · 가운데 정렬 · 구분선 */
+    /* 4페이지(태그 예시): 2×4 그리드가 남은 높이를 균등 분배 */
     #hcn-card-4 .image-slot { display: none; }
     #hcn-card-4 .slide-body.slide-body--tight {
       gap: 6px;
@@ -2241,12 +2320,12 @@
       min-height: 0;
     }
     #hcn-card-4 .tag-grid {
-      gap: 6px;
       flex: 1;
       min-height: 0;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: repeat(4, minmax(0, 1fr));
+      gap: 6px;
       align-content: stretch;
     }
     #hcn-card-4 .tag-card {
@@ -2260,6 +2339,7 @@
       padding: 10px 8px 10px;
       font-size: 12px;
       line-height: 1.45;
+      color: #1a1a1a;
       background: rgba(255, 255, 255, 0.48);
       border: 1px solid rgba(255, 255, 255, 0.6);
       border-radius: 12px;
@@ -2390,100 +2470,88 @@
       word-break: keep-all;
     }
 
-    /* 5페이지(HTML·CSS·JS): 단일 반투명 박스 + ai69.webp */
-    #hcn-card-5 .slide-body.slide-body--tight {
+    /* 내비 3번(hcn-card-5): ai69 없음 · 뼈대·옷·움직임 세로 꽉 + 큰 아이콘 + 제목 아래 구분선 */
+    #hcn-card-5 .slide-body.slide-body--tri-fill {
       min-height: 0;
-      gap: 6px !important;
-      padding-top: 12px !important;
-      padding-bottom: 8px !important;
+      flex: 1;
+      gap: 10px !important;
+      padding-top: 10px !important;
+      padding-bottom: 6px !important;
+      overflow-y: hidden;
     }
 
-    #hcn-card-5 .slide-body.slide-body--tight > .slide-h2 {
+    #hcn-card-5 .slide-body.slide-body--tri-fill > .slide-h2 {
       flex-shrink: 0;
       margin: 0;
-    }
-
-    #hcn-card-5 .page7-hero {
-      position: relative;
-      flex: 0 0 auto;
-      width: 100%;
-      height: clamp(124px, 28vmin, 198px);
-      border-radius: 14px;
-      overflow: hidden;
-      line-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.22);
-      border: 1px solid rgba(255, 255, 255, 0.38);
-      backdrop-filter: blur(14px);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.45),
-        0 12px 36px rgba(0, 40, 45, 0.08);
-    }
-
-    /* 박스 크기는 유지, 이미지만 확대(박스 밖은 overflow로 잘림) */
-    #hcn-card-5 .page7-hero img {
-      display: block;
-      width: auto;
-      height: auto;
-      max-width: 97%;
-      max-height: 97%;
-      object-fit: contain;
-      object-position: center;
-      transform: scale(1.5);
-      transform-origin: center center;
-    }
-
-    #hcn-card-5 .page7-hero__caption {
-      position: absolute;
-      right: 7px;
-      bottom: 5px;
-      left: 7px;
-      margin: 0;
-      text-align: right;
-      font-size: clamp(7px, 1.35vmin, 8.5px);
-      font-weight: 500;
-      line-height: 1.35;
-      color: rgba(75, 85, 99, 0.88);
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 1px 0 rgba(255, 255, 255, 0.55);
-      pointer-events: none;
-      z-index: 2;
-      word-break: keep-all;
     }
 
     #hcn-card-5 .tri-grid {
-      flex-shrink: 0;
-      gap: 6px;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(8px, 1.6vmin, 12px);
     }
 
     #hcn-card-5 .tri-item {
-      padding: 8px 11px;
-      gap: 10px;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: clamp(14px, 3.2vmin, 24px);
+      padding: clamp(10px, 2vmin, 16px) clamp(12px, 2.5vw, 18px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.48);
+      background: rgba(255, 255, 255, 0.32);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 10px 28px rgba(0, 40, 45, 0.1);
     }
 
     #hcn-card-5 .tri-item__icon {
-      font-size: clamp(21px, 3.65vmin, 28px);
+      flex-shrink: 0;
+      width: clamp(80px, 22vmin, 112px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(50px, 12.5vmin, 80px);
+      line-height: 1;
+    }
+
+    #hcn-card-5 .tri-item__body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
     }
 
     #hcn-card-5 .tri-item__body strong {
-      font-size: clamp(16.5px, 3vmin, 20.5px);
+      display: block;
+      font-size: clamp(17px, 3.1vmin, 22px);
       font-weight: 900;
       letter-spacing: -0.02em;
       color: #0a1211;
-      margin-bottom: 3px;
-      line-height: 1.28;
+      line-height: 1.25;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(6, 53, 50, 0.2);
     }
 
     #hcn-card-5 .tri-item__body p {
-      font-size: clamp(12.5px, 2.25vmin, 15.5px);
+      font-size: clamp(13.5px, 2.35vmin, 16.5px);
       font-weight: 650;
       line-height: 1.45;
       color: rgba(0, 0, 0, 0.82);
+      margin: 0;
     }
 
     #hcn-card-5 .tri-item__body p + p {
-      margin-top: 10px;
+      margin-top: 6px;
     }
 
     #hcn-card-5 .card-content--inner > .footer {
@@ -2563,7 +2631,9 @@
                   <h1 class="cover-title-stack">
                     <span class="cover-html-tag" aria-hidden="true">&lt;head&gt;</span>
                     <span class="cover-headline">
-                      <span class="cover-headline__mark">HTML</span> 웹을 만드는 기본 언어
+          
+                  
+                       웹페이지를 만드는 </br>필수 언어<span class="cover-headline__mark">HTML</span>, </br>바이브 코딩으로 쉽게 시작해보세요
                     </span>
                     <span class="cover-html-tag" aria-hidden="true">&lt;/head&gt;</span>
                   </h1>
@@ -2572,7 +2642,8 @@
                     <div class="cover-body-snippet__inner">
                       <p class="cover-body-snippet__line">지금 보고 있는 화면, 뉴스, 쇼핑몰</p>
                       <p class="cover-body-snippet__line">모든 웹페이지의 기초는 HTML입니다.</p>
-                      <p class="cover-body-snippet__line">HTML이 무엇인지, 웹페이지는 어떻게 구성되는지 알아봐요</p>
+                      <p class="cover-body-snippet__line">HTML이 무엇인지, 웹페이지는 어떻게 구성되되는지 알아보고</p>
+                      <p class="cover-body-snippet__line">바이브 코딩으로 쉽게 만들어봐요</p>
                     </div>
                     <span class="cover-body-snippet__tag cover-body-snippet__tag--close" aria-hidden="true">&lt;/body&gt;</span>
                   </div>
@@ -2604,15 +2675,13 @@
                     />
                   </div>
                   <p class="slide-p">HTML은 <span class="emph">Hypertext Markup Language</span>의 약자로, 웹 페이지를 만드는 데 쓰는 언어입니다. 웹 페이지는 모두 HTML로 작성 되며, <span class="emph">HTML</span>, <span class="emph">CSS</span>, <span class="emph">JavaScript</span>로 구성되어 있습니다.</p>
-                  <p class="slide-p">HTML은 <span class="emph">마크업</span> 언어의 한 종류로, <span class="emph">&lt;h1&gt;, &lt;p&gt;</span> 같은<span class="emph"> 태그</span>를 사용해 각 구성요소를 나눕니다. 이를 통해 웹 페이지가 구조화 됩니다.</p>
+                  <p class="slide-p">HTML은 <span class="emph">&lt;h1&gt;, &lt;p&gt;</span> 같은 <span class="emph">태그</span>를 사용해 각 구성요소를 나눕니다. 이를 통해 웹 페이지가 구조화 됩니다.</p>
+                  <p class="slide-p">여기서 <span class="emph">태그</span>는 < > 기호로 감싸진 HTML의 기본 문법으로, 각 요소의 의미와 역할(제목, 문단, 이미지 등)을 정의하는 표시입니다.</p>
                   <div class="compare-table-wrap">
                     <table class="compare-table">
                       <thead>
                         <tr>
-                          <th rowspan="2" scope="col" class="compare-table__corner">형식</th>
-                          <th colspan="2" scope="colgroup" class="compare-table__markup-parent">마크업</th>
-                        </tr>
-                        <tr>
+                          <th scope="col" class="compare-table__corner">형식</th>
                           <th scope="col" class="compare-table__subhead">HTML</th>
                           <th scope="col" class="compare-table__subhead">Markdown</th>
                         </tr>
@@ -2647,20 +2716,8 @@
             <section class="card" id="hcn-card-5" aria-label="슬라이드 5">
               <div class="card-bg"></div>
               <div class="card-content card-content--inner">
-                <div class="slide-body slide-body--tight slide-body--no-scroll">
+                <div class="slide-body slide-body--tight slide-body--tri-fill">
                   <h2 class="slide-h2">웹 페이지의 구성요소</h2>
-                  <div class="page7-hero" data-slot="page7-triangle">
-                    <img
-                      src="https://kikeun.github.io/KIKEUN/ai69.webp"
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      referrerpolicy="no-referrer-when-downgrade"
-                    />
-                    <p class="page7-hero__caption" role="note">
-                      ※로고는 WWW(월드와이드웹)의 공식 로고로, 방패 모양은 보호, 신뢰성, 안정성을 의미합니다.
-                    </p>
-                  </div>
                   <div class="tri-grid">
                     <div class="tri-item">
                       <span class="tri-item__icon" aria-hidden="true">🏗️</span>
@@ -2864,13 +2921,16 @@
             <section class="card" id="hcn-card-6" aria-label="슬라이드 6">
               <div class="card-bg"></div>
               <div class="card-content card-content--inner">
-                <div class="slide-body slide-body--tight slide-body--no-scroll">
-                  <h2 class="slide-h2">CSS로 HTML에 옷을 입히기</h2>
-                  <p class="slide-p"><span class="emph">HTML만</span> 있으면 내용은 있지만 색·배치·글꼴이 단조롭습니다. <span class="emph">CSS</span>를 더하면 <span class="emph">색상</span>, <span class="emph">크기</span>, <span class="emph">여백</span>, <span class="emph">폰트</span>, <span class="emph">정렬</span>, <span class="emph">레이아웃(flex, grid)</span>으로 완성도가 올라갑니다.</p>
-
-                  <div class="image-slot image-slot--split" data-slot="page5-before-after">
-                    <div class="image-slot" data-slot="page5-before">
-                      <div class="glass page3-live" aria-label="미리보기 · HTML만">
+                <div class="slide-body slide-body--tight">
+                  <h2 class="slide-h2">바이브코딩으로 웹페이지 만들기</h2>
+                  <div class="page6-block" aria-label="HTML 단계">
+                    <p class="page6-vibe-lead">바이브 코딩만으로 HTML을 구조화 할 수 있습니다.</p>
+                    <div class="page6-prompt" aria-label="프롬프트 · HTML 생성 요청">
+                      <span class="page6-prompt__label">프롬프트</span>
+                      <p class="page6-prompt__text">'안녕하세요 AI디자인랩입니다!' 내용과  PLAYGROUND 접속하기 버튼 만들어줘</p>
+                    </div>
+                    <div class="page6-live-wide page6-live-wide--html" aria-label="미리보기 · HTML만">
+                      <div class="glass page3-live">
                         <div class="page3-live__bar" aria-hidden="true">
                           <span class="page3-live__hint">HTML만</span>
                         </div>
@@ -2881,8 +2941,15 @@
                         </div>
                       </div>
                     </div>
-                    <div class="image-slot" data-slot="page5-after">
-                      <div class="glass page5-after-live page3-live" aria-label="미리보기 · HTML+CSS">
+                  </div>
+                  <div class="page6-block" aria-label="CSS 단계">
+                    <p class="slide-p page6-css-lead">CSS를 더하면 색상, 크기, 여백, 폰트, 정렬으로 완성도가 올라갑니다.</p>
+                    <div class="page6-prompt" aria-label="프롬프트 · CSS 스타일 요청">
+                      <span class="page6-prompt__label">프롬프트</span>
+                      <p class="page6-prompt__text">보라색느낌을 살려서 디자인해줘</p>
+                    </div>
+                    <div class="page6-live-wide page6-live-wide--combo" aria-label="미리보기 · HTML+CSS">
+                      <div class="glass page5-after-live page3-live">
                         <div class="page3-live__bar" aria-hidden="true">
                           <span class="page3-live__hint">HTML+CSS</span>
                         </div>
@@ -2894,19 +2961,6 @@
                       </div>
                     </div>
                   </div>
-                  <h2 class="slide-h2 page5-grammar-h2">CSS 기본 문법</h2>
-                  <p class="slide-p">
-                    CSS 문법은 크게 <span class="emph">셀렉터</span>와 <span class="emph">선언 블록</span>으로 나뉩니다. 먼저 <span class="emph">셀렉터</span>로 스타일을 지정할 HTML 요소나 <span class="emph">id</span>, <span class="emph">class</span> 등을 선택한 뒤 그에 대한 스타일을 <span class="emph">선언 블록</span>인 중괄호<span class="emph page5-brace">{}</span> 사이에 지정하는 방식입니다. 그리고 각각의 스타일 속성들은 세미콜론 <span class="emph page5-brace">;</span> 으로 구분합니다.
-                  </p>
-                  <figure class="page5-css-figure">
-                    <img
-                      src="https://kikeun.github.io/KIKEUN/ai66.png"
-                      alt="CSS 기본 문법: 셀렉터·선언 블록·속성과 값"
-                      loading="lazy"
-                      decoding="async"
-                      referrerpolicy="no-referrer-when-downgrade"
-                    />
-                  </figure>
                 </div>
                 <div class="footer">
                   <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2924,7 +2978,10 @@
               <div class="card-content card-content--inner">
                 <div class="slide-body slide-body--tight">
                   <h2 class="slide-h2">JavaScript로 HTML움직임 넣기</h2>
-                  <p class="slide-p"><span class="emph">HTML·CSS</span>는 정적입니다. <span class="emph">JavaScript</span>는 클릭·입력·타이머 등 사용자 행동에 반응하는 동적 동작을 만듭니다.</p>
+                  <div class="page6-prompt" aria-label="프롬프트 · JavaScript 동작 요청">
+                    <span class="page6-prompt__label">프롬프트</span>
+                    <p class="page6-prompt__text">접속하기를 누를때마다 방문회수가 표시되고, 배경과 글씨 색이 변경되게 구현해줘.</p>
+                  </div>
                   <div class="image-slot image-slot--tall" data-slot="page6-interaction">
                     <div class="glass page6-js-demo page3-live" aria-label="미리보기 · HTML+CSS+JavaScript 예시">
                       <div class="page3-live__bar" aria-hidden="true">
