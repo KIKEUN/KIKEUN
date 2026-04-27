@@ -1077,11 +1077,11 @@
       flex: 0 0 auto;
       position: relative;
       display: flex;
-      flex-direction: column;
-      gap: 5px;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      flex-direction: row;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: stretch;
+      text-align: left;
       width: 100%;
       padding: 16px 16px 17px;
       min-height: 132px;
@@ -1098,8 +1098,7 @@
         0 16px 38px rgba(0, 40, 45, 0.11),
         0 0 0 1px rgba(168, 85, 247, 0.18),
         0 0 0 6px rgba(56, 189, 248, 0.07);
-      cursor: pointer;
-      text-decoration: none;
+      cursor: default;
       -webkit-tap-highlight-color: transparent;
       transform: translateZ(0);
       transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
@@ -1107,16 +1106,7 @@
     }
 
     #hcn-card-7 .page6-guide-card::before {
-      content: "";
-      position: absolute;
-      inset: -40% -60%;
-      background:
-        linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.85) 50%, transparent 65%);
-      opacity: 0.35;
-      transform: translateX(-18%) rotate(6deg);
-      filter: blur(2px);
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.35s ease;
+      content: none;
     }
 
     #hcn-card-7 .page6-guide-card::after {
@@ -1127,6 +1117,7 @@
       padding: 1px;
       background: linear-gradient(135deg, rgba(56, 189, 248, 0.65), rgba(168, 85, 247, 0.65), rgba(34, 197, 94, 0.45));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
       pointer-events: none;
@@ -1134,52 +1125,47 @@
       transition: opacity 0.2s ease;
     }
 
-    #hcn-card-7 .page6-guide-card:hover {
-      transform: translateY(-2px) scale(1.01);
-      border-color: rgba(255, 255, 255, 0.86);
+    /* 박스 전체에는 별도 인터랙션 효과 없음 (버튼만 강조) */
+    #hcn-card-7 .page6-guide-card:hover,
+    #hcn-card-7 .page6-guide-card:active {
+      transform: none;
+      border-color: rgba(255, 255, 255, 0.68);
       box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.6),
-        0 22px 48px rgba(0, 40, 45, 0.14),
-        0 0 0 1px rgba(168, 85, 247, 0.22),
-        0 0 0 8px rgba(168, 85, 247, 0.09),
-        0 0 42px rgba(56, 189, 248, 0.22);
-    }
-
-    #hcn-card-7 .page6-guide-card:hover::before {
-      opacity: 0.55;
-      transform: translateX(18%) rotate(6deg);
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 16px 38px rgba(0, 40, 45, 0.11),
+        0 0 0 1px rgba(168, 85, 247, 0.18),
+        0 0 0 6px rgba(56, 189, 248, 0.07);
     }
 
     #hcn-card-7 .page6-guide-card:hover::after {
-      opacity: 1;
+      opacity: 0.85;
     }
 
-    #hcn-card-7 .page6-guide-card:active {
-      transform: translateY(2px) scale(0.995);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.55),
-        0 8px 18px rgba(0, 40, 45, 0.08);
-    }
-
-    #hcn-card-7 .page6-guide-card:focus-visible {
-      outline: 2px solid rgba(168, 85, 247, 0.55);
-      outline-offset: 3px;
+    #hcn-card-7 .page6-guide-card__left {
+      position: relative;
+      z-index: 1;
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
     }
 
     #hcn-card-7 .page6-guide-card__lead {
       margin: 0;
-      font-size: clamp(10.8px, 1.78vmin, 13.5px);
+      font-size: clamp(13px, 2.2vmin, 16px);
       font-weight: 900;
       letter-spacing: -0.03em;
       color: #0a1211;
-      line-height: 1.18;
+      line-height: 1.22;
       word-break: keep-all;
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
     }
 
     #hcn-card-7 .page6-guide-card__title {
       margin: 0;
-      font-size: clamp(14.5px, 2.45vmin, 18px);
+      font-size: clamp(14.5px, 2.5vmin, 18.5px);
       font-weight: 900;
       letter-spacing: -0.02em;
       color: rgba(10, 18, 17, 0.96);
@@ -1187,24 +1173,86 @@
       word-break: keep-all;
     }
 
-    #hcn-card-7 .page6-guide-card__link {
-      align-self: center;
-      display: inline-block;
-      margin: 2px 0 0;
-      padding: 0;
-      font-size: clamp(13px, 2.2vmin, 15.5px);
-      font-weight: 900;
-      letter-spacing: -0.01em;
-      color: rgba(67, 56, 202, 0.92);
-      text-decoration: none;
+    #hcn-card-7 .page6-guide-card__sub {
+      margin: 0;
+      font-size: clamp(11px, 1.75vmin, 13px);
+      font-weight: 750;
+      letter-spacing: -0.02em;
+      color: rgba(30, 41, 59, 0.78);
+      line-height: 1.25;
       word-break: keep-all;
-      opacity: 0.95;
     }
 
-    #hcn-card-7 .page6-guide-card__link::after {
+    #hcn-card-7 .page6-guide-card__btn {
+      position: relative;
+      z-index: 1;
+      flex: 0 0 clamp(140px, 34%, 200px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px 14px;
+      border-radius: 16px;
+      font-size: clamp(16px, 2.85vmin, 20px);
+      font-weight: 900;
+      letter-spacing: -0.015em;
+      color: #0b102a;
+      text-decoration: none;
+      word-break: keep-all;
+      opacity: 1;
+      line-height: 1.15;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.35) 0%, rgba(168, 85, 247, 0.28) 55%, rgba(56, 189, 248, 0.26) 100%);
+      border: 1px solid rgba(79, 70, 229, 0.42);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        0 10px 26px rgba(67, 56, 202, 0.22);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+      overflow: hidden;
+    }
+
+    #hcn-card-7 .page6-guide-card__btn::before {
+      content: "";
+      position: absolute;
+      inset: -40% -60%;
+      background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.9) 50%, transparent 65%);
+      opacity: 0.26;
+      transform: translateX(-18%) rotate(8deg);
+      filter: blur(1px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.35s ease;
+    }
+
+    #hcn-card-7 .page6-guide-card__btn:hover {
+      color: #090b1f;
+      border-color: rgba(79, 70, 229, 0.62);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 14px 34px rgba(67, 56, 202, 0.28);
+      transform: translateY(-1px);
+    }
+
+    #hcn-card-7 .page6-guide-card__btn:hover::before {
+      opacity: 0.5;
+      transform: translateX(18%) rotate(8deg);
+    }
+
+    #hcn-card-7 .page6-guide-card__btn:active {
+      transform: translateY(2px);
+      box-shadow:
+        inset 0 2px 6px rgba(15, 23, 42, 0.12),
+        0 8px 18px rgba(67, 56, 202, 0.2);
+    }
+
+    #hcn-card-7 .page6-guide-card__btn:focus-visible {
+      outline: 2px solid rgba(79, 70, 229, 0.7);
+      outline-offset: 3px;
+    }
+
+    #hcn-card-7 .page6-guide-card__btn::after {
       content: " →";
       font-weight: 900;
-      opacity: 0.9;
+      opacity: 1;
     }
 
     #hcn-card-6 .page6-block {
@@ -1564,9 +1612,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       min-height: 0;
-      padding: 14px 12px 16px;
+      padding: 12px 10px 14px;
       text-align: center;
       background:
         radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255, 255, 255, 0.9) 0%, transparent 55%),
@@ -1644,19 +1692,19 @@
     #hcn-card-7 .page7-float-app:nth-child(10) { --fa-l: 14%; --fa-t: 58%; --fa-s: clamp(13px, 2.4vmin, 17px); --fa-o: 0.5;  animation-duration: 15.5s; animation-delay: 0.6s; }
 
     #hcn-card-7 .page7-demo-chrome {
-      height: 32px;
+      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 0 12px;
+      padding: 0 10px;
       background: rgba(255, 255, 255, 0.92);
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       flex-shrink: 0;
     }
 
     #hcn-card-7 .page7-demo-chrome__label {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 900;
       letter-spacing: 0.04em;
       color: rgba(15, 23, 42, 0.55);
@@ -1664,7 +1712,7 @@
     }
 
     #hcn-card-7 .page7-demo-chrome__spark {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 900;
       letter-spacing: -0.01em;
       color: rgba(8, 12, 14, 0.92);
@@ -1679,7 +1727,7 @@
 
     #hcn-card-7 .page7-demo__greet {
       margin: 0;
-      font-size: clamp(17px, 3.6vmin, 24px);
+      font-size: clamp(15.5px, 3.25vmin, 22px);
       font-weight: 900;
       letter-spacing: -0.03em;
       color: #1d4ed8;
@@ -1693,7 +1741,7 @@
 
     #hcn-card-7 .page7-demo__brand {
       margin: 0;
-      font-size: clamp(13.5px, 2.55vmin, 17px);
+      font-size: clamp(12.5px, 2.35vmin, 15.5px);
       font-weight: 700;
       color: #475569;
       letter-spacing: -0.02em;
@@ -1702,12 +1750,12 @@
 
     #hcn-card-7 .page7-cta {
       display: inline-block;
-      margin-top: 4px;
-      padding: 11px 24px;
+      margin-top: 3px;
+      padding: 9px 20px;
       border: 0;
       border-radius: 999px;
       font: inherit;
-      font-size: clamp(11.5px, 1.95vmin, 14px);
+      font-size: clamp(10.8px, 1.78vmin, 13.2px);
       font-weight: 800;
       letter-spacing: 0.03em;
       font-family: var(--font-sans);
@@ -1716,8 +1764,8 @@
       -webkit-tap-highlight-color: transparent;
       background: linear-gradient(135deg, #6366f1 0%, #7c3aed 55%, #a855f7 100%);
       box-shadow:
-        0 5px 0 #4f46b5,
-        0 8px 18px rgba(99, 102, 241, 0.48),
+        0 4px 0 #4f46b5,
+        0 7px 16px rgba(99, 102, 241, 0.45),
         inset 0 1px 0 rgba(255, 255, 255, 0.25);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
@@ -1725,13 +1773,13 @@
     #hcn-card-7 .page7-cta:hover {
       transform: translateY(-1px);
       box-shadow:
-        0 6px 0 #4f46b5,
-        0 10px 24px rgba(124, 58, 237, 0.42),
+        0 5px 0 #4f46b5,
+        0 9px 20px rgba(124, 58, 237, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
     #hcn-card-7 .page7-cta:active {
-      transform: translateY(4px);
+      transform: translateY(3px);
       box-shadow:
         0 1px 0 #4338ca,
         0 3px 10px rgba(67, 56, 202, 0.45),
@@ -1743,11 +1791,55 @@
       outline-offset: 3px;
     }
 
+    #hcn-card-7 .page7-mini-hint {
+      position: absolute;
+      left: calc(100% + 8px);
+      top: 50%;
+      transform: translateY(-62%);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: clamp(9.4px, 1.38vmin, 11.2px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: rgba(15, 23, 42, 0.62);
+      line-height: 1.1;
+      user-select: none;
+      animation: page7-mini-blink 1.15s ease-in-out infinite;
+      pointer-events: none;
+      white-space: nowrap;
+      writing-mode: horizontal-tb;
+      text-orientation: mixed;
+    }
+
+    #hcn-card-7 .page7-mini-hint__arrow {
+      color: rgba(79, 70, 229, 0.9);
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    #hcn-card-7 .page7-action-wrap,
+    #hcn-card-7 .page7-like-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes page7-mini-blink {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #hcn-card-7 .page7-mini-hint { animation: none; opacity: 0.85; }
+    }
+
     #hcn-card-7 .page7-demo__note {
       position: relative;
       z-index: 3;
       margin: 2px 0 0;
-      font-size: clamp(11px, 1.72vmin, 14px);
+      font-size: clamp(10.2px, 1.58vmin, 12.8px);
       font-weight: 600;
       color: rgba(67, 56, 120, 0.82);
       line-height: 1.4;
@@ -1767,8 +1859,8 @@
     #hcn-card-7 .page7-like-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
+      gap: 7px;
+      padding: 7px 12px;
       border-radius: 999px;
       border: 1px solid rgba(15, 23, 42, 0.12);
       background: rgba(255, 255, 255, 0.72);
@@ -1780,20 +1872,20 @@
     }
 
     #hcn-card-7 .page7-like-btn__icon {
-      font-size: clamp(14px, 2.2vmin, 16px);
+      font-size: clamp(13px, 2.05vmin, 15px);
       color: #fb7185;
       transform-origin: 50% 55%;
     }
 
     #hcn-card-7 .page7-like-btn__label {
-      font-size: clamp(11px, 1.75vmin, 13px);
+      font-size: clamp(10.2px, 1.62vmin, 12px);
       font-weight: 800;
       letter-spacing: -0.02em;
       color: rgba(15, 23, 42, 0.85);
     }
 
     #hcn-card-7 .page7-like-btn__count {
-      font-size: clamp(11px, 1.75vmin, 13px);
+      font-size: clamp(10.2px, 1.62vmin, 12px);
       font-weight: 900;
       color: rgba(15, 23, 42, 0.6);
       letter-spacing: -0.02em;
@@ -3406,32 +3498,39 @@
                               AI 관련 문의사항이 있으시면<br aria-hidden="true" />
                               PLAYGROUND 자유게시판에 언제든지 남겨주세요.
                             </p>
-                            <button type="button" class="page7-cta" id="page7-playground-btn">PLAYGROUND 접속하기</button>
+                            <div class="page7-action-wrap">
+                              <button type="button" class="page7-cta" id="page7-playground-btn">PLAYGROUND 접속하기</button>
+                              <span class="page7-mini-hint"><span class="page7-mini-hint__arrow" aria-hidden="true">←</span>눌러보기</span>
+                            </div>
                             <div class="page7-like-row">
-                              <button type="button" class="page7-like-btn" id="page7-like-btn" aria-label="좋아요">
-                                <span class="page7-like-btn__icon" aria-hidden="true">♥</span>
-                                <span class="page7-like-btn__label">좋아요</span>
-                                <span class="page7-like-btn__count" id="page7-like-count" aria-live="polite">0회</span>
-                              </button>
+                              <div class="page7-like-wrap">
+                                <button type="button" class="page7-like-btn" id="page7-like-btn" aria-label="좋아요">
+                                  <span class="page7-like-btn__icon" aria-hidden="true">♥</span>
+                                  <span class="page7-like-btn__label">좋아요</span>
+                                  <span class="page7-like-btn__count" id="page7-like-count" aria-live="polite">0회</span>
+                                </button>
+                                <span class="page7-mini-hint"><span class="page7-mini-hint__arrow" aria-hidden="true">←</span>눌러보기</span>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <a
-                      class="page6-guide-card"
-                      aria-label="비개발자 바이브 코딩 실습 링크"
-                      href="https://jaydendom27-web.github.io/vibecoding-guide/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <p class="page6-guide-card__lead">
-                        복잡한 HTML과 웹페이지 생성,<br aria-hidden="true" />
-                        AI와 함께라면 어렵지 않습니다.
-                      </p>
-                      <p class="page6-guide-card__title">비개발자를 위한 바이브 코딩 실습하기</p>
-                      <span class="page6-guide-card__link">가이드 바로가기</span>
-                    </a>
+                    <div class="page6-guide-card" aria-label="비개발자 바이브 코딩 실습 안내">
+                      <div class="page6-guide-card__left">
+                        <p class="page6-guide-card__lead">
+                          복잡한 HTML과 웹페이지 생성,<br aria-hidden="true" />
+                          AI와 함게라면 어렵지 않습니다.
+                        </p>
+                        <p class="page6-guide-card__title">비개발자를 위한 바이브 코딩 실습해보세요!</p>
+                      </div>
+                      <a
+                        class="page6-guide-card__btn"
+                        href="https://jaydendom27-web.github.io/vibecoding-guide/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >가이드 바로가기</a>
+                    </div>
                   </div>
                 </div>
                 <div class="footer">
