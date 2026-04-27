@@ -128,7 +128,7 @@
     #hcn-nav-5:checked ~ .carousel-row #hcn-card-4,
     #hcn-nav-6:checked ~ .carousel-row #hcn-card-6,
     #hcn-nav-7:checked ~ .carousel-row #hcn-card-7,
-    #hcn-nav-8:checked ~ .carousel-row #hcn-card-8 {
+    #hcn-nav-7:checked ~ .carousel-row #hcn-card-7 {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -156,7 +156,7 @@
     #hcn-nav-5:checked ~ .carousel-row .nav-prev-from-5,
     #hcn-nav-6:checked ~ .carousel-row .nav-prev-from-6,
     #hcn-nav-7:checked ~ .carousel-row .nav-prev-from-7,
-    #hcn-nav-8:checked ~ .carousel-row .nav-prev-from-8 {
+    #hcn-nav-7:checked ~ .carousel-row .nav-prev-from-7 {
       display: inline-flex;
     }
     #hcn-nav-1:checked ~ .carousel-row .nav-prev-disabled {
@@ -172,7 +172,7 @@
     #hcn-nav-7:checked ~ .carousel-row .nav-next-from-7 {
       display: inline-flex;
     }
-    #hcn-nav-8:checked ~ .carousel-row .nav-next-disabled {
+    #hcn-nav-7:checked ~ .carousel-row .nav-next-disabled {
       display: inline-flex;
     }
 
@@ -190,7 +190,7 @@
     #hcn-nav-5:checked ~ .carousel__counter .cnt-5,
     #hcn-nav-6:checked ~ .carousel__counter .cnt-6,
     #hcn-nav-7:checked ~ .carousel__counter .cnt-7,
-    #hcn-nav-8:checked ~ .carousel__counter .cnt-8 {
+    #hcn-nav-7:checked ~ .carousel__counter .cnt-7 {
       display: inline;
     }
 
@@ -438,15 +438,47 @@
       line-height: 1.52;
     }
 
+    /* 2페이지: 도입 설명 한 덩어리 줄글 */
+    #hcn-card-2 .slide-p.slide-p--lead-flow {
+      margin: 0;
+    }
+
+    /* 표 박스와 안내 문구: 안내는 표 밖·표 아래 오른쪽 */
+    #hcn-card-2 .page2-compare-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      max-width: 96%;
+      margin: 2px auto 0;
+    }
+
+    #hcn-card-2 .page2-compare-stack .compare-table-wrap {
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+    }
+
     #hcn-card-2 .compare-table-wrap {
       overflow: hidden;
-      margin-top: 2px;
-      max-width: 96%;
-      margin-left: auto;
-      margin-right: auto;
       border-radius: 10px;
       border: 1px solid rgba(0, 0, 0, 0.08);
       background: rgba(255, 255, 255, 0.42);
+    }
+
+    #hcn-card-2 .page2-compare-stack .page2-md-note {
+      align-self: flex-end;
+      margin: 5px 0 0;
+      padding-right: 2px;
+      max-width: 100%;
+      text-align: right;
+      font-size: 9.5px;
+      font-weight: 500;
+      line-height: 1.35;
+      color: rgba(115, 115, 115, 0.95);
+      letter-spacing: -0.01em;
+      word-break: keep-all;
     }
 
     #hcn-card-2 .compare-table {
@@ -532,14 +564,22 @@
 
     .cover-headline {
       margin: 4px 0 2px;
-      font-size: clamp(1.52rem, 5.2vw, 2.28rem);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.12em;
+      max-width: 100%;
+      font-size: clamp(1.22rem, 4.1vw, 1.88rem);
       font-weight: 900;
-      line-height: 1.2;
+      line-height: 1.22;
       letter-spacing: -0.04em;
       color: #0a1211;
       text-shadow: 0 1px 0 rgba(255,255,255,0.45), 0 14px 40px rgba(0,0,0,0.1);
-      white-space: nowrap;
-      max-width: 100%;
+      word-break: keep-all;
+    }
+
+    .cover-headline__row {
+      display: block;
     }
 
     .cover-headline__mark {
@@ -591,6 +631,26 @@
 
     .cover-body-snippet__line + .cover-body-snippet__line {
       margin-top: 1.35em;
+    }
+
+    /* 1페이지 표지 &lt;body&gt; 본문: 줄 수 많을 때도 읽기 좋게 */
+    #hcn-card-1 .cover-body-snippet__line {
+      font-size: clamp(14px, 2.2vw, 16.5px);
+      font-weight: 600;
+      line-height: 1.48;
+      letter-spacing: -0.018em;
+    }
+
+    #hcn-card-1 .cover-body-snippet__line + .cover-body-snippet__line {
+      margin-top: 0.4em;
+    }
+
+    #hcn-card-1 .cover-body-snippet__tag--open {
+      margin-bottom: 8px;
+    }
+
+    #hcn-card-1 .cover-body-snippet__tag--close {
+      margin-top: 9px;
     }
 
     .slide-body {
@@ -954,8 +1014,9 @@
       text-shadow: none;
     }
 
-    /* 6페이지: 단계별 패널 — 남는 높이 균등 분배, 슬라이드 스크롤 없음 */
-    #hcn-card-6 .slide-body.slide-body--tight {
+    /* 6·7페이지: 단계별 패널 — 남는 높이 균등 분배, 슬라이드 스크롤 없음 */
+    #hcn-card-6 .slide-body.slide-body--tight,
+    #hcn-card-7 .slide-body.slide-body--tight {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -964,8 +1025,186 @@
       overflow: hidden;
     }
 
-    #hcn-card-6 .slide-body.slide-body--tight > .slide-h2 {
+    #hcn-card-6 .slide-body.slide-body--tight > .slide-h2,
+    #hcn-card-7 .slide-body.slide-body--tight > .slide-h2 {
       flex-shrink: 0;
+    }
+
+    /* 6페이지: HTML·CSS 두 단계 세로 반반 */
+    #hcn-card-6 .page6-split {
+      flex: 1 1 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow: hidden;
+    }
+
+    #hcn-card-6 .page6-split > .page6-block > .page6-live-wide {
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: none;
+    }
+
+    /* 6페이지 HTML+CSS 미리보기: 크롬 바(카드 6 page3-live 바 규칙과 동일 높이) */
+    #hcn-card-6 .page6-split .page6-live-wide--combo .page3-live {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #hcn-card-6 .page6-split .page6-live-wide--combo .page3-live__bar {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 12px;
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 0;
+    }
+
+    #hcn-card-6 .page6-split .page6-live-wide--combo .page3-live__hint {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: rgba(8, 12, 14, 0.92);
+      text-shadow: none;
+    }
+
+    /* 7페이지 하단: 바이브 코딩 실습 링크 박스 */
+    #hcn-card-7 .page6-guide-card {
+      flex: 0 0 auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      padding: 16px 16px 17px;
+      min-height: 132px;
+      border-radius: 18px;
+      background:
+        radial-gradient(120% 140% at 0% 0%, rgba(56, 189, 248, 0.34) 0%, transparent 55%),
+        radial-gradient(120% 140% at 100% 0%, rgba(168, 85, 247, 0.38) 0%, transparent 58%),
+        radial-gradient(140% 160% at 50% 110%, rgba(34, 197, 94, 0.16) 0%, transparent 55%),
+        rgba(255, 255, 255, 0.36);
+      border: 1px solid rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 16px 38px rgba(0, 40, 45, 0.11),
+        0 0 0 1px rgba(168, 85, 247, 0.18),
+        0 0 0 6px rgba(56, 189, 248, 0.07);
+      cursor: pointer;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      transform: translateZ(0);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+      overflow: hidden;
+    }
+
+    #hcn-card-7 .page6-guide-card::before {
+      content: "";
+      position: absolute;
+      inset: -40% -60%;
+      background:
+        linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.85) 50%, transparent 65%);
+      opacity: 0.35;
+      transform: translateX(-18%) rotate(6deg);
+      filter: blur(2px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.35s ease;
+    }
+
+    #hcn-card-7 .page6-guide-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.65), rgba(168, 85, 247, 0.65), rgba(34, 197, 94, 0.45));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    #hcn-card-7 .page6-guide-card:hover {
+      transform: translateY(-2px) scale(1.01);
+      border-color: rgba(255, 255, 255, 0.86);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 22px 48px rgba(0, 40, 45, 0.14),
+        0 0 0 1px rgba(168, 85, 247, 0.22),
+        0 0 0 8px rgba(168, 85, 247, 0.09),
+        0 0 42px rgba(56, 189, 248, 0.22);
+    }
+
+    #hcn-card-7 .page6-guide-card:hover::before {
+      opacity: 0.55;
+      transform: translateX(18%) rotate(6deg);
+    }
+
+    #hcn-card-7 .page6-guide-card:hover::after {
+      opacity: 1;
+    }
+
+    #hcn-card-7 .page6-guide-card:active {
+      transform: translateY(2px) scale(0.995);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 8px 18px rgba(0, 40, 45, 0.08);
+    }
+
+    #hcn-card-7 .page6-guide-card:focus-visible {
+      outline: 2px solid rgba(168, 85, 247, 0.55);
+      outline-offset: 3px;
+    }
+
+    #hcn-card-7 .page6-guide-card__lead {
+      margin: 0;
+      font-size: clamp(10.8px, 1.78vmin, 13.5px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #0a1211;
+      line-height: 1.18;
+      word-break: keep-all;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    #hcn-card-7 .page6-guide-card__title {
+      margin: 0;
+      font-size: clamp(14.5px, 2.45vmin, 18px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: rgba(10, 18, 17, 0.96);
+      line-height: 1.3;
+      word-break: keep-all;
+    }
+
+    #hcn-card-7 .page6-guide-card__link {
+      align-self: center;
+      display: inline-block;
+      margin: 2px 0 0;
+      padding: 0;
+      font-size: clamp(13px, 2.2vmin, 15.5px);
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: rgba(67, 56, 202, 0.92);
+      text-decoration: none;
+      word-break: keep-all;
+      opacity: 0.95;
+    }
+
+    #hcn-card-7 .page6-guide-card__link::after {
+      content: " →";
+      font-weight: 900;
+      opacity: 0.9;
     }
 
     #hcn-card-6 .page6-block {
@@ -990,6 +1229,58 @@
       border: 0;
     }
 
+    /* 7페이지: JS 패널 + 하단 바이브 코딩 링크 박스 */
+    #hcn-card-7 .page7-split {
+      flex: 1 1 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    #hcn-card-7 .page7-split > .page6-block.page6-block--fill {
+      flex: 1 1 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    #hcn-card-7 .page7-split > .page6-guide-card {
+      flex: 0 0 auto;
+    }
+
+    #hcn-card-7 .page6-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      padding: 8px 10px 10px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.48);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 8px 22px rgba(0, 40, 45, 0.08);
+    }
+
+    /* 하단 패널: 미리보기 영역이 패널 안에서만 자라도록 */
+    #hcn-card-7 .page6-block.page6-block--fill {
+      min-height: 0;
+    }
+
+    #hcn-card-7 .page7-js-lead {
+      margin: 0;
+      flex-shrink: 0;
+      font-size: clamp(14px, 2vmin, 16px);
+      font-weight: 800;
+      color: #0a1211;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+
     /* 6페이지: 상단·CSS 안내 문장 동일 글자 크기 */
     #hcn-card-6 .page6-vibe-lead,
     #hcn-card-6 .page6-css-lead {
@@ -1007,7 +1298,8 @@
       word-break: keep-all;
     }
 
-    #hcn-card-6 .page6-prompt {
+    #hcn-card-6 .page6-prompt,
+    #hcn-card-7 .page6-block .page6-prompt {
       flex-shrink: 0;
     }
 
@@ -1205,86 +1497,8 @@
       outline-offset: 3px;
     }
 
-    /* 6페이지: HTML+CSS+JS 미리보기 */
-    #hcn-card-7 .slide-body.slide-body--tight {
-      min-height: 0;
-    }
-
-    #hcn-card-7 .slide-body.slide-body--tight > .page6-capabilities {
-      flex-shrink: 0;
-      margin-top: 4px;
-    }
-
-    #hcn-card-7 .page6-capabilities__title {
-      margin: 0 0 8px;
-      font-size: clamp(11.5px, 1.85vmin, 13.5px);
-      font-weight: 800;
-      color: #0a1211;
-      letter-spacing: -0.02em;
-      line-height: 1.35;
-    }
-
-    #hcn-card-7 .page6-capabilities__list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    /* 3페이지 &lt;!DOCTYPE&gt; 태그 카드와 동일 구조: 왼쪽 바 + ✓ + 본문 */
-    #hcn-card-7 .page6-cap-card {
-      --p6-accent: #0d6b6e;
-      display: flex;
-      flex-direction: row;
-      align-items: stretch;
-      min-height: 0;
-      border-radius: 12px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(12px);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.55),
-        0 6px 16px rgba(0, 35, 40, 0.07);
-    }
-
-    #hcn-card-7 .page6-cap-card__accent {
-      width: 4px;
-      flex-shrink: 0;
-      background: var(--p6-accent);
-      border-radius: 12px 0 0 12px;
-    }
-
-    #hcn-card-7 .page6-cap-card__body {
-      display: flex;
-      align-items: flex-start;
-      gap: 7px;
-      padding: 7px 9px 7px 8px;
-      flex: 1;
-      min-width: 0;
-    }
-
-    #hcn-card-7 .page6-cap-card__check {
-      flex-shrink: 0;
-      font-size: 13px;
-      font-weight: 900;
-      line-height: 1.4;
-      color: #16a34a;
-      margin-top: 1px;
-    }
-
-    #hcn-card-7 .page6-cap-card__text {
-      font-size: clamp(10.5px, 1.82vmin, 12.5px);
-      font-weight: 600;
-      line-height: 1.42;
-      color: rgba(15, 23, 42, 0.88);
-      word-break: keep-all;
-      letter-spacing: -0.015em;
-    }
-
-    #hcn-card-7 .slide-body .image-slot[data-slot="page6-interaction"] {
+    /* 7페이지: HTML+CSS+JS 미리보기 */
+    #hcn-card-7 .page7-split .image-slot[data-slot="page6-interaction"] {
       display: flex;
       flex-direction: column;
       flex: 1 1 0;
@@ -1298,7 +1512,7 @@
       justify-content: stretch;
     }
 
-    #hcn-card-7 .slide-body .image-slot[data-slot="page6-interaction"].image-slot--tall {
+    #hcn-card-7 .page7-split .image-slot[data-slot="page6-interaction"].image-slot--tall {
       min-height: 0;
     }
 
@@ -1343,7 +1557,8 @@
     }
 
     /* 5페이지 HTML+CSS 미리보기(.page5-after-live)와 동일 톤 — 클릭 시 JS로 배경·글자색 변경 */
-    #hcn-card-7 .page6-js-demo__inner {
+    #hcn-card-7 .page7-demo-stage {
+      position: relative;
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
@@ -1358,9 +1573,111 @@
         linear-gradient(165deg, #eff6ff 0%, #e0e7ff 42%, #faf5ff 100%);
       border-top: 1px solid rgba(255, 255, 255, 0.65);
       transition: background 0.38s ease;
+      overflow: hidden;
+      isolation: isolate;
     }
 
-    #hcn-card-7 .page6-js-demo__greet {
+    #hcn-card-7 .page7-demo-fireworks {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      display: block;
+    }
+
+    #hcn-card-7 .page7-float-apps {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #hcn-card-7 .page7-float-app {
+      position: absolute;
+      left: var(--fa-l, 50%);
+      top: var(--fa-t, 50%);
+      width: var(--fa-s, 22px);
+      height: var(--fa-s, 22px);
+      margin: 0;
+      padding: 2px;
+      border-radius: 22%;
+      opacity: var(--fa-o, 0.52);
+      background: rgba(255, 255, 255, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow:
+        0 4px 14px rgba(0, 40, 50, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transform: translate(-50%, -50%);
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      will-change: transform;
+    }
+
+    #hcn-card-7 .page7-float-app:nth-child(4n + 1) { animation-name: page8-free-1; }
+    #hcn-card-7 .page7-float-app:nth-child(4n + 2) { animation-name: page8-free-2; }
+    #hcn-card-7 .page7-float-app:nth-child(4n + 3) { animation-name: page8-free-3; }
+    #hcn-card-7 .page7-float-app:nth-child(4n + 4) { animation-name: page8-free-4; }
+
+    #hcn-card-7 .page7-float-app img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 16%;
+      pointer-events: none;
+    }
+
+    #hcn-card-7 .page7-float-app:nth-child(1)  { --fa-l: 10%; --fa-t: 20%; --fa-s: clamp(14px, 2.55vmin, 19px); --fa-o: 0.52; animation-duration: 18s; animation-delay: 0s; }
+    #hcn-card-7 .page7-float-app:nth-child(2)  { --fa-l: 22%; --fa-t: 12%; --fa-s: clamp(15px, 2.65vmin, 20px); --fa-o: 0.54; animation-duration: 20s; animation-delay: 0.5s; }
+    #hcn-card-7 .page7-float-app:nth-child(3)  { --fa-l: 84%; --fa-t: 14%; --fa-s: clamp(14px, 2.5vmin, 18px); --fa-o: 0.53; animation-duration: 16s; animation-delay: 1s; }
+    #hcn-card-7 .page7-float-app:nth-child(4)  { --fa-l: 90%; --fa-t: 30%; --fa-s: clamp(15px, 2.75vmin, 21px); --fa-o: 0.55; animation-duration: 22s; animation-delay: 0.3s; }
+    #hcn-card-7 .page7-float-app:nth-child(5)  { --fa-l: 9%;  --fa-t: 72%; --fa-s: clamp(14px, 2.6vmin, 19px); --fa-o: 0.53; animation-duration: 17s; animation-delay: 1.4s; }
+    #hcn-card-7 .page7-float-app:nth-child(6)  { --fa-l: 18%; --fa-t: 84%; --fa-s: clamp(13px, 2.4vmin, 17px); --fa-o: 0.5;  animation-duration: 21s; animation-delay: 0.2s; }
+    #hcn-card-7 .page7-float-app:nth-child(7)  { --fa-l: 80%; --fa-t: 76%; --fa-s: clamp(15px, 2.65vmin, 20px); --fa-o: 0.54; animation-duration: 19s; animation-delay: 0.8s; }
+    #hcn-card-7 .page7-float-app:nth-child(8)  { --fa-l: 90%; --fa-t: 62%; --fa-s: clamp(14px, 2.55vmin, 19px); --fa-o: 0.53; animation-duration: 20.5s; animation-delay: 1.2s; }
+    #hcn-card-7 .page7-float-app:nth-child(9)  { --fa-l: 6%;  --fa-t: 46%; --fa-s: clamp(12px, 2.3vmin, 16px); --fa-o: 0.48; animation-duration: 22.5s; animation-delay: 0.1s; }
+    #hcn-card-7 .page7-float-app:nth-child(10) { --fa-l: 14%; --fa-t: 58%; --fa-s: clamp(13px, 2.4vmin, 17px); --fa-o: 0.5;  animation-duration: 15.5s; animation-delay: 0.6s; }
+
+    #hcn-card-7 .page7-demo-chrome {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 12px;
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    #hcn-card-7 .page7-demo-chrome__label {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: rgba(15, 23, 42, 0.55);
+      text-transform: uppercase;
+    }
+
+    #hcn-card-7 .page7-demo-chrome__spark {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: rgba(8, 12, 14, 0.92);
+    }
+
+    #hcn-card-7 .page7-demo__leadline {
+      position: relative;
+      z-index: 3;
+      margin: 0;
+      line-height: 1.18;
+    }
+
+    #hcn-card-7 .page7-demo__greet {
       margin: 0;
       font-size: clamp(17px, 3.6vmin, 24px);
       font-weight: 900;
@@ -1370,11 +1687,11 @@
       transition: color 0.28s ease, transform 0.18s ease;
     }
 
-    #hcn-card-7 .page6-js-demo__greet.is-pulse {
+    #hcn-card-7 .page7-demo__greet.is-pulse {
       transform: scale(1.02);
     }
 
-    #hcn-card-7 .page6-js-demo__brand {
+    #hcn-card-7 .page7-demo__brand {
       margin: 0;
       font-size: clamp(13.5px, 2.55vmin, 17px);
       font-weight: 700;
@@ -1383,7 +1700,7 @@
       transition: color 0.28s ease;
     }
 
-    #hcn-card-7 .page6-js-demo__cta {
+    #hcn-card-7 .page7-cta {
       display: inline-block;
       margin-top: 4px;
       padding: 11px 24px;
@@ -1405,7 +1722,7 @@
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
 
-    #hcn-card-7 .page6-js-demo__cta:hover {
+    #hcn-card-7 .page7-cta:hover {
       transform: translateY(-1px);
       box-shadow:
         0 6px 0 #4f46b5,
@@ -1413,7 +1730,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
-    #hcn-card-7 .page6-js-demo__cta:active {
+    #hcn-card-7 .page7-cta:active {
       transform: translateY(4px);
       box-shadow:
         0 1px 0 #4338ca,
@@ -1421,12 +1738,14 @@
         inset 0 2px 6px rgba(0, 0, 0, 0.18);
     }
 
-    #hcn-card-7 .page6-js-demo__cta:focus-visible {
+    #hcn-card-7 .page7-cta:focus-visible {
       outline: 2px solid rgba(99, 102, 241, 0.75);
       outline-offset: 3px;
     }
 
-    #hcn-card-7 .page6-js-demo__note {
+    #hcn-card-7 .page7-demo__note {
+      position: relative;
+      z-index: 3;
       margin: 2px 0 0;
       font-size: clamp(11px, 1.72vmin, 14px);
       font-weight: 600;
@@ -1434,6 +1753,77 @@
       line-height: 1.4;
       word-break: keep-all;
       transition: color 0.28s ease;
+    }
+
+    #hcn-card-7 .page7-like-row {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 2px;
+    }
+
+    #hcn-card-7 .page7-like-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 8px 18px rgba(2, 6, 23, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    #hcn-card-7 .page7-like-btn__icon {
+      font-size: clamp(14px, 2.2vmin, 16px);
+      color: #fb7185;
+      transform-origin: 50% 55%;
+    }
+
+    #hcn-card-7 .page7-like-btn__label {
+      font-size: clamp(11px, 1.75vmin, 13px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: rgba(15, 23, 42, 0.85);
+    }
+
+    #hcn-card-7 .page7-like-btn__count {
+      font-size: clamp(11px, 1.75vmin, 13px);
+      font-weight: 900;
+      color: rgba(15, 23, 42, 0.6);
+      letter-spacing: -0.02em;
+      min-width: 3ch;
+      text-align: right;
+    }
+
+    #hcn-card-7 .page7-like-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(2, 6, 23, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+
+    #hcn-card-7 .page7-like-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 6px 14px rgba(2, 6, 23, 0.12), inset 0 2px 6px rgba(2, 6, 23, 0.12);
+    }
+
+    #hcn-card-7 .page7-like-btn:focus-visible {
+      outline: 2px solid rgba(251, 113, 133, 0.7);
+      outline-offset: 3px;
+    }
+
+    #hcn-card-7 .page7-like-btn.is-pulse .page7-like-btn__icon {
+      animation: page7-heart-pop 0.22s ease-out;
+    }
+
+    @keyframes page7-heart-pop {
+      0% { transform: scale(1); }
+      55% { transform: scale(1.28); }
+      100% { transform: scale(1); }
     }
 
     /* 8페이지: AI + HTML/CSS/JS · 황금비 타이포 · 폭죽 · PLAYGROUND 링크 */
@@ -2594,7 +2984,6 @@
     <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-5">
     <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-6">
     <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-7">
-    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-8">
 
     <div class="carousel-row">
       <div class="nav-stack nav-stack--prev">
@@ -2605,7 +2994,6 @@
         <label class="nav-btn nav-btn--prev nav-prev-from-5" for="hcn-nav-4" aria-label="이전 슬라이드">←</label>
         <label class="nav-btn nav-btn--prev nav-prev-from-6" for="hcn-nav-5" aria-label="이전 슬라이드">←</label>
         <label class="nav-btn nav-btn--prev nav-prev-from-7" for="hcn-nav-6" aria-label="이전 슬라이드">←</label>
-        <label class="nav-btn nav-btn--prev nav-prev-from-8" for="hcn-nav-7" aria-label="이전 슬라이드">←</label>
       </div>
 
       <div class="carousel__viewport">
@@ -2631,19 +3019,21 @@
                   <h1 class="cover-title-stack">
                     <span class="cover-html-tag" aria-hidden="true">&lt;head&gt;</span>
                     <span class="cover-headline">
-          
-                  
-                       웹페이지를 만드는 </br>필수 언어<span class="cover-headline__mark">HTML</span>, </br>바이브 코딩으로 쉽게 시작해보세요
+                      <span class="cover-headline__row">웹페이지의 시작,<span class="cover-headline__mark"> HTML</span></span>
+                      <span class="cover-headline__row">이제는 바이브코딩으로 쉽게 만들어보세요.</span>
                     </span>
                     <span class="cover-html-tag" aria-hidden="true">&lt;/head&gt;</span>
                   </h1>
                   <div class="cover-body-snippet" aria-label="본문 소개">
                     <span class="cover-body-snippet__tag cover-body-snippet__tag--open" aria-hidden="true">&lt;body&gt;</span>
                     <div class="cover-body-snippet__inner">
-                      <p class="cover-body-snippet__line">지금 보고 있는 화면, 뉴스, 쇼핑몰</p>
-                      <p class="cover-body-snippet__line">모든 웹페이지의 기초는 HTML입니다.</p>
-                      <p class="cover-body-snippet__line">HTML이 무엇인지, 웹페이지는 어떻게 구성되되는지 알아보고</p>
-                      <p class="cover-body-snippet__line">바이브 코딩으로 쉽게 만들어봐요</p>
+                      <p class="cover-body-snippet__line">우리가 매일 보는 뉴스, 쇼핑몰, 사내 안내페이지도</p>
+                      <p class="cover-body-snippet__line">기본은 HTML에서 시작됩니다.</p>
+                      <p class="cover-body-snippet__line">복잡한 코드를 처음부터 외우지 않아도 괜찮습니다.</p>
+                      <p class="cover-body-snippet__line">만들고 싶은 화면을 말로 설명하면,</p>
+                      <p class="cover-body-snippet__line">AI와 함께 누구나 웹페이지를 만들 수 있습니다.</p>
+                      <p class="cover-body-snippet__line">오늘은 HTML의 기본 감각을 익히고,</p>
+                      <p class="cover-body-snippet__line">바이브 코딩으로 직접 만들어보겠습니다.</p>
                     </div>
                     <span class="cover-body-snippet__tag cover-body-snippet__tag--close" aria-hidden="true">&lt;/body&gt;</span>
                   </div>
@@ -2674,32 +3064,33 @@
                       referrerpolicy="no-referrer-when-downgrade"
                     />
                   </div>
-                  <p class="slide-p">HTML은 <span class="emph">Hypertext Markup Language</span>의 약자로, 웹 페이지를 만드는 데 쓰는 언어입니다. 웹 페이지는 모두 HTML로 작성 되며, <span class="emph">HTML</span>, <span class="emph">CSS</span>, <span class="emph">JavaScript</span>로 구성되어 있습니다.</p>
-                  <p class="slide-p">HTML은 <span class="emph">&lt;h1&gt;, &lt;p&gt;</span> 같은 <span class="emph">태그</span>를 사용해 각 구성요소를 나눕니다. 이를 통해 웹 페이지가 구조화 됩니다.</p>
-                  <p class="slide-p">여기서 <span class="emph">태그</span>는 < > 기호로 감싸진 HTML의 기본 문법으로, 각 요소의 의미와 역할(제목, 문단, 이미지 등)을 정의하는 표시입니다.</p>
-                  <div class="compare-table-wrap">
-                    <table class="compare-table">
-                      <thead>
-                        <tr>
-                          <th scope="col" class="compare-table__corner">형식</th>
-                          <th scope="col" class="compare-table__subhead">HTML</th>
-                          <th scope="col" class="compare-table__subhead">Markdown</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>개념 목적</td>
-                          <td>태그로 웹페이지를 구조화 하는 방식</td>
-                          <td>기호로 문서를 구조화 하는 방식</td>
-                        </tr>
+                  <p class="slide-p slide-p--lead-flow">HTML은 <span class="emph">Hypertext Markup Language</span>의 약자로, 웹 페이지를 만드는 데 쓰는 언어입니다. 웹 페이지는 모두 HTML로 작성 되며, <span class="emph">HTML</span>, <span class="emph">CSS</span>, <span class="emph">JavaScript</span>로 구성되어 있습니다. </br> HTML은 <span class="emph">&lt;h1&gt;, &lt;p&gt;</span> 같은 <span class="emph">태그</span>를 사용해 각 구성요소를 나눕니다. 이를 통해 웹 페이지가 구조화 됩니다. 여기서 <span class="emph">태그</span>는 &lt; &gt; 기호로 감싸진 HTML의 기본 문법으로, 각 요소의 의미와 역할(제목, 문단, 이미지 등)을 정의하는 표시입니다.</p>
+                  <div class="page2-compare-stack" aria-label="HTML·Markdown 비교">
+                    <div class="compare-table-wrap">
+                      <table class="compare-table">
+                        <thead>
+                          <tr>
+                            <th scope="col" class="compare-table__corner">형식</th>
+                            <th scope="col" class="compare-table__subhead">HTML</th>
+                            <th scope="col" class="compare-table__subhead">Markdown</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>개념 목적</td>
+                            <td>태그로 웹페이지를 구조화 하는 방식</td>
+                            <td>기호로 문서를 구조화 하는 방식</td>
+                          </tr>
 
-                        <tr>
-                          <td>작성 방식</td>
-                          <td>&lt;h1&gt;, &lt;p&gt; 같은 태그 사용</td>
-                          <td>#, -, ** 같은 기호 사용</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                          <tr>
+                            <td>작성 방식</td>
+                            <td>&lt;h1&gt;, &lt;p&gt; 같은 태그 사용</td>
+                            <td>#, -, ** 같은 기호 사용</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="page2-md-note" role="note">Markdown은 WeeklyAI Vol3 를 참조하세요</p>
                   </div>
                 </div>
                 <div class="footer">
@@ -2923,40 +3314,42 @@
               <div class="card-content card-content--inner">
                 <div class="slide-body slide-body--tight">
                   <h2 class="slide-h2">바이브코딩으로 웹페이지 만들기</h2>
-                  <div class="page6-block" aria-label="HTML 단계">
-                    <p class="page6-vibe-lead">바이브 코딩만으로 HTML을 구조화 할 수 있습니다.</p>
-                    <div class="page6-prompt" aria-label="프롬프트 · HTML 생성 요청">
-                      <span class="page6-prompt__label">프롬프트</span>
-                      <p class="page6-prompt__text">'안녕하세요 AI디자인랩입니다!' 내용과  PLAYGROUND 접속하기 버튼 만들어줘</p>
-                    </div>
-                    <div class="page6-live-wide page6-live-wide--html" aria-label="미리보기 · HTML만">
-                      <div class="glass page3-live">
-                        <div class="page3-live__bar" aria-hidden="true">
-                          <span class="page3-live__hint">HTML만</span>
-                        </div>
-                        <div class="page3-live__inner">
-                          <h1>안녕하세요</h1>
-                          <p>AI디자인랩입니다!</p>
-                          <button type="button">PLAYGROUND 접속하기</button>
+                  <div class="page6-split" aria-label="HTML 단계와 CSS 단계">
+                    <div class="page6-block" aria-label="HTML 단계">
+                      <p class="page6-vibe-lead">1단계 : 먼저 HTML로 웹페이지를 구조화 할 수 있습니다.</p>
+                      <div class="page6-prompt" aria-label="프롬프트 · HTML 생성 요청">
+                        <span class="page6-prompt__label">프롬프트</span>
+                        <p class="page6-prompt__text">'안녕하세요 AI디자인랩입니다!' 내용과  PLAYGROUND 접속하기 버튼을 HTML로 만들어줘</p>
+                      </div>
+                      <div class="page6-live-wide page6-live-wide--html" aria-label="미리보기 · HTML만">
+                        <div class="glass page3-live">
+                          <div class="page3-live__bar" aria-hidden="true">
+                            <span class="page3-live__hint">HTML만</span>
+                          </div>
+                          <div class="page3-live__inner">
+                            <h1>안녕하세요</h1>
+                            <p>AI디자인랩입니다!</p>
+                            <button type="button">PLAYGROUND 접속하기</button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="page6-block" aria-label="CSS 단계">
-                    <p class="slide-p page6-css-lead">CSS를 더하면 색상, 크기, 여백, 폰트, 정렬으로 완성도가 올라갑니다.</p>
-                    <div class="page6-prompt" aria-label="프롬프트 · CSS 스타일 요청">
-                      <span class="page6-prompt__label">프롬프트</span>
-                      <p class="page6-prompt__text">보라색느낌을 살려서 디자인해줘</p>
-                    </div>
-                    <div class="page6-live-wide page6-live-wide--combo" aria-label="미리보기 · HTML+CSS">
-                      <div class="glass page5-after-live page3-live">
-                        <div class="page3-live__bar" aria-hidden="true">
-                          <span class="page3-live__hint">HTML+CSS</span>
-                        </div>
-                        <div class="page5-after-live__inner">
-                          <p class="page5-after-live__greet">안녕하세요</p>
-                          <p class="page5-after-live__brand">AI디자인랩입니다!</p>
-                          <button type="button" class="page5-after-live__cta">PLAYGROUND 접속하기</button>
+                    <div class="page6-block" aria-label="CSS 단계">
+                      <p class="slide-p page6-css-lead">2단계 : 여기에 CSS를 더하면 디자인의 완성도가 올라갑니다.</p>
+                      <div class="page6-prompt" aria-label="프롬프트 · CSS 스타일 요청">
+                        <span class="page6-prompt__label">프롬프트</span>
+                        <p class="page6-prompt__text">CSS를 활용해서 보라색이 강조된 디자인을 완성해줘</p>
+                      </div>
+                      <div class="page6-live-wide page6-live-wide--combo" aria-label="미리보기 · HTML+CSS">
+                        <div class="glass page5-after-live page3-live">
+                          <div class="page3-live__bar" aria-hidden="true">
+                            <span class="page3-live__hint">HTML+CSS</span>
+                          </div>
+                          <div class="page5-after-live__inner">
+                            <p class="page5-after-live__greet">안녕하세요</p>
+                            <p class="page5-after-live__brand">AI디자인랩입니다!</p>
+                            <button type="button" class="page5-after-live__cta">PLAYGROUND 접속하기</button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -2977,132 +3370,68 @@
               <div class="card-bg"></div>
               <div class="card-content card-content--inner">
                 <div class="slide-body slide-body--tight">
-                  <h2 class="slide-h2">JavaScript로 HTML움직임 넣기</h2>
-                  <div class="page6-prompt" aria-label="프롬프트 · JavaScript 동작 요청">
-                    <span class="page6-prompt__label">프롬프트</span>
-                    <p class="page6-prompt__text">접속하기를 누를때마다 방문회수가 표시되고, 배경과 글씨 색이 변경되게 구현해줘.</p>
-                  </div>
-                  <div class="image-slot image-slot--tall" data-slot="page6-interaction">
-                    <div class="glass page6-js-demo page3-live" aria-label="미리보기 · HTML+CSS+JavaScript 예시">
-                      <div class="page3-live__bar" aria-hidden="true">
-                        <span class="page3-live__hint">HTML+CSS+JS</span>
+                  <h2 class="slide-h2">바이브코딩으로 웹페이지 만들기</h2>
+                  <div class="page7-split" aria-label="JavaScript 단계와 바이브 코딩 안내">
+                    <div class="page6-block page6-block--fill" aria-label="JavaScript 단계 패널">
+                      <p class="slide-p page7-js-lead">3단계 : JavaScript를 활용해 HTML을 움직이게 만들 수 있습니다.</p>
+                      <div class="page6-prompt" aria-label="프롬프트 · JavaScript 동작 요청">
+                        <span class="page6-prompt__label">프롬프트</span>
+                        <p class="page6-prompt__text">JavaScript를 사용해서 좋아요 버튼 만들어주고 누를때마다 폭죽이 터지는 효과와 같이 글씨 색이 바뀌게 해줘. 그리고 배경에는 AI어플모양의 박스가 둥실둥실 떠있게 구현해줘</p>
                       </div>
-                      <div class="page6-js-demo__inner" id="page6-demo-inner">
-                        <p class="page6-js-demo__greet" id="page6-demo-greet">안녕하세요 !</p>
-                        <p class="page6-js-demo__brand">AI디자인랩입니다!</p>
-                        <button type="button" class="page6-js-demo__cta" id="page6-demo-btn">PLAYGROUND 접속하기</button>
-                        <p class="page6-js-demo__note" id="page6-demo-note" aria-live="polite">PLAYGROUND를 누를 때마다 방문 횟수가 올라가요</p>
+                      <div class="image-slot image-slot--tall" data-slot="page6-interaction">
+                        <div class="glass page6-js-demo page3-live" aria-label="미리보기 · HTML+CSS+JavaScript 예시">
+                          <div class="page7-demo-chrome" aria-hidden="true">
+                            <span class="page7-demo-chrome__label">Live</span>
+                            <span class="page7-demo-chrome__spark">✨ HTML + CSS + JS</span>
+                          </div>
+                          <div class="page7-demo-stage" id="page7-demo-stage">
+                            <canvas class="page7-demo-fireworks" id="page7-fireworks-canvas" aria-hidden="true"></canvas>
+                            <div class="page7-float-apps" aria-hidden="true">
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai1.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai2.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai3.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai4.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai5.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai6.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai7.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai8.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai9.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                              <figure class="page7-float-app"><img src="https://kikeun.github.io/aidesign/ai10.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
+                            </div>
+                            <p class="page7-demo__leadline">
+                              <span class="page7-demo__greet" id="page7-demo-greet">안녕하세요</span><br aria-hidden="true" />
+                              <span class="page7-demo__brand" id="page7-demo-brand">AI디자인랩 입니다!</span>
+                            </p>
+                            <p class="page7-demo__note">
+                              AI 관련 문의사항이 있으시면<br aria-hidden="true" />
+                              PLAYGROUND 자유게시판에 언제든지 남겨주세요.
+                            </p>
+                            <button type="button" class="page7-cta" id="page7-playground-btn">PLAYGROUND 접속하기</button>
+                            <div class="page7-like-row">
+                              <button type="button" class="page7-like-btn" id="page7-like-btn" aria-label="좋아요">
+                                <span class="page7-like-btn__icon" aria-hidden="true">♥</span>
+                                <span class="page7-like-btn__label">좋아요</span>
+                                <span class="page7-like-btn__count" id="page7-like-count" aria-live="polite">0회</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="page6-capabilities">
-                    <h3 class="page6-capabilities__title">JavaScript로 구현할 수 있는 기능들 (예시)</h3>
-                    <ul class="page6-capabilities__list">
-                      <li class="page6-cap-card">
-                        <span class="page6-cap-card__accent" aria-hidden="true"></span>
-                        <div class="page6-cap-card__body">
-                          <span class="page6-cap-card__check" aria-hidden="true">✓</span>
-                          <span class="page6-cap-card__text">버튼 클릭 시 색상이나 화면이 동적으로 변화</span>
-                        </div>
-                      </li>
-                      <li class="page6-cap-card">
-                        <span class="page6-cap-card__accent" aria-hidden="true"></span>
-                        <div class="page6-cap-card__body">
-                          <span class="page6-cap-card__check" aria-hidden="true">✓</span>
-                          <span class="page6-cap-card__text">검색어 입력에 따라 결과가 실시간으로 업데이트</span>
-                        </div>
-                      </li>
-                      <li class="page6-cap-card">
-                        <span class="page6-cap-card__accent" aria-hidden="true"></span>
-                        <div class="page6-cap-card__body">
-                          <span class="page6-cap-card__check" aria-hidden="true">✓</span>
-                          <span class="page6-cap-card__text">방문자 수 증가 표시, 타이머 기능, 무한 스크롤 구현</span>
-                        </div>
-                      </li>
-                      <li class="page6-cap-card">
-                        <span class="page6-cap-card__accent" aria-hidden="true"></span>
-                        <div class="page6-cap-card__body">
-                          <span class="page6-cap-card__check" aria-hidden="true">✓</span>
-                          <span class="page6-cap-card__text">hover 등 사용자 행동에 반응하는 인터랙션 효과</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="footer">
-                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M12 45L28 35V80L12 90V45Z"/>
-                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
-                  </svg>
-                  <span class="footer-text">AI디자인랩</span>
-                </div>
-              </div>
-            </section>
-
-            <!-- 8/8 AI와 함께 멋진 웹 -->
-            <section class="card" id="hcn-card-8" aria-label="슬라이드 8">
-              <div class="card-bg"></div>
-              <div class="card-content card-content--inner">
-                <div class="slide-body slide-body--tight slide-body--no-scroll page8-slide">
-                  <h2 class="slide-h2 page8-slide__h2">복잡한 HTML과 웹페이지 생성,</br>AI와 함께라면 어렵지 않습니다.</h2>
-                  <div class="page8-stack" aria-label="HTML+CSS+JS 라이브 데모">
-                    <div class="page8-demo-chrome" aria-hidden="true">
-                      <div class="page8-demo-chrome__dots">
-                        <span class="page8-demo-chrome__dot"></span>
-                        <span class="page8-demo-chrome__dot"></span>
-                        <span class="page8-demo-chrome__dot"></span>
-                      </div>
-                      <span class="page8-demo-chrome__label">Live</span>
-                      <span class="page8-demo-chrome__spark">✨ HTML + CSS + JS</span>
-                    </div>
-                    <div class="page8-demo-stage" id="page8-demo-stage">
-                      <canvas class="page8-demo-fireworks" id="page8-fireworks-canvas" aria-hidden="true"></canvas>
-                      <div class="page8-float-apps" aria-hidden="true">
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai1.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai2.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai3.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai4.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai5.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai6.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai7.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai8.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai9.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai10.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai11.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai12.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai13.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai14.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai15.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                        <figure class="page8-float-app"><img src="https://kikeun.github.io/aidesign/ai16.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade" /></figure>
-                      </div>
-                      <p class="page8-demo__leadline" id="page8-demo-leadline">
-                        <span class="page8-demo__greet" id="page8-demo-greet">안녕하세요</span><br aria-hidden="true" />
-                        <span class="page8-demo__brand" id="page8-demo-brand">AI디자인랩 입니다!</span>
+                    <a
+                      class="page6-guide-card"
+                      aria-label="비개발자 바이브 코딩 실습 링크"
+                      href="https://jaydendom27-web.github.io/vibecoding-guide/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <p class="page6-guide-card__lead">
+                        복잡한 HTML과 웹페이지 생성,<br aria-hidden="true" />
+                        AI와 함께라면 어렵지 않습니다.
                       </p>
-                      <p class="page8-demo__note">
-                        AI 관련 문의사항이 있으시면<br aria-hidden="true" />
-                        PLAYGROUND 자유게시판에 언제든지 남겨주세요.
-                      </p>
-                      <a
-                        class="page8-cta"
-                        id="page8-playground-link"
-                        href="https://teams.microsoft.com/l/channel/19%3A1b51738e3b8448fab35322050c0047b2%40thread.tacv2/%F0%9F%8F%80%20%EC%9E%90%EC%9C%A0%EA%B2%8C%EC%8B%9C%ED%8C%90?groupId=43c83ad4-1ac0-44ad-8ab1-6729a6279fcb&tenantId=5fcb0def-a698-40ce-a73a-ea61130c13c6"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >PLAYGROUND 접속하기</a>
-                      <div class="page8-like-row">
-                        <button type="button" class="page8-like-btn" id="page8-like-btn" aria-label="좋아요">
-                          <span class="page8-like-btn__icon" aria-hidden="true">♥</span>
-                          <span class="page8-like-btn__label">좋아요</span>
-                          <span class="page8-like-btn__count" id="page8-like-count" aria-live="polite">0회</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="page8-badges" aria-label="역할 요약">
-                    <span class="page8-badge page8-badge--html"><span aria-hidden="true">🏗️</span> HTML 뼈대</span>
-                    <span class="page8-badge page8-badge--css"><span aria-hidden="true">🎨</span> CSS 옷</span>
-                    <span class="page8-badge page8-badge--js"><span aria-hidden="true">⚡</span> JS 움직임</span>
+                      <p class="page6-guide-card__title">비개발자를 위한 바이브 코딩 실습하기</p>
+                      <span class="page6-guide-card__link">가이드 바로가기</span>
+                    </a>
                   </div>
                 </div>
                 <div class="footer">
@@ -3126,81 +3455,61 @@
         <label class="nav-btn nav-btn--next nav-next-from-4" for="hcn-nav-5" aria-label="다음 슬라이드">→</label>
         <label class="nav-btn nav-btn--next nav-next-from-5" for="hcn-nav-6" aria-label="다음 슬라이드">→</label>
         <label class="nav-btn nav-btn--next nav-next-from-6" for="hcn-nav-7" aria-label="다음 슬라이드">→</label>
-        <label class="nav-btn nav-btn--next nav-next-from-7" for="hcn-nav-8" aria-label="다음 슬라이드">→</label>
         <span class="nav-btn nav-btn--next nav-next-disabled is-disabled" aria-hidden="true">→</span>
       </div>
     </div>
 
     <div class="carousel__counter" aria-live="polite">
-      <span class="cnt-num cnt-1">1</span><span class="cnt-num cnt-2">2</span><span class="cnt-num cnt-3">3</span><span class="cnt-num cnt-4">4</span><span class="cnt-num cnt-5">5</span><span class="cnt-num cnt-6">6</span><span class="cnt-num cnt-7">7</span><span class="cnt-num cnt-8">8</span> / 8
+      <span class="cnt-num cnt-1">1</span><span class="cnt-num cnt-2">2</span><span class="cnt-num cnt-3">3</span><span class="cnt-num cnt-4">4</span><span class="cnt-num cnt-5">5</span><span class="cnt-num cnt-6">6</span><span class="cnt-num cnt-7">7</span> / 7
     </div>
   </div>
   <script>
     (function () {
-      var greet = document.getElementById("page6-demo-greet");
-      var brand = document.querySelector("#hcn-card-7 .page6-js-demo__brand");
-      var inner = document.getElementById("page6-demo-inner");
-      var btn = document.getElementById("page6-demo-btn");
-      var note = document.getElementById("page6-demo-note");
-      if (!greet || !inner || !btn || !note) return;
-      var count = 0;
-      /* 첫 클릭부터 색이 확 바뀌도록(초기 #1d4ed8과 구분), 패널 배경은 톤만 맞춤 */
-      var greetColors = ["#c026d3", "#0d9488", "#ea580c", "#1d4ed8"];
-      var brandColors = ["#6b21a8", "#0f766e", "#c2410c", "#1e40af"];
-      var noteColors = ["rgba(107, 33, 168, 0.88)", "rgba(15, 118, 110, 0.88)", "rgba(194, 65, 12, 0.88)", "rgba(30, 64, 175, 0.88)"];
-      var panelBgs = [
-        "radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255,255,255,0.92) 0%, transparent 55%), linear-gradient(165deg, #faf5ff 0%, #f3e8ff 38%, #fce7f3 100%)",
-        "radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255,255,255,0.92) 0%, transparent 55%), linear-gradient(165deg, #ecfdf5 0%, #d1fae5 40%, #e0f2fe 100%)",
-        "radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255,255,255,0.92) 0%, transparent 55%), linear-gradient(165deg, #fff7ed 0%, #ffedd5 40%, #fed7aa 100%)",
-        "radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255,255,255,0.92) 0%, transparent 55%), linear-gradient(165deg, #eff6ff 0%, #dbeafe 42%, #e0e7ff 100%)"
+      var nav7 = document.getElementById("hcn-nav-7");
+      var stage7 = document.getElementById("page7-demo-stage");
+      var greet7 = document.getElementById("page7-demo-greet");
+      var brand7 = document.getElementById("page7-demo-brand");
+      var likeBtn7 = document.getElementById("page7-like-btn");
+      var likeCountEl7 = document.getElementById("page7-like-count");
+      var playgroundBtn7 = document.getElementById("page7-playground-btn");
+      var fwCanvas7 = document.getElementById("page7-fireworks-canvas");
+      if (!nav7 || !stage7 || !greet7 || !brand7 || !likeBtn7 || !likeCountEl7 || !playgroundBtn7 || !fwCanvas7) return;
+
+      var palettes7 = [
+        { greet: "#1d4ed8", brand: "rgba(30, 41, 59, 0.82)", bg: "radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255, 255, 255, 0.92) 0%, transparent 55%), linear-gradient(165deg, #eff6ff 0%, #dbeafe 44%, #e0e7ff 100%)" },
+        { greet: "#c026d3", brand: "#6b21a8", bg: "radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255, 255, 255, 0.92) 0%, transparent 55%), linear-gradient(165deg, #faf5ff 0%, #f3e8ff 38%, #fce7f3 100%)" },
+        { greet: "#0d9488", brand: "#0f766e", bg: "radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255, 255, 255, 0.92) 0%, transparent 55%), linear-gradient(165deg, #ecfdf5 0%, #d1fae5 40%, #e0f2fe 100%)" },
+        { greet: "#ea580c", brand: "#c2410c", bg: "radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255, 255, 255, 0.92) 0%, transparent 55%), linear-gradient(165deg, #fff7ed 0%, #ffedd5 40%, #fed7aa 100%)" }
       ];
-      btn.addEventListener("click", function () {
-        count += 1;
-        var i = (count - 1) % greetColors.length;
-        greet.style.color = greetColors[i];
-        inner.style.background = panelBgs[i];
-        if (brand) brand.style.color = brandColors[i];
-        note.style.color = noteColors[i];
-        greet.classList.add("is-pulse");
-        setTimeout(function () {
-          greet.classList.remove("is-pulse");
-        }, 200);
-        note.textContent = "PLAYGROUND 방문 " + count + "회";
-      });
-    })();
+      var step7 = 0;
+      var likeCount7 = 0;
 
-    (function () {
-      var canvas = document.getElementById("page8-fireworks-canvas");
-      var nav8 = document.getElementById("hcn-nav-8");
-      var stage = document.getElementById("page8-demo-stage");
-      if (!canvas || !nav8 || !stage) return;
-      var ctx = canvas.getContext("2d");
-      if (!ctx) return;
+      var fwCtx7 = fwCanvas7.getContext("2d");
+      if (!fwCtx7) return;
+      var fwRaf7 = null;
+      var fwParts7 = [];
+      var fwW7 = 400;
+      var fwH7 = 280;
 
-      var rafId = null;
-      var particles = [];
-      var logicalW = 400;
-      var logicalH = 280;
-
-      function resizeCanvas() {
-        var r = stage.getBoundingClientRect();
-        logicalW = Math.max(120, Math.floor(r.width) || 400);
-        logicalH = Math.max(100, Math.floor(r.height) || 280);
+      function resizeFw7() {
+        var r = stage7.getBoundingClientRect();
+        fwW7 = Math.max(120, Math.floor(r.width) || 400);
+        fwH7 = Math.max(100, Math.floor(r.height) || 280);
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.floor(logicalW * dpr);
-        canvas.height = Math.floor(logicalH * dpr);
-        canvas.style.width = logicalW + "px";
-        canvas.style.height = logicalH + "px";
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        fwCanvas7.width = Math.floor(fwW7 * dpr);
+        fwCanvas7.height = Math.floor(fwH7 * dpr);
+        fwCanvas7.style.width = fwW7 + "px";
+        fwCanvas7.style.height = fwH7 + "px";
+        fwCtx7.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
 
-      function burst(cx, cy, count) {
+      function burstFw7(cx, cy, count) {
         var colors = ["#fb7185", "#38bdf8", "#34d399", "#fbbf24", "#c084fc", "#f472b6", "#fcd34d"];
         var n = count || 40;
         for (var i = 0; i < n; i++) {
           var ang = Math.random() * Math.PI * 2;
           var sp = 2.2 + Math.random() * 5.2;
-          particles.push({
+          fwParts7.push({
             x: cx,
             y: cy,
             vx: Math.cos(ang) * sp,
@@ -3212,141 +3521,120 @@
             g: 0.055 + Math.random() * 0.05
           });
         }
-        ensureAnimLoop();
+        ensureFwLoop7();
       }
 
-      function ensureAnimLoop() {
-        if (!nav8.checked || rafId != null) return;
-        rafId = window.requestAnimationFrame(drawFrame);
+      function ensureFwLoop7() {
+        if (!nav7.checked || fwRaf7 != null) return;
+        fwRaf7 = window.requestAnimationFrame(drawFwFrame7);
       }
 
-      function drawFrame() {
-        if (!nav8.checked) {
-          rafId = null;
+      function drawFwFrame7() {
+        if (!nav7.checked) {
+          fwRaf7 = null;
           return;
         }
-        var w = logicalW;
-        var h = logicalH;
-        ctx.clearRect(0, 0, w, h);
-        for (var i = particles.length - 1; i >= 0; i--) {
-          var p = particles[i];
+        var w = fwW7;
+        var h = fwH7;
+        fwCtx7.clearRect(0, 0, w, h);
+        for (var i = fwParts7.length - 1; i >= 0; i--) {
+          var p = fwParts7[i];
           p.x += p.vx;
           p.y += p.vy;
           p.vy += p.g;
           p.life -= p.decay;
           if (p.life <= 0) {
-            particles.splice(i, 1);
+            fwParts7.splice(i, 1);
             continue;
           }
-          ctx.globalAlpha = Math.max(0, Math.min(1, p.life));
-          ctx.fillStyle = p.c;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.sz * (0.55 + 0.45 * p.life), 0, Math.PI * 2);
-          ctx.fill();
+          fwCtx7.globalAlpha = Math.max(0, Math.min(1, p.life));
+          fwCtx7.fillStyle = p.c;
+          fwCtx7.beginPath();
+          fwCtx7.arc(p.x, p.y, p.sz * (0.55 + 0.45 * p.life), 0, Math.PI * 2);
+          fwCtx7.fill();
         }
-        ctx.globalAlpha = 1;
-        if (particles.length === 0) {
-          rafId = null;
+        fwCtx7.globalAlpha = 1;
+        if (fwParts7.length === 0) {
+          fwRaf7 = null;
           return;
         }
-        rafId = window.requestAnimationFrame(drawFrame);
+        fwRaf7 = window.requestAnimationFrame(drawFwFrame7);
       }
 
-      function prepareSlide8() {
+      function prepareFw7() {
         window.requestAnimationFrame(function () {
-          if (!nav8.checked) return;
-          if (rafId != null) {
-            window.cancelAnimationFrame(rafId);
-            rafId = null;
+          if (!nav7.checked) return;
+          if (fwRaf7 != null) {
+            window.cancelAnimationFrame(fwRaf7);
+            fwRaf7 = null;
           }
-          particles = [];
-          resizeCanvas();
-          ctx.clearRect(0, 0, logicalW, logicalH);
+          fwParts7 = [];
+          resizeFw7();
+          fwCtx7.clearRect(0, 0, fwW7, fwH7);
         });
       }
 
-      function stopLoop() {
-        if (rafId != null) {
-          cancelAnimationFrame(rafId);
-          rafId = null;
+      function stopFw7() {
+        if (fwRaf7 != null) {
+          window.cancelAnimationFrame(fwRaf7);
+          fwRaf7 = null;
         }
-        particles = [];
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        fwParts7 = [];
+        fwCtx7.setTransform(1, 0, 0, 1, 0, 0);
+        fwCtx7.clearRect(0, 0, fwCanvas7.width, fwCanvas7.height);
       }
 
-      function syncFromNav() {
-        if (nav8.checked) prepareSlide8();
-        else stopLoop();
+      function syncFwFromNav7() {
+        if (nav7.checked) prepareFw7();
+        else stopFw7();
       }
 
       document.querySelectorAll('input[name="hcn-nav"]').forEach(function (r) {
-        r.addEventListener("change", syncFromNav);
+        r.addEventListener("change", syncFwFromNav7);
       });
       window.addEventListener("resize", function () {
-        if (nav8.checked) resizeCanvas();
+        if (nav7.checked) resizeFw7();
       });
 
-      var greet8 = document.getElementById("page8-demo-greet");
-      var brand8 = document.getElementById("page8-demo-brand");
-      var palettes = [
-        { brand: "rgba(30, 41, 59, 0.82)", bg: "radial-gradient(ellipse 130% 90% at 50% -25%, rgba(255, 255, 255, 0.95) 0%, transparent 58%), linear-gradient(168deg, #f0fdf4 0%, #ecfeff 38%, #eef2ff 72%, #fdf4ff 100%)" },
-        { brand: "#6b21a8", bg: "radial-gradient(ellipse 130% 90% at 50% -25%, rgba(255,255,255,0.95) 0%, transparent 58%), linear-gradient(168deg, #faf5ff 0%, #f3e8ff 40%, #fce7f3 100%)" },
-        { brand: "#c2410c", bg: "radial-gradient(ellipse 130% 90% at 50% -25%, rgba(255,255,255,0.95) 0%, transparent 58%), linear-gradient(168deg, #fff7ed 0%, #ffedd5 42%, #fed7aa 100%)" },
-        { brand: "#0369a1", bg: "radial-gradient(ellipse 130% 90% at 50% -25%, rgba(255,255,255,0.95) 0%, transparent 58%), linear-gradient(168deg, #eff6ff 0%, #dbeafe 44%, #e0e7ff 100%)" }
-      ];
-      var step = 0;
-      if (stage && greet8 && brand8) {
-        stage.addEventListener("click", function (e) {
-          if (!nav8.checked) return;
-          if (e.target.closest && e.target.closest(".page8-cta")) return;
-          if (e.target.closest && e.target.closest(".page8-like-btn")) return;
-          step = (step + 1) % palettes.length;
-          var pal = palettes[step];
-          brand8.style.color = pal.brand;
-          stage.style.background = pal.bg;
-          brand8.classList.add("is-pulse");
-          window.setTimeout(function () {
-            brand8.classList.remove("is-pulse");
-          }, 200);
-          var w = logicalW;
-          var h = logicalH;
-          burst(w * 0.5, h * 0.35, 64);
-        });
+      function applyPalette7(nextStep) {
+        step7 = nextStep % palettes7.length;
+        var pal = palettes7[step7];
+        greet7.style.color = pal.greet;
+        brand7.style.color = pal.brand;
+        stage7.style.background = pal.bg;
+        greet7.classList.add("is-pulse");
+        window.setTimeout(function () {
+          greet7.classList.remove("is-pulse");
+        }, 200);
       }
 
-      var likeBtn = document.getElementById("page8-like-btn");
-      var likeCountEl = document.getElementById("page8-like-count");
-      var likeCount = 0;
-      if (likeBtn && likeCountEl) {
-        likeBtn.addEventListener("click", function (ev) {
-          ev.stopPropagation();
-          if (!nav8.checked) return;
-          likeCount += 1;
-          likeCountEl.textContent = likeCount + "회";
-          if (brand8) {
-            step = (step + 1) % palettes.length;
-            var pal2 = palettes[step];
-            brand8.style.color = pal2.brand;
-            brand8.classList.add("is-pulse");
-            window.setTimeout(function () {
-              brand8.classList.remove("is-pulse");
-            }, 200);
-          }
-          var w = logicalW;
-          var h = logicalH;
-          burst(w * 0.35, h * 0.42, 72);
-          burst(w * 0.65, h * 0.38, 64);
-          burst(w * 0.5, h * 0.52, 56);
-          likeBtn.classList.add("is-pulse");
-          window.setTimeout(function () {
-            likeBtn.classList.remove("is-pulse");
-          }, 220);
-        });
-      }
+      likeBtn7.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        if (!nav7.checked) return;
+        likeCount7 += 1;
+        likeCountEl7.textContent = likeCount7 + "회";
+        applyPalette7(step7 + 1);
+        var w = fwW7;
+        var h = fwH7;
+        burstFw7(w * 0.35, h * 0.42, 56);
+        burstFw7(w * 0.65, h * 0.38, 52);
+        burstFw7(w * 0.5, h * 0.52, 48);
+        likeBtn7.classList.add("is-pulse");
+        window.setTimeout(function () {
+          likeBtn7.classList.remove("is-pulse");
+        }, 220);
+      });
 
-      syncFromNav();
+      playgroundBtn7.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        if (!nav7.checked) return;
+        applyPalette7(step7 + 1);
+      });
+
+      syncFwFromNav7();
     })();
+
+    /* 8페이지 제거됨 */
   </script>
 </body>
 </html>
