@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Weekly AI — ChatGPT 5.5 (VOL.5 골격)</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --font-sans: Pretendard, "Noto Sans KR", "Malgun Gothic", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-cover-headline-min: 1.85rem;
+      --font-cover-headline-vw: 4.8vw;
+      --font-cover-headline-max: 2.45rem;
+      --font-cover-headline-mark-em: 1.22;
+      --font-cover-strapline: 23px;
+      --font-slide-title: 26px;
+      --font-slide-p: 14px;
+      --color-brand: #0d8a6a;
+    }
+
+    html { overflow-x: hidden; }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: #ffffff;
+      font-family: var(--font-sans);
+    }
+
+    .carousel-shell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 48px 16px 64px;
+      gap: 14px;
+    }
+
+    .carousel-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+      max-width: 700px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .carousel__viewport {
+      flex: 0 1 540px;
+      min-width: 0;
+      width: 540px;
+      max-width: 540px;
+      overflow: hidden;
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      touch-action: pan-y;
+      background: transparent;
+      transform-origin: top center;
+      -webkit-transform-origin: top center;
+    }
+
+    .carousel__inner {
+      width: 540px;
+      height: 720px;
+      overflow: hidden;
+      border-radius: 20px;
+      position: relative;
+    }
+
+    /* 반응형 축소: zoom 지원 브라우저는 zoom(비디오 흰 타임라인 어긋남 완화), 그 외는 기존 scale */
+    @media (max-width: 600px) {
+      .carousel__viewport {
+        height: 612px;
+        transform: scale(0.85);
+        -webkit-transform: scale(0.85);
+      }
+      @supports (zoom: 0.85) {
+        .carousel__viewport {
+          transform: none;
+          -webkit-transform: none;
+          zoom: 0.85;
+        }
+      }
+    }
+    @media (max-width: 520px) {
+      .carousel__viewport {
+        height: 540px;
+        transform: scale(0.75);
+        -webkit-transform: scale(0.75);
+      }
+      @supports (zoom: 0.75) {
+        .carousel__viewport {
+          transform: none;
+          -webkit-transform: none;
+          zoom: 0.75;
+        }
+      }
+    }
+    @media (max-width: 460px) {
+      .carousel__viewport {
+        height: 468px;
+        transform: scale(0.65);
+        -webkit-transform: scale(0.65);
+      }
+      @supports (zoom: 0.65) {
+        .carousel__viewport {
+          transform: none;
+          -webkit-transform: none;
+          zoom: 0.65;
+        }
+      }
+    }
+    @media (max-width: 400px) {
+      .carousel__viewport {
+        height: 396px;
+        transform: scale(0.55);
+        -webkit-transform: scale(0.55);
+      }
+      @supports (zoom: 0.55) {
+        .carousel__viewport {
+          transform: none;
+          -webkit-transform: none;
+          zoom: 0.55;
+        }
+      }
+    }
+
+    #deck {
+      position: relative !important;
+      width: 540px !important;
+      height: 720px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+    }
+
+    #deck > .card {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      margin: 0 !important;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.32s ease, visibility 0s linear 0.32s;
+      pointer-events: none;
+    }
+
+    .wai-nav {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+
+    #hcn-nav-1:checked ~ .carousel-row #hcn-card-1,
+    #hcn-nav-2:checked ~ .carousel-row #hcn-card-2,
+    #hcn-nav-3:checked ~ .carousel-row #hcn-card-3,
+    #hcn-nav-4:checked ~ .carousel-row #hcn-card-4,
+    #hcn-nav-5:checked ~ .carousel-row #hcn-card-5,
+    #hcn-nav-6:checked ~ .carousel-row #hcn-card-6,
+    #hcn-nav-7:checked ~ .carousel-row #hcn-card-7,
+    #hcn-nav-8:checked ~ .carousel-row #hcn-card-8,
+    #hcn-nav-9:checked ~ .carousel-row #hcn-card-9,
+    #hcn-nav-10:checked ~ .carousel-row #hcn-card-10 {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      z-index: 2;
+      transition: opacity 0.32s ease, visibility 0s linear 0s;
+    }
+
+    .nav-stack {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      align-self: center;
+    }
+    .nav-stack > .nav-btn {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+    }
+
+    #hcn-nav-2:checked ~ .carousel-row .nav-prev-from-2 {
+      display: inline-flex;
+    }
+    #hcn-nav-3:checked ~ .carousel-row .nav-prev-from-3 {
+      display: inline-flex;
+    }
+    #hcn-nav-4:checked ~ .carousel-row .nav-prev-from-4 {
+      display: inline-flex;
+    }
+    #hcn-nav-5:checked ~ .carousel-row .nav-prev-from-5 {
+      display: inline-flex;
+    }
+    #hcn-nav-6:checked ~ .carousel-row .nav-prev-from-6 {
+      display: inline-flex;
+    }
+    #hcn-nav-7:checked ~ .carousel-row .nav-prev-from-7 {
+      display: inline-flex;
+    }
+    #hcn-nav-8:checked ~ .carousel-row .nav-prev-from-8 {
+      display: inline-flex;
+    }
+    #hcn-nav-9:checked ~ .carousel-row .nav-prev-from-9 {
+      display: inline-flex;
+    }
+    #hcn-nav-10:checked ~ .carousel-row .nav-prev-from-10 {
+      display: inline-flex;
+    }
+    #hcn-nav-1:checked ~ .carousel-row .nav-prev-disabled {
+      display: inline-flex;
+    }
+
+    #hcn-nav-1:checked ~ .carousel-row .nav-next-from-1 {
+      display: inline-flex;
+    }
+    #hcn-nav-2:checked ~ .carousel-row .nav-next-from-2 {
+      display: inline-flex;
+    }
+    #hcn-nav-3:checked ~ .carousel-row .nav-next-from-3 {
+      display: inline-flex;
+    }
+    #hcn-nav-4:checked ~ .carousel-row .nav-next-from-4 {
+      display: inline-flex;
+    }
+    #hcn-nav-5:checked ~ .carousel-row .nav-next-from-5 {
+      display: inline-flex;
+    }
+    #hcn-nav-6:checked ~ .carousel-row .nav-next-from-6 {
+      display: inline-flex;
+    }
+    #hcn-nav-7:checked ~ .carousel-row .nav-next-from-7 {
+      display: inline-flex;
+    }
+    #hcn-nav-8:checked ~ .carousel-row .nav-next-from-8 {
+      display: inline-flex;
+    }
+    #hcn-nav-9:checked ~ .carousel-row .nav-next-from-9 {
+      display: inline-flex;
+    }
+    #hcn-nav-10:checked ~ .carousel-row .nav-next-disabled {
+      display: inline-flex;
+    }
+
+    .nav-btn.is-disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .carousel__counter .cnt-num { display: none; }
+    #hcn-nav-1:checked ~ .carousel__counter .cnt-1,
+    #hcn-nav-2:checked ~ .carousel__counter .cnt-2,
+    #hcn-nav-3:checked ~ .carousel__counter .cnt-3,
+    #hcn-nav-4:checked ~ .carousel__counter .cnt-4,
+    #hcn-nav-5:checked ~ .carousel__counter .cnt-5,
+    #hcn-nav-6:checked ~ .carousel__counter .cnt-6,
+    #hcn-nav-7:checked ~ .carousel__counter .cnt-7,
+    #hcn-nav-8:checked ~ .carousel__counter .cnt-8,
+    #hcn-nav-9:checked ~ .carousel__counter .cnt-9,
+    #hcn-nav-10:checked ~ .carousel__counter .cnt-10 {
+      display: inline;
+    }
+
+    .nav-btn {
+      flex-shrink: 0;
+      align-self: center;
+      position: relative;
+      z-index: 10;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid #d4d4d4;
+      background: #fafafa;
+      color: #262626;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-btn:hover:not(.is-disabled) { background: #f0f0f0; }
+
+    .carousel__counter {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #737373;
+      user-select: none;
+    }
+
+    .card {
+      width: 540px;
+      height: 720px;
+      aspect-ratio: 3 / 4;
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.35);
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, #d4e8a0 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 15%, #a8e6c1 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, #5ccfb1 0%, transparent 55%),
+        radial-gradient(ellipse at 30% 70%, #3cc4a7 0%, transparent 50%),
+        radial-gradient(ellipse at 75% 80%, #1a8f8f 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 95%, #0d6b6e 0%, transparent 50%),
+        linear-gradient(180deg, #c8e6a0 0%, #4dc9a0 40%, #1a8888 80%, #0a5a5e 100%);
+      z-index: 0;
+    }
+
+    .card-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255,255,255,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 90% 60% at 100% 100%, rgba(0,30,40,0.18) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 50% at 0% 100%, rgba(0,40,35,0.12) 0%, transparent 45%);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 32px 28px;
+    }
+
+    .card-content--inner { padding-top: 36px; }
+
+    .card--cover .card-content--cover {
+      padding: 24px 24px 22px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .cover-inner {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cover-hero-wrap {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .cover-hero {
+      align-self: flex-start;
+      width: 100%;
+      text-align: left;
+    }
+
+    .cover-figure {
+      margin: 10px 0 14px;
+      padding: 0;
+      max-width: 100%;
+      line-height: 0;
+    }
+
+    .cover-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 8px 16px;
+      margin-bottom: 10px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #063532;
+      background: rgba(6,53,50,0.14);
+      border: 1px solid rgba(6,53,50,0.2);
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px rgba(0,40,45,0.08);
+    }
+
+    .cover-headline {
+      margin: 0;
+      font-size: clamp(var(--font-cover-headline-min), var(--font-cover-headline-vw), var(--font-cover-headline-max));
+      font-weight: 900;
+      line-height: 1.18;
+      letter-spacing: -0.045em;
+      color: #0a1211;
+      text-shadow:
+        0 1px 0 rgba(255,255,255,0.45),
+        0 14px 40px rgba(0,0,0,0.1);
+    }
+
+    .cover-headline strong {
+      font-weight: 900;
+    }
+
+    .cover-headline__mark {
+      font-size: calc(1em * var(--font-cover-headline-mark-em));
+      color: #166534;
+    }
+
+    .card--cover .cover-strapline {
+      margin: 12px 0 0;
+      font-size: var(--font-cover-strapline, 32px) !important;
+      font-weight: 600;
+      line-height: 1.38;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      text-align: left;
+      word-break: keep-all;
+    }
+
+    .cover-inner__bottom {
+      flex-shrink: 0;
+      padding-top: 12px;
+    }
+
+    .cover-swipe {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 0;
+    }
+
+    .cover-swipe__line {
+      width: 48px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #0a5a5e 0%, rgba(10,90,94,0.15) 100%);
+    }
+
+    .cover-swipe__label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(10,30,28,0.42);
+    }
+
+    @keyframes cover-rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .cover-animate-1  { opacity: 0; animation: cover-rise 0.55s ease forwards; }
+    .cover-animate-1b { opacity: 0; animation: cover-rise 0.55s ease 0.06s forwards; }
+    .cover-animate-2  { opacity: 0; animation: cover-rise 0.55s ease 0.14s forwards; }
+    .cover-animate-2b { opacity: 0; animation: cover-rise 0.55s ease 0.2s forwards; }
+    .cover-animate-3  { opacity: 0; animation: cover-rise 0.55s ease 0.24s forwards; }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .card:not(.card--cover) .slide-body {
+      padding: 18px 16px 14px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.38);
+      backdrop-filter: blur(14px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.45),
+        0 12px 36px rgba(0,40,45,0.08);
+    }
+
+    .slide-body--tight { gap: 8px; padding-top: 14px !important; }
+
+    /* 2p~10p: 글래스 없음 · 제목 블록 높이 + 16:9 미디어 슬롯을 2번 카드와 동일 규격으로 통일 */
+    #hcn-card-2 .card-content--inner,
+    #hcn-card-3 .card-content--inner,
+    #hcn-card-4 .card-content--inner,
+    #hcn-card-5 .card-content--inner,
+    #hcn-card-6 .card-content--inner,
+    #hcn-card-7 .card-content--inner,
+    #hcn-card-8 .card-content--inner,
+    #hcn-card-9 .card-content--inner,
+    #hcn-card-10 .card-content--inner {
+      padding: 0;
+    }
+
+    #hcn-card-2 .slide-body.slide-body--tight,
+    #hcn-card-3 .slide-body.slide-body--tight,
+    #hcn-card-4 .slide-body.slide-body--tight,
+    #hcn-card-5 .slide-body.slide-body--tight,
+    #hcn-card-6 .slide-body.slide-body--tight,
+    #hcn-card-7 .slide-body.slide-body--tight,
+    #hcn-card-8 .slide-body.slide-body--tight,
+    #hcn-card-9 .slide-body.slide-body--tight,
+    #hcn-card-10 .slide-body.slide-body--tight {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 0 !important;
+      padding-top: 0 !important;
+      border-radius: 0;
+      background: transparent;
+      border: none;
+      backdrop-filter: none;
+      box-shadow: none;
+    }
+
+    #hcn-card-2 .slide-head,
+    #hcn-card-3 .slide-head,
+    #hcn-card-4 .slide-head,
+    #hcn-card-5 .slide-head,
+    #hcn-card-6 .slide-head,
+    #hcn-card-7 .slide-head,
+    #hcn-card-8 .slide-head,
+    #hcn-card-9 .slide-head,
+    #hcn-card-10 .slide-head {
+      flex: 0 0 auto;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 96px;
+      padding: 12px 18px 8px;
+      overflow: hidden;
+    }
+
+    .slide-head-logo {
+      display: block;
+      width: 96px;
+      max-width: 40%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+      opacity: 0.96;
+    }
+
+    #hcn-card-3 .slide-yt-fallback,
+    #hcn-card-4 .slide-yt-fallback,
+    #hcn-card-7 .slide-yt-fallback,
+    #hcn-card-8 .slide-yt-fallback {
+      margin: 0;
+      padding: 8px 18px 10px;
+      flex-shrink: 0;
+    }
+
+    .slide-body-fill {
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    #hcn-card-2 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-3 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-4 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-5 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-6 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-7 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-8 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-9 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-10 .slide-yt-wrap.slide-media-slot {
+      flex: 0 0 auto;
+      position: relative;
+      width: 100%;
+      margin: -10px 0 0 0;
+      line-height: 0;
+      aspect-ratio: 16 / 9;
+      background: rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      border-radius: 0;
+    }
+
+    /* 요청: 이미지 여백은 흰색으로 처리 (4p, 7p, 8p) */
+    #hcn-card-4 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-7 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-8 .slide-yt-wrap.slide-media-slot {
+      background: #ffffff;
+    }
+
+    #hcn-card-2 .slide-media-slot video,
+    #hcn-card-5 .slide-media-slot video,
+    #hcn-card-6 .slide-media-slot video,
+    #hcn-card-9 .slide-media-slot video,
+    #hcn-card-10 .slide-media-slot video {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      vertical-align: top;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    #hcn-card-3 .slide-media-slot img,
+    #hcn-card-4 .slide-media-slot img,
+    #hcn-card-7 .slide-media-slot img,
+    #hcn-card-8 .slide-media-slot img {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      vertical-align: top;
+    }
+
+    #hcn-card-4 .slide-media-slot img,
+    #hcn-card-7 .slide-media-slot img,
+    #hcn-card-8 .slide-media-slot img {
+      transform: scale(1.06);
+      transform-origin: center center;
+    }
+
+
+    #hcn-card-2 .card-content--inner > .footer,
+    #hcn-card-3 .card-content--inner > .footer,
+    #hcn-card-4 .card-content--inner > .footer,
+    #hcn-card-5 .card-content--inner > .footer,
+    #hcn-card-6 .card-content--inner > .footer,
+    #hcn-card-7 .card-content--inner > .footer,
+    #hcn-card-8 .card-content--inner > .footer,
+    #hcn-card-9 .card-content--inner > .footer,
+    #hcn-card-10 .card-content--inner > .footer {
+      margin-top: auto;
+      padding: 12px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(12, 55, 52, 0.22);
+    }
+
+    #hcn-card-2 .footer-logo path,
+    #hcn-card-3 .footer-logo path,
+    #hcn-card-4 .footer-logo path,
+    #hcn-card-5 .footer-logo path,
+    #hcn-card-6 .footer-logo path,
+    #hcn-card-7 .footer-logo path,
+    #hcn-card-8 .footer-logo path,
+    #hcn-card-9 .footer-logo path,
+    #hcn-card-10 .footer-logo path {
+      fill: #0a1211;
+    }
+
+    #hcn-card-2 .footer-text,
+    #hcn-card-3 .footer-text,
+    #hcn-card-4 .footer-text,
+    #hcn-card-5 .footer-text,
+    #hcn-card-6 .footer-text,
+    #hcn-card-7 .footer-text,
+    #hcn-card-8 .footer-text,
+    #hcn-card-9 .footer-text,
+    #hcn-card-10 .footer-text {
+      color: #0a1211;
+    }
+
+    .slide-h2 {
+      font-size: var(--font-slide-title);
+      font-weight: 900;
+      color: #0a1211;
+      line-height: 1.25;
+      word-break: keep-all;
+      letter-spacing: -0.03em;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+    }
+
+    .slide-p {
+      font-size: var(--font-slide-p);
+      font-weight: 500;
+      color: rgba(0,0,0,0.75);
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .emph { font-weight: 800; color: #062a26; }
+
+    .slide-skeleton {
+      margin-top: 8px;
+      padding: 20px 18px;
+      border-radius: 14px;
+      border: 1px dashed rgba(6, 53, 50, 0.35);
+      background: rgba(255,255,255,0.25);
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(6, 53, 50, 0.72);
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+
+    .slide-skeleton {
+      margin: 8px 0 0;
+      font-size: 11px;
+      font-weight: 650;
+      line-height: 1.45;
+      color: rgba(6, 53, 50, 0.78);
+      word-break: keep-all;
+    }
+
+    .slide-yt-fallback {
+      font-size: 11px;
+      font-weight: 650;
+      line-height: 1.45;
+      color: rgba(6, 53, 50, 0.78);
+      word-break: keep-all;
+    }
+
+    .slide-yt-fallback a {
+      color: #065f46;
+      font-weight: 800;
+    }
+
+    .slide-yt-fallback code {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 0.92em;
+      font-weight: 700;
+    }
+
+    .slide-copy {
+      padding: 12px 18px 0;
+      color: #0a1211;
+    }
+
+    .slide-copy__num {
+      margin: 0;
+      font-size: clamp(21px, 3.3vw, 24px);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-copy__title {
+      margin: 2px 0 0;
+      font-size: clamp(30px, 4.8vw, 37px);
+      font-weight: 900;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
+      word-break: keep-all;
+    }
+
+    .slide-copy__body {
+      margin: 10px 0 0;
+      font-size: clamp(15.5px, 2.8vw, 18.5px);
+      font-weight: 700;
+      line-height: 1.56;
+      letter-spacing: -0.01em;
+      word-break: keep-all;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .footer-logo {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .footer-logo path { fill: #111; }
+
+    .footer-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: 1px;
+    }
+
+    .card-content--inner > .footer {
+      padding-top: 8px;
+      flex-shrink: 0;
+    }
+</style>
+</head>
+<body>
+  <div class="carousel-shell" id="html-cardnews-vol5">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-1" checked>
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-2">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-3">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-4">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-5">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-6">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-7">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-8">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-9">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-10">
+
+    <div class="carousel-row">
+      <div class="nav-stack nav-stack--prev">
+        <span class="nav-btn nav-btn--prev nav-prev-disabled is-disabled" aria-hidden="true">←</span>
+        <label class="nav-btn nav-btn--prev nav-prev-from-2" for="hcn-nav-1" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-3" for="hcn-nav-2" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-4" for="hcn-nav-3" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-5" for="hcn-nav-4" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-6" for="hcn-nav-5" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-7" for="hcn-nav-6" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-8" for="hcn-nav-7" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-9" for="hcn-nav-8" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-10" for="hcn-nav-9" aria-label="이전 슬라이드">←</label>
+      </div>
+
+      <div class="carousel__viewport">
+        <div class="carousel__inner">
+          <div id="deck">
+
+            <section class="card card--cover" id="hcn-card-1" aria-label="슬라이드 1 표지">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--cover">
+                <div class="cover-inner">
+                  <div class="cover-hero-wrap">
+                    <div class="cover-hero">
+                      <span class="cover-badge cover-animate-1">VOL.5</span>
+                      <figure class="cover-figure cover-animate-1b">
+                        <img
+                          src="https://kikeun.github.io/KIKEUN/ai54.png"
+                          alt="마크다운 로고와 기호 일러스트"
+                          loading="eager"
+                          decoding="async"
+                          referrerpolicy="no-referrer-when-downgrade"
+                        />
+                      </figure>
+                      <h1 class="cover-headline cover-animate-2">
+                        <strong>멈추지 않는</strong><br>
+                        <strong class="cover-headline__mark">ChatGPT-5.5 등장</strong>
+                      </h1>
+                    </div>
+                  </div>
+                  <div class="cover-inner__bottom cover-animate-3">
+                    <div class="cover-swipe">
+                      <div class="cover-swipe__line" aria-hidden="true"></div>
+                      <span class="cover-swipe__label">총 10장 · Swipe to explore</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-2" aria-label="슬라이드 2 · 소개 영상">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <video
+                      class="slide-card-video"
+                      src="https://kikeun.github.io/KIKEUN/1%EC%9E%A5.mp4"
+                      controls
+                      playsinline
+                      muted
+                      loop
+                      preload="metadata"
+                    ></video>
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#1</p>
+                    <p class="slide-copy__title">GPT-5.5 나왔어요</p>
+                    <p class="slide-copy__body">실제 업무를 위한 새로운 지능.<br>이번 업데이트 핵심만 빠르게 8장 카드뉴스로 지금 바로 확인해 보세요.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-3" aria-label="슬라이드 3 · 벤치마크 표">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <img
+                      class="slide-card-figure"
+                      src="https://kikeun.github.io/KIKEUN/2%EC%9E%A5.png"
+                      alt="GPT-5.5 등 AI 모델 벤치마크 비교 표"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#2</p>
+                    <p class="slide-copy__title">무엇이 달라졌나요</p>
+                    <p class="slide-copy__body">GPT-5.5는 더 똑똑해졌고, 더 오래 끈기 있게 일합니다.<br>도구도 안정적으로 쓰고, 토큰은 덜 쓰면서 결과는 더 좋아졌어요.<br>진짜 업무에 맞춰 설계된 모델입니다.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-4" aria-label="슬라이드 4 · 3장 이미지">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <img
+                      class="slide-card-figure"
+                      src="https://kikeun.github.io/KIKEUN/3%EC%9E%A5.png"
+                      alt="3장"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#3</p>
+                    <p class="slide-copy__title">20시간도 끝까지 갑니다</p>
+                    <p class="slide-copy__body">복잡한 코딩 작업에서 멈추지 않고 끝까지 갑니다.<br>터미널 벤치 82.7%로 역대 최고 점수를 기록했고,<br>20시간짜리 장기 코딩에서도 이전 모델을 안정적으로 앞섰어요.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-5" aria-label="슬라이드 5 · 4장 영상">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <video
+                      class="slide-card-video"
+                      data-video-src="https://kikeun.github.io/KIKEUN/4%EC%9E%A5.mp4"
+                      controls
+                      playsinline
+                      muted
+                      loop
+                      preload="none"
+                    ></video>
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#4</p>
+                    <p class="slide-copy__title">문서분석도 자동으로</p>
+                    <p class="slide-copy__body">Codex에서 문서, 스프레드시트, 슬라이드 제작 능력이 크게 늘었어요.<br>OpenAI 내부에선 85%가 매주 쓰고 있고,<br>재무팀은 한 주에 5~10시간을 아끼고 있다고 합니다.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-6" aria-label="슬라이드 6 · 5장 영상">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <video
+                      class="slide-card-video"
+                      data-video-src="https://kikeun.github.io/KIKEUN/5%EC%9E%A5.mp4"
+                      controls
+                      playsinline
+                      muted
+                      loop
+                      preload="none"
+                    ></video>
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#5</p>
+                    <p class="slide-copy__title">연구도 몇 시간으로</p>
+                    <p class="slide-copy__body">유전자 분석, 수석 연구 같은 전문 영역에서 크게 발전했어요.<br>한 수학자는 11분 만에 대수기하학 앱을 만들었고,<br>한 면역학 교수는 몇 달 걸릴 분석을 빠르게 끝냈습니다.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-7" aria-label="슬라이드 7 · 6장 이미지">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <img
+                      class="slide-card-figure"
+                      src="https://kikeun.github.io/KIKEUN/6%EC%9E%A5.png"
+                      alt="6장"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#6</p>
+                    <p class="slide-copy__title">절반 비용, 같은 결과</p>
+                    <p class="slide-copy__body">같은 문제를 풀 때 토큰을 훨씬 적게 쓰면서 더 좋은 결과를 냅니다.<br>코딩 인덱스 기준 경쟁 모델의 절반 비용으로<br>최상위 성능을 보여주고 있어요.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-8" aria-label="슬라이드 8 · 7장 이미지">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <img
+                      class="slide-card-figure"
+                      src="https://kikeun.github.io/KIKEUN/7%EC%9E%A5.png"
+                      alt="7장"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#7</p>
+                    <p class="slide-copy__title">관련 종사자들은 이렇게 말해요</p>
+                    <p class="slide-copy__body">커서, Every, 엔비디아까지 입을 모았어요.<br>커서는 눈에 띄게 더 똑똑하고 끈기가 있다,<br>더 강력한 코딩 성능을 제공한다고 평가했어요.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-9" aria-label="슬라이드 9 · 8장 영상">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <video
+                      class="slide-card-video"
+                      data-video-src="https://kikeun.github.io/KIKEUN/8%EC%9E%A5.mp4"
+                      controls
+                      playsinline
+                      muted
+                      loop
+                      preload="none"
+                    ></video>
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#8</p>
+                    <p class="slide-copy__title">어디서, 어떤 일까지 되나요</p>
+                    <p class="slide-copy__body">ChatGPT 플러스, 프로, 비즈니스, 엔터프라이즈에서 바로 쓸 수 있어요.<br>Codex는 Fast 모드를, API는 100만 토큰 컨텍스트를 지원합니다.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-10" aria-label="슬라이드 10 · 9장 영상">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <video
+                      class="slide-card-video"
+                      data-video-src="https://kikeun.github.io/KIKEUN/9%EC%9E%A5.mp4"
+                      controls
+                      playsinline
+                      muted
+                      loop
+                      preload="none"
+                    ></video>
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#9</p>
+                    <p class="slide-copy__title">한 줄로 요약하면요</p>
+                    <p class="slide-copy__body">GPT-5.5는 그저 똑똑해진 모델이 아닙니다.<br>오래 일하고, 효율적이고, 전문 업무에 바로 투입할 수 있는<br>진짜 일꾼에 가까워졌어요.</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-stack nav-stack--next">
+        <label class="nav-btn nav-btn--next nav-next-from-1" for="hcn-nav-2" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-2" for="hcn-nav-3" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-3" for="hcn-nav-4" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-4" for="hcn-nav-5" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-5" for="hcn-nav-6" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-6" for="hcn-nav-7" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-7" for="hcn-nav-8" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-8" for="hcn-nav-9" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-9" for="hcn-nav-10" aria-label="다음 슬라이드">→</label>
+        <span class="nav-btn nav-btn--next nav-next-disabled is-disabled" aria-hidden="true">→</span>
+      </div>
+    </div>
+
+    <div class="carousel__counter" aria-live="polite">
+      <span class="cnt-num cnt-1">1</span><span class="cnt-num cnt-2">2</span><span class="cnt-num cnt-3">3</span><span class="cnt-num cnt-4">4</span><span class="cnt-num cnt-5">5</span><span class="cnt-num cnt-6">6</span><span class="cnt-num cnt-7">7</span><span class="cnt-num cnt-8">8</span><span class="cnt-num cnt-9">9</span><span class="cnt-num cnt-10">10</span> / 10
+    </div>
+  </div>
+  <script>
+    (function () {
+      var LAZY_VIDEO_NAV = {
+        "hcn-nav-5": "#hcn-card-5 .slide-card-video",
+        "hcn-nav-6": "#hcn-card-6 .slide-card-video",
+        "hcn-nav-9": "#hcn-card-9 .slide-card-video",
+        "hcn-nav-10": "#hcn-card-10 .slide-card-video",
+      };
+
+      function hydrateLazyVideoForNav(navId) {
+        var sel = LAZY_VIDEO_NAV[navId];
+        if (!sel) return;
+        var v = document.querySelector(sel);
+        if (!v) return;
+        if (v.getAttribute("data-hydrated") === "1") return;
+        var url = v.getAttribute("data-video-src");
+        if (!url) return;
+        v.setAttribute("data-hydrated", "1");
+        v.src = url;
+        v.removeAttribute("data-video-src");
+        v.load();
+      }
+
+      var videoSlides = [
+        { navId: "hcn-nav-2", sel: "#hcn-card-2 .slide-card-video" },
+        { navId: "hcn-nav-5", sel: "#hcn-card-5 .slide-card-video" },
+        { navId: "hcn-nav-6", sel: "#hcn-card-6 .slide-card-video" },
+        { navId: "hcn-nav-9", sel: "#hcn-card-9 .slide-card-video" },
+        { navId: "hcn-nav-10", sel: "#hcn-card-10 .slide-card-video" },
+      ].map(function (x) {
+        return { navId: x.navId, video: document.querySelector(x.sel) };
+      }).filter(function (x) {
+        return x.video;
+      });
+
+      function pauseAllVideos() {
+        videoSlides.forEach(function (x) {
+          x.video.pause();
+        });
+      }
+
+      function tryPlayActiveSlide() {
+        var nav = document.querySelector('input[name="hcn-nav"]:checked');
+        if (!nav) return;
+        hydrateLazyVideoForNav(nav.id);
+        videoSlides.forEach(function (x) {
+          if (nav.id !== x.navId) return;
+          var v = x.video;
+          v.muted = true;
+          function doPlay() {
+            var p = v.play();
+            if (p && p.catch) p.catch(function () {});
+          }
+          if (v.readyState >= 2) doPlay();
+          else v.addEventListener("loadeddata", doPlay, { once: true });
+        });
+      }
+
+      function onNavChange() {
+        pauseAllVideos();
+        var nav = document.querySelector('input[name="hcn-nav"]:checked');
+        if (nav) hydrateLazyVideoForNav(nav.id);
+        window.setTimeout(tryPlayActiveSlide, 400);
+      }
+
+      document.querySelectorAll('input[name="hcn-nav"]').forEach(function (r) {
+        r.addEventListener("change", onNavChange);
+      });
+
+      tryPlayActiveSlide();
+    })();
+  </script>
+</body>
+</html>
