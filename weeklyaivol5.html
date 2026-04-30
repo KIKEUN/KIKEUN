@@ -943,20 +943,11 @@
     .emph { font-weight: 800; color: #062a26; }
 
     .slide-skeleton {
-      margin-top: 8px;
+      margin: 8px 0 0;
       padding: 20px 18px;
       border-radius: 14px;
       border: 1px dashed rgba(6, 53, 50, 0.35);
       background: rgba(255,255,255,0.25);
-      font-size: 13px;
-      font-weight: 600;
-      color: rgba(6, 53, 50, 0.72);
-      line-height: 1.55;
-      word-break: keep-all;
-    }
-
-    .slide-skeleton {
-      margin: 8px 0 0;
       font-size: 11px;
       font-weight: 650;
       line-height: 1.45;
@@ -1126,9 +1117,8 @@
                         />
                       </figure>
                       <h1 class="cover-headline cover-animate-2">
-                        <strong>끝없이 확장되는<br>
-                        <strong class="cover-headline__mark">ChatGPT-5.5</strong><br>
-                        <strong></strong>
+                        <strong>끝없이 확장되는</strong><br>
+                        <strong class="cover-headline__mark">ChatGPT-5.5</strong>
                       </h1>
                     </div>
                   </div>
@@ -1579,56 +1569,58 @@
   </div>
   <script>
     (function () {
-      var LAZY_VIDEO_NAV = {
-        "hcn-nav-5": "#hcn-card-5 .slide-card-video",
-        "hcn-nav-6": "#hcn-card-6 .slide-card-video",
-        "hcn-nav-9": "#hcn-card-9 .slide-card-video",
-        "hcn-nav-10": "#hcn-card-10 .slide-card-video",
-      };
-
-      function hydrateLazyVideoForNav(navId) {
-        var sel = LAZY_VIDEO_NAV[navId];
-        if (!sel) return;
-        var v = document.querySelector(sel);
-        if (!v) return;
-        if (v.getAttribute("data-hydrated") === "1") return;
-        var url = v.getAttribute("data-video-src");
-        if (!url) return;
-        v.setAttribute("data-hydrated", "1");
-        v.src = url;
-        v.removeAttribute("data-video-src");
-        v.load();
-      }
-
-      var videoSlides = [
+      var VIDEO_SLIDES = [
         { navId: "hcn-nav-2", sel: "#hcn-card-2 .slide-card-video" },
         { navId: "hcn-nav-5", sel: "#hcn-card-5 .slide-card-video" },
         { navId: "hcn-nav-6", sel: "#hcn-card-6 .slide-card-video" },
         { navId: "hcn-nav-9", sel: "#hcn-card-9 .slide-card-video" },
         { navId: "hcn-nav-10", sel: "#hcn-card-10 .slide-card-video" },
-      ].map(function (x) {
-        return { navId: x.navId, video: document.querySelector(x.sel) };
-      }).filter(function (x) {
-        return x.video;
-      });
+      ];
+
+      function hydrateLazyVideo(v) {
+        if (!v || v.getAttribute("data-hydrated") === "1") return;
+        var url = v.getAttribute("data-video-src");
+        if (!url) return;
+        v.setAttribute("data-hydrated", "1");
+        v.src = url;
+        v.removeAttribute("data-video-src");
+        try {
+          v.load();
+        } catch (err) {}
+      }
+
+      function hydrateForNav(navId) {
+        VIDEO_SLIDES.forEach(function (def) {
+          if (def.navId === navId) hydrateLazyVideo(document.querySelector(def.sel));
+        });
+      }
+
+      var videoSlides = VIDEO_SLIDES.map(function (def) {
+        var video = document.querySelector(def.sel);
+        return video ? { navId: def.navId, video: video } : null;
+      }).filter(Boolean);
 
       function pauseAllVideos() {
         videoSlides.forEach(function (x) {
-          x.video.pause();
+          try {
+            if (!x.video.paused) x.video.pause();
+          } catch (err) {}
         });
       }
 
       function tryPlayActiveSlide() {
         var nav = document.querySelector('input[name="hcn-nav"]:checked');
         if (!nav) return;
-        hydrateLazyVideoForNav(nav.id);
+        hydrateForNav(nav.id);
         videoSlides.forEach(function (x) {
           if (nav.id !== x.navId) return;
           var v = x.video;
           v.muted = true;
           function doPlay() {
-            var p = v.play();
-            if (p && p.catch) p.catch(function () {});
+            try {
+              var p = v.play();
+              if (p && typeof p.catch === "function") p.catch(function () {});
+            } catch (err) {}
           }
           if (v.readyState >= 2) doPlay();
           else v.addEventListener("loadeddata", doPlay, { once: true });
@@ -1638,7 +1630,7 @@
       function onNavChange() {
         pauseAllVideos();
         var nav = document.querySelector('input[name="hcn-nav"]:checked');
-        if (nav) hydrateLazyVideoForNav(nav.id);
+        if (nav) hydrateForNav(nav.id);
         window.setTimeout(tryPlayActiveSlide, 400);
       }
 
@@ -1703,7 +1695,8 @@
 
       chips.forEach(function (btn) {
         btn.addEventListener("click", function () {
-          showPartner(btn.getAttribute("data-partner"));
+          var key = btn.getAttribute("data-partner");
+          if (key) showPartner(key);
         });
       });
 
