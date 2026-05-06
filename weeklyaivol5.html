@@ -174,7 +174,8 @@
     #hcn-nav-7:checked ~ .carousel-row #hcn-card-7,
     #hcn-nav-8:checked ~ .carousel-row #hcn-card-8,
     #hcn-nav-9:checked ~ .carousel-row #hcn-card-9,
-    #hcn-nav-10:checked ~ .carousel-row #hcn-card-10 {
+    #hcn-nav-10:checked ~ .carousel-row #hcn-card-10,
+    #hcn-nav-11:checked ~ .carousel-row #hcn-card-11 {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -223,6 +224,9 @@
     #hcn-nav-10:checked ~ .carousel-row .nav-prev-from-10 {
       display: inline-flex;
     }
+    #hcn-nav-11:checked ~ .carousel-row .nav-prev-from-11 {
+      display: inline-flex;
+    }
     #hcn-nav-1:checked ~ .carousel-row .nav-prev-disabled {
       display: inline-flex;
     }
@@ -254,7 +258,10 @@
     #hcn-nav-9:checked ~ .carousel-row .nav-next-from-9 {
       display: inline-flex;
     }
-    #hcn-nav-10:checked ~ .carousel-row .nav-next-disabled {
+    #hcn-nav-10:checked ~ .carousel-row .nav-next-from-10 {
+      display: inline-flex;
+    }
+    #hcn-nav-11:checked ~ .carousel-row .nav-next-disabled {
       display: inline-flex;
     }
 
@@ -274,7 +281,8 @@
     #hcn-nav-7:checked ~ .carousel__counter .cnt-7,
     #hcn-nav-8:checked ~ .carousel__counter .cnt-8,
     #hcn-nav-9:checked ~ .carousel__counter .cnt-9,
-    #hcn-nav-10:checked ~ .carousel__counter .cnt-10 {
+    #hcn-nav-10:checked ~ .carousel__counter .cnt-10,
+    #hcn-nav-11:checked ~ .carousel__counter .cnt-11 {
       display: inline;
     }
 
@@ -512,7 +520,7 @@
 
     .slide-body--tight { gap: 8px; padding-top: 14px !important; }
 
-    /* 2p~10p: 글래스 없음 · 제목 블록 높이 + 16:9 미디어 슬롯을 2번 카드와 동일 규격으로 통일 */
+    /* 2p~11p: 글래스 없음 · 제목 블록 높이 + 16:9 미디어 슬롯을 2번 카드와 동일 규격으로 통일 */
     #hcn-card-2 .card-content--inner,
     #hcn-card-3 .card-content--inner,
     #hcn-card-4 .card-content--inner,
@@ -521,7 +529,8 @@
     #hcn-card-7 .card-content--inner,
     #hcn-card-8 .card-content--inner,
     #hcn-card-9 .card-content--inner,
-    #hcn-card-10 .card-content--inner {
+    #hcn-card-10 .card-content--inner,
+    #hcn-card-11 .card-content--inner {
       padding: 0;
     }
 
@@ -533,7 +542,8 @@
     #hcn-card-7 .slide-body.slide-body--tight,
     #hcn-card-8 .slide-body.slide-body--tight,
     #hcn-card-9 .slide-body.slide-body--tight,
-    #hcn-card-10 .slide-body.slide-body--tight {
+    #hcn-card-10 .slide-body.slide-body--tight,
+    #hcn-card-11 .slide-body.slide-body--tight {
       flex: 1 1 auto;
       min-height: 0;
       display: flex;
@@ -567,7 +577,8 @@
     #hcn-card-7 .slide-head,
     #hcn-card-8 .slide-head,
     #hcn-card-9 .slide-head,
-    #hcn-card-10 .slide-head {
+    #hcn-card-10 .slide-head,
+    #hcn-card-11 .slide-head {
       flex: 0 0 auto;
       box-sizing: border-box;
       display: flex;
@@ -591,7 +602,8 @@
     #hcn-card-3 .slide-yt-fallback,
     #hcn-card-4 .slide-yt-fallback,
     #hcn-card-7 .slide-yt-fallback,
-    #hcn-card-8 .slide-yt-fallback {
+    #hcn-card-8 .slide-yt-fallback,
+    #hcn-card-10 .slide-yt-fallback {
       margin: 0;
       padding: 8px 18px 10px;
       flex-shrink: 0;
@@ -610,7 +622,8 @@
     #hcn-card-7 .slide-yt-wrap.slide-media-slot,
     #hcn-card-8 .slide-yt-wrap.slide-media-slot,
     #hcn-card-9 .slide-yt-wrap.slide-media-slot,
-    #hcn-card-10 .slide-yt-wrap.slide-media-slot {
+    #hcn-card-10 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-11 .slide-yt-wrap.slide-media-slot {
       flex: 0 0 auto;
       position: relative;
       width: 100%;
@@ -626,7 +639,8 @@
     #hcn-card-4 .slide-yt-wrap.slide-media-slot,
     #hcn-card-7 .slide-yt-wrap.slide-media-slot,
     #hcn-card-8 .slide-yt-wrap.slide-media-slot,
-    #hcn-card-10 .slide-yt-wrap.slide-media-slot {
+    #hcn-card-10 .slide-yt-wrap.slide-media-slot,
+    #hcn-card-11 .slide-yt-wrap.slide-media-slot {
       background: #ffffff;
     }
 
@@ -838,14 +852,14 @@
       -webkit-backface-visibility: hidden;
     }
 
-    /* 10p: 합성 틈 방지(배경 색은 위쪽 흰색 그룹과 동일) */
-    #hcn-card-10 .slide-yt-wrap.slide-media-slot {
+    /* 11p(마지막): 10장 영상 — 합성 틈 방지 */
+    #hcn-card-11 .slide-yt-wrap.slide-media-slot {
       isolation: isolate;
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
     }
 
-    #hcn-card-10 .slide-media-slot video {
+    #hcn-card-11 .slide-media-slot video {
       position: absolute;
       inset: 0;
       display: block;
@@ -865,7 +879,8 @@
     }
 
     #hcn-card-4 .slide-media-slot img,
-    #hcn-card-7 .slide-media-slot img {
+    #hcn-card-7 .slide-media-slot img,
+    #hcn-card-10 .slide-media-slot img {
       position: absolute;
       inset: 0;
       display: block;
@@ -877,7 +892,8 @@
     }
 
     #hcn-card-4 .slide-media-slot img,
-    #hcn-card-7 .slide-media-slot img {
+    #hcn-card-7 .slide-media-slot img,
+    #hcn-card-10 .slide-media-slot img {
       transform: scale(1.1);
       transform-origin: center center;
     }
@@ -891,7 +907,8 @@
     #hcn-card-7 .card-content--inner > .footer,
     #hcn-card-8 .card-content--inner > .footer,
     #hcn-card-9 .card-content--inner > .footer,
-    #hcn-card-10 .card-content--inner > .footer {
+    #hcn-card-10 .card-content--inner > .footer,
+    #hcn-card-11 .card-content--inner > .footer {
       margin-top: auto;
       padding: 12px 18px;
       border-top: none;
@@ -906,7 +923,8 @@
     #hcn-card-7 .footer-logo path,
     #hcn-card-8 .footer-logo path,
     #hcn-card-9 .footer-logo path,
-    #hcn-card-10 .footer-logo path {
+    #hcn-card-10 .footer-logo path,
+    #hcn-card-11 .footer-logo path {
       fill: #0a1211;
     }
 
@@ -918,7 +936,8 @@
     #hcn-card-7 .footer-text,
     #hcn-card-8 .footer-text,
     #hcn-card-9 .footer-text,
-    #hcn-card-10 .footer-text {
+    #hcn-card-10 .footer-text,
+    #hcn-card-11 .footer-text {
       color: #0a1211;
     }
 
@@ -1081,6 +1100,7 @@
     <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-8">
     <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-9">
     <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-10">
+    <input class="wai-nav" type="radio" name="hcn-nav" id="hcn-nav-11">
 
     <div class="carousel-row">
       <div class="nav-stack nav-stack--prev">
@@ -1094,6 +1114,7 @@
         <label class="nav-btn nav-btn--prev nav-prev-from-8" for="hcn-nav-7" aria-label="이전 슬라이드">←</label>
         <label class="nav-btn nav-btn--prev nav-prev-from-9" for="hcn-nav-8" aria-label="이전 슬라이드">←</label>
         <label class="nav-btn nav-btn--prev nav-prev-from-10" for="hcn-nav-9" aria-label="이전 슬라이드">←</label>
+        <label class="nav-btn nav-btn--prev nav-prev-from-11" for="hcn-nav-10" aria-label="이전 슬라이드">←</label>
       </div>
 
       <div class="carousel__viewport">
@@ -1125,7 +1146,7 @@
                   <div class="cover-inner__bottom cover-animate-3">
                     <div class="cover-swipe">
                       <div class="cover-swipe__line" aria-hidden="true"></div>
-                      <span class="cover-swipe__label">총 10장 · Swipe to explore</span>
+                      <span class="cover-swipe__label">총 11장 · Swipe to explore</span>
                     </div>
                   </div>
                 </div>
@@ -1158,8 +1179,8 @@
                   </div>
                   <div class="slide-copy">
                     <p class="slide-copy__num">#1</p>
-                    <p class="slide-copy__title">GPT-5.5 나왔어요</p>
-                    <p class="slide-copy__body">실제 업무를 위한 새로운 지능.<br>이번 업데이트 핵심만 빠르게 8장 카드뉴스로 지금 바로 확인해 보세요.</p>
+                    <p class="slide-copy__title">GPT-5.5가 공개되었습니다.</p>
+                    <p class="slide-copy__body">생각은 더 깊어지고, 실행은 더 빨라졌습니다.<br>이번 변화의 핵심만 9장의 카드로 가볍게 확인해보세요.</p>
                   </div>
                 </div>
                 <div class="footer">
@@ -1512,7 +1533,39 @@
               </div>
             </section>
 
-            <section class="card" id="hcn-card-10" aria-label="슬라이드 10 · 10장 영상">
+            <section class="card" id="hcn-card-10" aria-label="슬라이드 10 · Copilot 이미지">
+              <div class="card-bg"></div>
+              <div class="card-content card-content--inner">
+                <div class="slide-body slide-body--tight">
+                  <div class="slide-head">
+                    <img class="slide-head-logo" src="https://kikeun.github.io/KIKEUN/ai54.png" alt="AI 5.4" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="slide-yt-wrap slide-media-slot">
+                    <img
+                      class="slide-card-figure"
+                      src="https://kikeun.github.io/KIKEUN/ai59.png"
+                      alt="Copilot와 GPT-5.5"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="slide-copy">
+                    <p class="slide-copy__num">#9</p>
+                    <p class="slide-copy__title">Copilot 에서도 GPT-5.5를 사용할 수 있어요</p>
+                    <p class="slide-copy__body">사내 copilot 환경에서도 더 정교해진 GPT 성능을 그대로 활용할 수 있습니다. 복잡한 작업은 더 빠르게 처리하고, 반복 업무는 줄이면서 업무 효율과 완성도를 동시에 끌어올릴 수 있습니다.
+                  </div> 
+                </div>
+                <div class="footer">
+                  <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 45L28 35V80L12 90V45Z"/>
+                    <path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z"/>
+                  </svg>
+                  <span class="footer-text">AI디자인랩</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card" id="hcn-card-11" aria-label="슬라이드 11 · 10장 영상">
               <div class="card-bg"></div>
               <div class="card-content card-content--inner">
                 <div class="slide-body slide-body--tight">
@@ -1530,7 +1583,7 @@
                     ></video>
                   </div>
                   <div class="slide-copy">
-                    <p class="slide-copy__num">#9</p>
+                    <p class="slide-copy__num">#10</p>
                     <p class="slide-copy__title">ChatGPT-5.5를 요약하면</p>
                     <p class="slide-copy__body">ChatGPT-5.5는 그저 똑똑해진 모델이 아닙니다.<br>오래 일하고, 효율적이고, 전문 업무에 바로 투입할 수 있는<br>진짜 일꾼에 가까워졌어요.</p>
                   </div>
@@ -1559,12 +1612,13 @@
         <label class="nav-btn nav-btn--next nav-next-from-7" for="hcn-nav-8" aria-label="다음 슬라이드">→</label>
         <label class="nav-btn nav-btn--next nav-next-from-8" for="hcn-nav-9" aria-label="다음 슬라이드">→</label>
         <label class="nav-btn nav-btn--next nav-next-from-9" for="hcn-nav-10" aria-label="다음 슬라이드">→</label>
+        <label class="nav-btn nav-btn--next nav-next-from-10" for="hcn-nav-11" aria-label="다음 슬라이드">→</label>
         <span class="nav-btn nav-btn--next nav-next-disabled is-disabled" aria-hidden="true">→</span>
       </div>
     </div>
 
     <div class="carousel__counter" aria-live="polite">
-      <span class="cnt-num cnt-1">1</span><span class="cnt-num cnt-2">2</span><span class="cnt-num cnt-3">3</span><span class="cnt-num cnt-4">4</span><span class="cnt-num cnt-5">5</span><span class="cnt-num cnt-6">6</span><span class="cnt-num cnt-7">7</span><span class="cnt-num cnt-8">8</span><span class="cnt-num cnt-9">9</span><span class="cnt-num cnt-10">10</span> / 10
+      <span class="cnt-num cnt-1">1</span><span class="cnt-num cnt-2">2</span><span class="cnt-num cnt-3">3</span><span class="cnt-num cnt-4">4</span><span class="cnt-num cnt-5">5</span><span class="cnt-num cnt-6">6</span><span class="cnt-num cnt-7">7</span><span class="cnt-num cnt-8">8</span><span class="cnt-num cnt-9">9</span><span class="cnt-num cnt-10">10</span><span class="cnt-num cnt-11">11</span> / 11
     </div>
   </div>
   <script>
@@ -1574,7 +1628,7 @@
         { navId: "hcn-nav-5", sel: "#hcn-card-5 .slide-card-video" },
         { navId: "hcn-nav-6", sel: "#hcn-card-6 .slide-card-video" },
         { navId: "hcn-nav-9", sel: "#hcn-card-9 .slide-card-video" },
-        { navId: "hcn-nav-10", sel: "#hcn-card-10 .slide-card-video" },
+        { navId: "hcn-nav-11", sel: "#hcn-card-11 .slide-card-video" },
       ];
 
       function hydrateLazyVideo(v) {
