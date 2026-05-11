@@ -371,48 +371,6 @@
       -webkit-text-fill-color: transparent;
       color: #a7f3d0;
     }
-    .cover-swipe {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-    .cover-swipe__label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.92);
-    }
-    .cover-swipe__arrow {
-      display: inline-block;
-      width: 14px;
-      height: 8px;
-      position: relative;
-      animation: swipeNudge 1.8s ease-in-out infinite;
-    }
-    .cover-swipe__arrow::before,
-    .cover-swipe__arrow::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 8px;
-      height: 1.5px;
-      background: rgba(255, 255, 255, 0.92);
-      border-radius: 2px;
-      transform-origin: right center;
-    }
-    .cover-swipe__arrow::before { right: 1px; transform: translateY(-50%) rotate(35deg); }
-    .cover-swipe__arrow::after  { right: 1px; transform: translateY(-50%) rotate(-35deg); }
-    @keyframes swipeNudge {
-      0%, 100% { transform: translateX(0); opacity: 0.85; }
-      50% { transform: translateX(4px); opacity: 1; }
-    }
 
     /* inner slides layout (stable, like early vol6) */
     .slide-body { flex: 1; display: flex; flex-direction: column; gap: 0; min-height: 0; overflow: hidden; }
@@ -432,8 +390,7 @@
       width: 26px;
       height: 3px;
       border-radius: 999px;
-      background: linear-gradient(90deg, #0a4a48 0%, #1a8888 50%, #c8e6a0 100%);
-      opacity: 0.85;
+      background: #3a8a6c;
     }
     .slide-top-copy .kicker {
       margin: 0;
@@ -520,6 +477,26 @@
     }
     .slide-bottom-copy span,
     .slide-bottom-copy { font-feature-settings: "ss01", "ss02", "case", "tnum"; }
+    .slide-bottom-copy .brand-list {
+      font-size: 0.78em;
+      font-weight: 500;
+      color: rgba(10, 18, 17, 0.5);
+      letter-spacing: -0.005em;
+    }
+
+    .slide-footnote {
+      padding: 4px 22px 10px;
+      text-align: left;
+      color: rgba(10, 18, 17, 0.45);
+      font-size: 10.5px;
+      font-weight: 500;
+      line-height: 1.55;
+      letter-spacing: -0.01em;
+      word-break: keep-all;
+    }
+    .slide-footnote dl { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+    .slide-footnote .term { font-weight: 700; color: rgba(10, 18, 17, 0.62); margin-right: 4px; }
+    .slide-footnote .item { display: block; }
 
     .footer {
       position: relative;
@@ -589,12 +566,6 @@
                         <strong>창작을 위한 AI파트너</strong><br />
                         <strong class="cover-headline__mark">클로드 커넥터 출시</strong>
                       </h1>
-                    </div>
-                  </div>
-                  <div class="cover-inner__bottom">
-                    <div class="cover-swipe">
-                      <span class="cover-swipe__label">총 7장 · Swipe to explore</span>
-                      <span class="cover-swipe__arrow" aria-hidden="true"></span>
                     </div>
                   </div>
                 </div>
@@ -687,6 +658,12 @@
                       3D 작업 환경을 쉽게 탐색하고 이해할 수 있도록 돕습니다.
                     </span>
                   </div>
+                  <div class="slide-footnote" aria-label="용어 설명">
+                    <dl>
+                      <div class="item"><span class="term">'블렌더'란?</span>3D 모델링, 애니메이션, 영상 제작까지 가능한 모델링 툴</div>
+                      <div class="item"><span class="term">'Python API'란?</span>Python으로 사용할 수 있는 기능/연결 인터페이스</div>
+                    </dl>
+                  </div>
                 </div>
                 <div class="footer">
                   <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -717,6 +694,11 @@
                       통해 3D 모델을 생성하고 수정할 수 있습니다.
                     </span>
                   </div>
+                  <div class="slide-footnote" aria-label="용어 설명">
+                    <dl>
+                      <div class="item"><span class="term">'오토데스크'란?</span>건축, 설계, 엔지니어링, 3D 디자인 소프트웨어</div>
+                    </dl>
+                  </div>
                 </div>
                 <div class="footer">
                   <svg class="footer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -733,8 +715,8 @@
               <div class="card-content card-content--inner">
                 <div class="slide-body">
                   <div class="slide-top-copy">
-                    <p class="kicker">창작 도구와 Claude를 연결하는</p>
-                    <p class="subkicker">디렉터리 속 다양한 커넥터</p>
+                    <p class="kicker">앞서 소개드린 커넥터를 포함한</p>
+                    <p class="subkicker">클로드의 다양한 커넥터</p>
                   </div>
                   <div class="slide-yt-wrap slide-media-slot" aria-hidden="true">
                     <video autoplay muted loop playsinline preload="auto" disablepictureinpicture>
@@ -743,10 +725,10 @@
                   </div>
                   <div class="slide-bottom-copy">
                     <span>
-                      기존 커넥터에서 새롭게 음악 제작도구(Ableton, Splice),<br />
-                      비주얼 크레이이티브 도구(Adobe, Affinity by Canva),<br />
-                      3D 및 모델링 도구(Autodesk Fusion, Blender, SketchUp),<br />
-                      라이브 퍼모먼스 도구(Resolume Arena &amp; Wire)가 추가되었습니다.
+                      기존 커넥터에서 새롭게 음악 제작도구<span class="brand-list">(Ableton, Splice)</span>,<br />
+                      비주얼 크레이이티브 도구<span class="brand-list">(Adobe, Affinity by Canva)</span>,<br />
+                      3D 및 모델링 도구<span class="brand-list">(Autodesk Fusion, Blender, SketchUp)</span>,<br />
+                      라이브 퍼모먼스 도구<span class="brand-list">(Resolume Arena &amp; Wire)</span>가 추가되었습니다.
                     </span>
                   </div>
                 </div>
