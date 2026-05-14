@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>플레이데이 — 포토카드 생성 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <style>
+        html {
+            background: transparent;
+        }
+
+        html,
+        body {
+            font-family:
+                'Pretendard',
+                -apple-system,
+                BlinkMacSystemFont,
+                'Segoe UI',
+                Roboto,
+                'Helvetica Neue',
+                'Apple SD Gothic Neo',
+                'Noto Sans KR',
+                'Malgun Gothic',
+                sans-serif !important;
+        }
+
+        body {
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: transparent;
+        }
+
+        .ai97-surface {
+            position: relative;
+            background-color: #ffffff;
+            background-image: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+            border: 1px solid rgb(226 232 240);
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.04),
+                0 12px 40px -12px rgba(15, 23, 42, 0.12);
+        }
+
+        .glass-panel {
+            background: rgb(248 250 252);
+            border: 1px solid rgb(226 232 240);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+        }
+        textarea.input-field {
+            min-height: 4.5rem;
+            resize: vertical;
+        }
+        textarea.input-field.prompt-compact {
+            min-height: 2.25rem;
+            max-height: 12rem;
+            line-height: 1.35;
+        }
+        #mdPreview {
+            font-family: 'Pretendard', ui-monospace, monospace;
+            font-size: 0.72rem;
+            line-height: 1.5;
+            tab-size: 2;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgb(148 163 184);
+            opacity: 1;
+        }
+
+        /* 메시지 입력란 placeholder 작게 */
+        #fMessage::placeholder {
+            font-size: 0.75rem;
+            line-height: 1.45;
+        }
+        @media (min-width: 768px) {
+            #fMessage::placeholder {
+                font-size: 0.8125rem;
+            }
+        }
+
+        /* 메인 입력 카드 (눈에 띄게 강조) */
+        .prompt-field-card {
+            container-type: inline-size;
+            background: linear-gradient(
+                165deg,
+                rgba(224, 242, 254, 0.88) 0%,
+                rgba(186, 230, 253, 0.55) 38%,
+                rgba(240, 249, 255, 0.75) 100%
+            );
+            border: 2px solid rgba(13, 148, 136, 0.35);
+            box-shadow:
+                0 4px 24px rgba(15, 118, 110, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        }
+
+        .story-helper-oneline {
+            white-space: nowrap;
+            overflow: visible;
+            max-width: 100%;
+            font-size: clamp(0.38rem, calc(0.15rem + 1.2vw), 1rem);
+            line-height: 1.4;
+        }
+        @supports (container-type: inline-size) {
+            .story-helper-oneline {
+                font-size: clamp(0.38rem, calc(100cqi / 50), 1rem);
+            }
+        }
+        @media (min-width: 768px) {
+            .story-helper-oneline {
+                font-size: clamp(0.875rem, calc(0.18rem + 1.1vw), 1.09375rem);
+                line-height: 1.4;
+            }
+            @supports (container-type: inline-size) {
+                .story-helper-oneline {
+                    font-size: clamp(0.875rem, calc(100cqi / 38), 1.09375rem);
+                }
+            }
+        }
+
+        /* 오른쪽 위 깜빡이 배지 */
+        .story-write-badge {
+            position: absolute;
+            z-index: 2;
+            top: 0.15rem;
+            right: -1.25rem;
+            padding: 0;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            color: rgb(15 118 110);
+            text-shadow:
+                0 0 1px rgba(255, 255, 255, 0.95),
+                0 1px 2px rgba(255, 255, 255, 0.85);
+            background: none;
+            border: none;
+            transform: rotate(15deg);
+            transform-origin: top right;
+            pointer-events: none;
+            user-select: none;
+            animation: storyBlink 1.25s ease-in-out infinite;
+        }
+
+        @keyframes storyBlink {
+            0%, 100% {
+                opacity: 1;
+                transform: rotate(15deg) scale(1);
+            }
+            50% {
+                opacity: 0.55;
+                transform: rotate(15deg) scale(1.03);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .story-write-badge {
+                animation: none;
+            }
+        }
+
+        /* 받는 사람 인풋 */
+        .receiver-input {
+            width: 100%;
+            border-radius: 0.75rem;
+            border: 2px solid rgba(13, 148, 136, 0.25);
+            background: #ffffff;
+            padding: 0.65rem 0.85rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #0f172a;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .receiver-input::placeholder {
+            color: rgb(148 163 184);
+            font-weight: 500;
+        }
+
+        .receiver-input:focus {
+            outline: none;
+            border-color: rgba(13, 148, 136, 0.65);
+            box-shadow:
+                inset 0 1px 2px rgba(15, 23, 42, 0.04),
+                0 0 0 3px rgba(45, 212, 191, 0.25);
+        }
+
+        /* 분위기 선택 칩 */
+        .mood-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 9999px;
+            background: #ffffff;
+            border: 1.5px solid rgb(226 232 240);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .mood-chip:hover {
+            border-color: rgba(13, 148, 136, 0.5);
+            color: #0f766e;
+        }
+
+        .mood-chip.selected {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            border-color: #0d9488;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 text-sm">
+
+    <main class="max-w-3xl mx-auto px-4 py-6 pb-12">
+        <div class="ai97-surface rounded-3xl px-5 sm:px-8 pt-6 sm:pt-7 pb-10 sm:pb-12">
+
+            <header class="border-b border-slate-200 pb-4 mb-6">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <a href="./vol3.html" class="text-slate-700 hover:text-slate-900 text-xs font-bold inline-flex items-center gap-1">
+                        <i class="fas fa-arrow-left"></i> PlayDay로 돌아가기
+                    </a>
+                </div>
+            </header>
+
+        <div class="mb-8 max-w-2xl mx-auto w-full">
+            <h1 class="text-center text-2xl md:text-3xl font-black text-slate-900 mb-6 tracking-tight leading-tight [text-shadow:0_1px_0_rgba(15,23,42,0.12)]">포토카드 생성 가이드</h1>
+            <div class="rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 shadow-[0_1px_3px_rgba(15,23,42,0.06)] p-4 sm:p-5 md:p-6 flex flex-col gap-6">
+            <div class="glass-panel rounded-2xl px-4 py-4 text-left">
+            <p class="text-sm md:text-base text-slate-600 leading-relaxed">
+                <strong class="text-slate-800">받는 사람</strong>과 <strong class="text-slate-800">전하고 싶은 마음</strong>만 입력하면, 바로 사용할 수 있는 <strong class="text-slate-800">프롬프트</strong>가 완성됩니다.<br>
+                작성된 프롬프트를 활용하여 AI와 함께 포토카드를 완성해 보세요.
+            </p>
+            </div>
+
+            <div class="prompt-field-card relative rounded-2xl p-4 md:p-5 overflow-visible">
+                <span class="story-write-badge" aria-hidden="true">이것만 작성하세요!</span>
+                <label class="block text-base md:text-lg font-extrabold text-slate-900 mb-2 flex items-center gap-2 pr-20 sm:pr-24" for="fMessage">
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white text-base shadow-sm"><i class="fas fa-camera"></i></span>
+                    포토카드 작성
+                </label>
+                <p class="story-helper-oneline text-slate-600 mb-3">색감·구도는 적지 않아도 됩니다. <span class="text-slate-800 font-semibold">받는 분과 마음만</span> 적어 주면 AI가 어울리게 만들어 줍니다.</p>
+
+                <!-- 받는 사람 -->
+                <label class="block text-xs md:text-sm font-bold text-slate-700 mb-1.5" for="fReceiver">
+                    <i class="fas fa-user-tag text-teal-600 mr-1"></i> TO. 받는 사람
+                </label>
+                <input id="fReceiver" type="text" class="receiver-input mb-4" placeholder="예: 소장님 / 동료 / 부모님" autocomplete="off">
+
+                <!-- 메시지 -->
+                <label class="block text-xs md:text-sm font-bold text-slate-700 mb-1.5" for="fMessage">
+                    <i class="fas fa-feather-alt text-teal-600 mr-1"></i> 마음을 담은 메시지
+                </label>
+                <textarea id="fMessage" class="input-field w-full bg-white border-2 border-teal-200/70 rounded-xl px-3 py-2.5 text-sm md:text-base focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none min-h-[10rem] shadow-sm"></textarea>
+
+                <!-- 분위기 선택 (선택 사항) -->
+                <div class="mt-4">
+                    <label class="block text-xs md:text-sm font-bold text-slate-700 mb-2">
+                        <i class="fas fa-palette text-teal-600 mr-1"></i> 카드 분위기 <span class="font-medium text-slate-400">(선택)</span>
+                    </label>
+                    <div id="moodChips" class="flex flex-wrap gap-2">
+                        <button type="button" class="mood-chip" data-mood="따뜻하고 포근한">🌷 따뜻한</button>
+                        <button type="button" class="mood-chip" data-mood="밝고 활기찬">☀️ 밝은</button>
+                        <button type="button" class="mood-chip" data-mood="잔잔하고 감성적인">🌿 잔잔한</button>
+                        <button type="button" class="mood-chip" data-mood="유쾌하고 재미있는">🎈 유쾌한</button>
+                        <button type="button" class="mood-chip" data-mood="고급스럽고 차분한">🥂 고급스러운</button>
+                    </div>
+                </div>
+            </div>
+
+        <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-xl overflow-hidden w-full">
+            <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-slate-800 border-b border-slate-700">
+                <span class="text-xs font-bold text-slate-400 tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 프롬프트</span>
+                <div class="flex gap-2">
+                    <button type="button" id="btnCopy" class="text-xs font-bold bg-slate-200 hover:bg-slate-300 text-slate-900 px-3 py-1.5 rounded-lg transition-colors">
+                        <i class="fas fa-copy mr-1"></i>복사
+                    </button>
+                    <button type="button" id="btnReset" class="text-xs font-bold bg-slate-600 hover:bg-slate-500 text-white px-3 py-1.5 rounded-lg transition-colors">초기화</button>
+                </div>
+            </div>
+            <textarea id="mdPreview" readonly class="w-full min-h-[280px] p-3 text-slate-200 bg-slate-900 border-0 outline-none resize-y text-xs"></textarea>
+        </div>
+
+        <!-- 순서 안내 -->
+        <div class="w-full">
+            <div class="flex items-start justify-start sm:justify-center gap-0 text-center overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]">
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-slate-800 text-white text-base shadow"><i class="fas fa-pencil"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">메시지 작성</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-blue-500 text-white text-base shadow"><i class="fas fa-copy"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">프롬프트 복사</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-teal-600 text-white text-lg leading-none shadow">✦</span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">제미나이 열기</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-indigo-700 text-white text-base shadow"><i class="fas fa-paste"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">붙여넣기</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[4.75rem] sm:min-w-[6rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-fuchsia-600 text-white text-base shadow"><i class="fas fa-wand-magic-sparkles"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-snug">[도구]<br>이미지만들기 선택</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-amber-500 text-white text-base shadow"><i class="fas fa-image"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">포토카드 생성</span>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer"
+           class="w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-md transition hover:shadow-lg border border-teal-200/80 bg-gradient-to-r from-teal-100 via-emerald-100 to-sky-100 text-slate-800 text-[19px] md:text-[21px] hover:from-teal-50 hover:via-emerald-50 hover:to-sky-50">
+            <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/70 text-teal-700 text-[1.125rem] shadow-sm" aria-hidden="true">✦</span>
+            <span class="text-center min-w-0">
+                <span class="block text-slate-800">브라우저에서 제미나이 열기(로그인 필수) <i class="fas fa-external-link-alt ml-1 text-[17px] opacity-80 align-middle"></i></span>
+            </span>
+        </a>
+            </div>
+        </div>
+
+        <p id="copyToast" class="hidden mt-3 text-center text-xs font-bold text-slate-600">클립보드에 복사했습니다.</p>
+
+        <footer class="mt-12 pt-8 border-t border-slate-200 text-center">
+            <div class="max-w-2xl mx-auto w-full rounded-2xl border border-amber-200/90 bg-gradient-to-b from-amber-50 to-orange-50/60 shadow-sm mb-10 overflow-hidden">
+                <div class="px-3 sm:px-5 py-4 md:py-5 flex flex-col items-stretch gap-2.5 text-slate-800 leading-snug text-center max-w-full">
+                    <p class="text-[clamp(0.6875rem,3vw,0.875rem)] break-words">
+                        AI로 만든 <strong>나만의 감사 포토카드</strong>를 <a href="https://hmap.hdec.co.kr/HMAP/Authentication/HMAPAccess.aspx?popupUrl=PLAYGALLERY" target="_blank" rel="noopener noreferrer" class="text-slate-900 font-bold underline underline-offset-2 hover:text-slate-950"><strong>PlayDay Gallery</strong> <i class="fas fa-external-link-alt text-[10px] opacity-70"></i></a><span class="text-slate-500 text-[12px] font-semibold">(로그인 필수)</span>에 업로드 해주세요.
+                    </p>
+                    <p class="text-[clamp(0.6875rem,3vw,0.875rem)] font-semibold text-slate-900 break-words">
+                        따뜻한 사연을 선정하여 <strong class="text-amber-800">스타벅스 상품권</strong>을 보내 드립니다. (제출기한 : 26년 6월 30일)
+                    </p>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-slate-600 font-semibold">
+                <span class="text-slate-500">워크이노베이션센터</span>
+                <span class="text-slate-300" aria-hidden="true">│</span>
+                <span class="inline-flex items-center gap-1">
+                    <svg class="h-4 w-4 text-slate-700" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 45L28 35V80L12 90V45Z" fill="currentColor"/><path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z" fill="currentColor"/></svg>
+                AI디자인랩
+                </span>
+            </div>
+        </footer>
+
+        </div>
+    </main>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+
+        function esc(s) {
+            return (s || '').trim();
+        }
+
+        let selectedMood = '';
+
+        function buildMarkdown() {
+            const receiver = esc($('fReceiver').value) || '_(받는 사람이 입력되지 않았습니다)_';
+            const message  = esc($('fMessage').value)  || '_(전하고 싶은 메시지가 입력되지 않았습니다)_';
+            const mood     = selectedMood || '메시지의 톤에 가장 잘 어울리는 분위기를 자동으로 선택';
+
+            const L = [];
+
+            L.push('실사 감성 포토카드 이미지 1장을 바로 생성해줘.');
+            L.push('');
+            L.push('[내용]');
+            L.push('- 받는 사람: ' + receiver);
+            L.push('- 전하고 싶은 마음: ' + message.replace(/\n/g, ' '));
+            L.push('- 분위기: ' + mood);
+            L.push('');
+            L.push('[이미지 요구사항]');
+            L.push('- 9:16 세로 비율, 핸드폰 화면을 꽉 채우는 full-bleed 포토카드');
+            L.push('- 카드 주변 여백, 흰 테두리, 프레임, 목업 배경 없이 화면 전체가 곧 포토카드');
+            L.push('- 실사 사진풍, 영화 스틸컷 같은 자연광, 얕은 심도, 필름 그레인, 시네마틱 색감');
+            L.push('- 입력 내용을 감정적으로 재해석해 2~4줄의 짧은 편지 문구를 만들고, 이미지 안에 자연스럽게 녹여 넣기');
+            L.push('- "TO. ' + receiver + '"를 작게 넣고, 편지 문구는 한국어로 또렷하게 읽히게 배치');
+            L.push('- 텍스트 박스나 배너 없이 빛, 벽면, 하늘, 책상, 편지지, 창가 그림자 같은 자연스러운 공간 위에 문구 배치');
+            L.push('');
+            L.push('[금지]');
+            L.push('- 설명, 문구 초안, 제작 과정, 이미지 생성 프롬프트를 텍스트로 출력하지 말 것');
+            L.push('- 만화, 일러스트, 애니메이션풍, 장면 분할 금지');
+            L.push('- 결과는 반드시 포토카드 이미지 1장만 보여줄 것');
+
+            return L.join('\n');
+        }
+
+        function refresh() {
+            $('mdPreview').value = buildMarkdown();
+        }
+
+        const inputs = ['fReceiver', 'fMessage'];
+
+        const PLACEHOLDER_HINTS = {
+            fReceiver: '예: 소장님 / 후배, 동료 / 부모님',
+            fMessage:
+                '예시: 항상 묵묵히 옆에서 도와주셔서 감사해요. 덕분에 이번 프로젝트도 무사히 마칠 수 있었어요. 앞으로도 잘 부탁드립니다.',
+        };
+
+        function applyPlaceholderHints() {
+            Object.entries(PLACEHOLDER_HINTS).forEach(([id, text]) => {
+                const el = $(id);
+                if (el) el.placeholder = text;
+            });
+        }
+
+        /** vol3.html에서 「포토카드 만들기」로 전달된 텍스트 */
+        function applyTransferredData() {
+            try {
+                const toKey  = 'PLAYDAY_PHOTOCARD_TO';
+                const msgKey = 'PLAYDAY_PHOTOCARD_MSG';
+                const to  = sessionStorage.getItem(toKey);
+                const msg = sessionStorage.getItem(msgKey);
+                if (to)  $('fReceiver').value = to;
+                if (msg) $('fMessage').value  = msg;
+                sessionStorage.removeItem(toKey);
+                sessionStorage.removeItem(msgKey);
+            } catch (e) {}
+        }
+
+        function clearPromptFields() {
+            inputs.forEach((id) => { $(id).value = ''; });
+            selectedMood = '';
+            document.querySelectorAll('.mood-chip.selected').forEach((c) => c.classList.remove('selected'));
+            refresh();
+        }
+
+        inputs.forEach((id) => {
+            $(id).addEventListener('input', refresh);
+        });
+
+        document.querySelectorAll('.mood-chip').forEach((chip) => {
+            chip.addEventListener('click', () => {
+                const wasSelected = chip.classList.contains('selected');
+                document.querySelectorAll('.mood-chip.selected').forEach((c) => c.classList.remove('selected'));
+                if (!wasSelected) {
+                    chip.classList.add('selected');
+                    selectedMood = chip.dataset.mood || '';
+                } else {
+                    selectedMood = '';
+                }
+                refresh();
+            });
+        });
+
+        $('btnCopy').addEventListener('click', async () => {
+            refresh();
+            try {
+                await navigator.clipboard.writeText($('mdPreview').value);
+                const t = $('copyToast');
+                t.classList.remove('hidden');
+                setTimeout(() => t.classList.add('hidden'), 2000);
+            } catch (e) {
+                $('mdPreview').select();
+                document.execCommand('copy');
+                $('copyToast').classList.remove('hidden');
+            }
+        });
+
+        $('btnReset').addEventListener('click', () => {
+            if (!confirm('입력 내용을 모두 지울까요?')) return;
+            clearPromptFields();
+        });
+
+        applyPlaceholderHints();
+        applyTransferredData();
+        refresh();
+    </script>
+</body>
+</html>
