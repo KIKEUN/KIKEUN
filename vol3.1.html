@@ -13,7 +13,7 @@
     />
     <style>
         html {
-            background: transparent;
+            background: #fbf3ea;
         }
 
         html,
@@ -32,26 +32,29 @@
         }
 
         body {
-            color: #333;
+            color: #2b1a12;
             overflow-x: hidden;
             min-height: 100vh;
-            background: transparent;
+            background: #fbf3ea;
         }
 
         .ai97-surface {
             position: relative;
-            background-color: #ffffff;
-            background-image: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
-            border: 1px solid rgb(226 232 240);
+            background-color: #fdf6ee;
+            background-image:
+                radial-gradient(ellipse 95% 55% at 80% 88%, rgba(247, 200, 175, 0.45) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 50% at 12% 18%, rgba(255, 237, 220, 0.6) 0%, transparent 65%),
+                linear-gradient(180deg, #fdf6ee 0%, #fbf1e6 100%);
+            border: 1px solid rgba(214, 142, 100, 0.28);
             box-shadow:
-                0 1px 2px rgba(15, 23, 42, 0.04),
-                0 12px 40px -12px rgba(15, 23, 42, 0.12);
+                0 1px 2px rgba(193, 110, 74, 0.05),
+                0 18px 48px -14px rgba(193, 110, 74, 0.2);
         }
 
         .glass-panel {
-            background: rgb(248 250 252);
-            border: 1px solid rgb(226 232 240);
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+            background: linear-gradient(180deg, #ffffff 0%, #fff7ee 100%);
+            border: 1px solid rgba(214, 142, 100, 0.28);
+            box-shadow: 0 1px 3px rgba(193, 110, 74, 0.08);
         }
         textarea.input-field {
             min-height: 4.5rem;
@@ -91,14 +94,14 @@
             container-type: inline-size;
             background: linear-gradient(
                 165deg,
-                rgba(224, 242, 254, 0.88) 0%,
-                rgba(186, 230, 253, 0.55) 38%,
-                rgba(240, 249, 255, 0.75) 100%
+                #ffffff 0%,
+                #fff5e9 55%,
+                #ffe9d4 100%
             );
-            border: 2px solid rgba(13, 148, 136, 0.35);
+            border: 2px solid rgba(217, 119, 87, 0.32);
             box-shadow:
-                0 4px 24px rgba(15, 118, 110, 0.12),
-                0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+                0 4px 24px rgba(193, 110, 74, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.85) inset;
         }
 
         .story-helper-oneline {
@@ -135,7 +138,7 @@
             font-size: 0.72rem;
             font-weight: 900;
             letter-spacing: 0.03em;
-            color: rgb(15 118 110);
+            color: #c2410c;
             text-shadow:
                 0 0 1px rgba(255, 255, 255, 0.95),
                 0 1px 2px rgba(255, 255, 255, 0.85);
@@ -169,27 +172,27 @@
         .receiver-input {
             width: 100%;
             border-radius: 0.75rem;
-            border: 2px solid rgba(13, 148, 136, 0.25);
+            border: 2px solid rgba(217, 119, 87, 0.35);
             background: #ffffff;
             padding: 0.65rem 0.85rem;
             font-size: 0.95rem;
             font-weight: 600;
-            color: #0f172a;
-            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+            color: #2b1a12;
+            box-shadow: inset 0 1px 2px rgba(67, 20, 7, 0.05);
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .receiver-input::placeholder {
-            color: rgb(148 163 184);
+            color: #c9a48a;
             font-weight: 500;
         }
 
         .receiver-input:focus {
             outline: none;
-            border-color: rgba(13, 148, 136, 0.65);
+            border-color: rgba(194, 65, 12, 0.6);
             box-shadow:
-                inset 0 1px 2px rgba(15, 23, 42, 0.04),
-                0 0 0 3px rgba(45, 212, 191, 0.25);
+                inset 0 1px 2px rgba(67, 20, 7, 0.05),
+                0 0 0 3px rgba(253, 186, 116, 0.4);
         }
 
         /* 분위기 선택 칩 */
@@ -200,25 +203,25 @@
             padding: 0.4rem 0.85rem;
             border-radius: 9999px;
             background: #ffffff;
-            border: 1.5px solid rgb(226 232 240);
+            border: 1.5px solid #f1d6c1;
             font-size: 0.82rem;
             font-weight: 700;
-            color: #475569;
+            color: #7c4a30;
             cursor: pointer;
             transition: all 0.15s ease;
             user-select: none;
         }
 
         .mood-chip:hover {
-            border-color: rgba(13, 148, 136, 0.5);
-            color: #0f766e;
+            border-color: rgba(217, 119, 87, 0.55);
+            color: #c2410c;
         }
 
         .mood-chip.selected {
-            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-            border-color: #0d9488;
+            background: linear-gradient(135deg, #d97757 0%, #c2410c 100%);
+            border-color: #c2410c;
             color: #ffffff;
-            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+            box-shadow: 0 2px 8px rgba(193, 110, 74, 0.35);
         }
     </style>
 </head>
@@ -227,48 +230,48 @@
     <main class="max-w-3xl mx-auto px-4 py-6 pb-12">
         <div class="ai97-surface rounded-3xl px-5 sm:px-8 pt-6 sm:pt-7 pb-10 sm:pb-12">
 
-            <header class="border-b border-slate-200 pb-4 mb-6">
+            <header class="border-b border-[#e8c7b0] pb-4 mb-6">
                 <div class="flex flex-wrap items-center justify-between gap-2">
-                    <a href="./vol3.html" class="text-slate-700 hover:text-slate-900 text-xs font-bold inline-flex items-center gap-1">
+                    <a href="./vol3.html" class="text-[#7c4a30] hover:text-[#2b1a12] text-xs font-bold inline-flex items-center gap-1">
                         <i class="fas fa-arrow-left"></i> PlayDay로 돌아가기
                     </a>
                 </div>
             </header>
 
         <div class="mb-8 max-w-2xl mx-auto w-full">
-            <h1 class="text-center text-2xl md:text-3xl font-black text-slate-900 mb-6 tracking-tight leading-tight [text-shadow:0_1px_0_rgba(15,23,42,0.12)]">포토카드 생성 가이드</h1>
-            <div class="rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 shadow-[0_1px_3px_rgba(15,23,42,0.06)] p-4 sm:p-5 md:p-6 flex flex-col gap-6">
+            <h1 class="text-center text-2xl md:text-3xl font-black text-[#2b1a12] mb-6 tracking-tight leading-tight">포토카드 생성 가이드</h1>
+            <div class="rounded-3xl border border-[#e8c7b0] bg-gradient-to-b from-white to-[#fdf6ee] shadow-[0_1px_3px_rgba(193,110,74,0.08)] p-4 sm:p-5 md:p-6 flex flex-col gap-6">
             <div class="glass-panel rounded-2xl px-4 py-4 text-left">
-            <p class="text-sm md:text-base text-slate-600 leading-relaxed">
-                <strong class="text-slate-800">받는 사람</strong>과 <strong class="text-slate-800">전하고 싶은 마음</strong>만 입력하면, 바로 사용할 수 있는 <strong class="text-slate-800">프롬프트</strong>가 완성됩니다.<br>
+            <p class="text-sm md:text-base text-[#6b4630] leading-relaxed">
+                <strong class="text-[#2b1a12]">받는 사람</strong>과 <strong class="text-[#2b1a12]">전하고 싶은 마음</strong>만 입력하면, 바로 사용할 수 있는 <strong class="text-[#2b1a12]">프롬프트</strong>가 완성됩니다.<br>
                 작성된 프롬프트를 활용하여 AI와 함께 포토카드를 완성해 보세요.
             </p>
             </div>
 
             <div class="prompt-field-card relative rounded-2xl p-4 md:p-5 overflow-visible">
                 <span class="story-write-badge" aria-hidden="true">이것만 작성하세요!</span>
-                <label class="block text-base md:text-lg font-extrabold text-slate-900 mb-2 flex items-center gap-2 pr-20 sm:pr-24" for="fMessage">
-                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white text-base shadow-sm"><i class="fas fa-camera"></i></span>
+                <label class="block text-base md:text-lg font-extrabold text-[#2b1a12] mb-2 flex items-center gap-2 pr-20 sm:pr-24" for="fMessage">
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#c2410c] text-white text-base shadow-sm"><i class="fas fa-camera"></i></span>
                     포토카드 작성
                 </label>
-                <p class="story-helper-oneline text-slate-600 mb-3">색감·구도는 적지 않아도 됩니다. <span class="text-slate-800 font-semibold">받는 분과 마음만</span> 적어 주면 AI가 어울리게 만들어 줍니다.</p>
+                <p class="story-helper-oneline text-[#6b4630] mb-3">색감·구도는 적지 않아도 됩니다. <span class="text-[#2b1a12] font-semibold">받는 분과 마음만</span> 적어 주면 AI가 어울리게 만들어 줍니다.</p>
 
                 <!-- 받는 사람 -->
-                <label class="block text-xs md:text-sm font-bold text-slate-700 mb-1.5" for="fReceiver">
-                    <i class="fas fa-user-tag text-teal-600 mr-1"></i> TO. 받는 사람
+                <label class="block text-xs md:text-sm font-bold text-[#7c4a30] mb-1.5" for="fReceiver">
+                    <i class="fas fa-user-tag text-[#c2410c] mr-1"></i> TO. 받는 사람
                 </label>
                 <input id="fReceiver" type="text" class="receiver-input mb-4" placeholder="예: 소장님 / 동료 / 부모님" autocomplete="off">
 
                 <!-- 메시지 -->
-                <label class="block text-xs md:text-sm font-bold text-slate-700 mb-1.5" for="fMessage">
-                    <i class="fas fa-feather-alt text-teal-600 mr-1"></i> 마음을 담은 메시지
+                <label class="block text-xs md:text-sm font-bold text-[#7c4a30] mb-1.5" for="fMessage">
+                    <i class="fas fa-feather-alt text-[#c2410c] mr-1"></i> 마음을 담은 메시지
                 </label>
-                <textarea id="fMessage" class="input-field w-full bg-white border-2 border-teal-200/70 rounded-xl px-3 py-2.5 text-sm md:text-base focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none min-h-[10rem] shadow-sm"></textarea>
+                <textarea id="fMessage" class="input-field w-full bg-white border-2 border-[#f0c8a8] rounded-xl px-3 py-2.5 text-sm md:text-base text-[#2b1a12] focus:ring-2 focus:ring-[#fdba74] focus:border-[#d97757] outline-none min-h-[10rem] shadow-sm"></textarea>
 
                 <!-- 분위기 선택 (선택 사항) -->
                 <div class="mt-4">
-                    <label class="block text-xs md:text-sm font-bold text-slate-700 mb-2">
-                        <i class="fas fa-palette text-teal-600 mr-1"></i> 카드 분위기 <span class="font-medium text-slate-400">(선택)</span>
+                    <label class="block text-xs md:text-sm font-bold text-[#7c4a30] mb-2">
+                        <i class="fas fa-palette text-[#c2410c] mr-1"></i> 카드 분위기 <span class="font-medium text-[#c9a48a]">(선택)</span>
                     </label>
                     <div id="moodChips" class="flex flex-wrap gap-2">
                         <button type="button" class="mood-chip" data-mood="따뜻하고 포근한">🌷 따뜻한</button>
@@ -280,82 +283,87 @@
                 </div>
             </div>
 
-        <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-xl overflow-hidden w-full">
-            <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-slate-800 border-b border-slate-700">
-                <span class="text-xs font-bold text-slate-400 tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 프롬프트</span>
+        <div class="bg-[#3b1f12] rounded-2xl border border-[#5a3220] shadow-xl overflow-hidden w-full">
+            <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-[#3b1f12] border-b border-[#5a3220]">
+                <span class="text-xs font-bold text-[#f2c8a8] tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 프롬프트</span>
                 <div class="flex gap-2">
-                    <button type="button" id="btnCopy" class="text-xs font-bold bg-slate-200 hover:bg-slate-300 text-slate-900 px-3 py-1.5 rounded-lg transition-colors">
+                    <button type="button" id="btnCopy" class="text-xs font-bold bg-[#ffedd5] hover:bg-[#fed7aa] text-[#7c2d12] px-3 py-1.5 rounded-lg transition-colors">
                         <i class="fas fa-copy mr-1"></i>복사
                     </button>
-                    <button type="button" id="btnReset" class="text-xs font-bold bg-slate-600 hover:bg-slate-500 text-white px-3 py-1.5 rounded-lg transition-colors">초기화</button>
+                    <button type="button" id="btnReset" class="text-xs font-bold bg-[#7c4a30] hover:bg-[#6b3f29] text-white px-3 py-1.5 rounded-lg transition-colors">초기화</button>
                 </div>
             </div>
-            <textarea id="mdPreview" readonly class="w-full min-h-[280px] p-3 text-slate-200 bg-slate-900 border-0 outline-none resize-y text-xs"></textarea>
+            <textarea id="mdPreview" readonly class="w-full min-h-[280px] p-3 text-[#fff4e6] bg-[#3b1f12] border-0 outline-none resize-y text-xs"></textarea>
         </div>
 
         <!-- 순서 안내 -->
         <div class="w-full">
             <div class="flex items-start justify-start sm:justify-center gap-0 text-center overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]">
                 <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
-                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-slate-800 text-white text-base shadow"><i class="fas fa-pencil"></i></span>
-                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">메시지 작성</span>
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-[#3b1f12] text-white text-base shadow"><i class="fas fa-pencil"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-[#7c4a30] leading-tight">메시지 작성</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <i class="fas fa-chevron-right text-[#d6a888] text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
                 <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
-                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-blue-500 text-white text-base shadow"><i class="fas fa-copy"></i></span>
-                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">프롬프트 복사</span>
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-[#d97757] text-white text-base shadow"><i class="fas fa-copy"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-[#7c4a30] leading-tight">프롬프트 복사</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <i class="fas fa-chevron-right text-[#d6a888] text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
                 <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
-                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-teal-600 text-white text-lg leading-none shadow">✦</span>
-                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">제미나이 열기</span>
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-[#c2410c] text-white text-base shadow"><i class="fas fa-robot"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-[#7c4a30] leading-tight">코파일럿 열기</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <i class="fas fa-chevron-right text-[#d6a888] text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
                 <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
-                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-indigo-700 text-white text-base shadow"><i class="fas fa-paste"></i></span>
-                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">붙여넣기</span>
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-[#9a3412] text-white text-base shadow"><i class="fas fa-paste"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-[#7c4a30] leading-tight">붙여넣기</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <i class="fas fa-chevron-right text-[#d6a888] text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
                 <div class="flex flex-col items-center gap-1.5 min-w-[4.75rem] sm:min-w-[6rem]">
-                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-fuchsia-600 text-white text-base shadow"><i class="fas fa-wand-magic-sparkles"></i></span>
-                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-snug">[도구]<br>이미지만들기 선택</span>
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-[#b45309] text-white text-base shadow"><i class="fas fa-wand-magic-sparkles"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-[#7c4a30] leading-snug">[만들기]<br>이미지만들기</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <i class="fas fa-chevron-right text-[#d6a888] text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
                 <div class="flex flex-col items-center gap-1.5 min-w-[3.75rem] sm:min-w-[5rem]">
-                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-amber-500 text-white text-base shadow"><i class="fas fa-image"></i></span>
-                    <span class="text-[11px] sm:text-[13px] font-bold text-slate-700 leading-tight">포토카드 생성</span>
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-[#d97706] text-white text-base shadow"><i class="fas fa-image"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-[#7c4a30] leading-tight">포토카드 생성</span>
+                </div>
+                <i class="fas fa-chevron-right text-[#d6a888] text-[11px] sm:text-xs mx-1 sm:mx-2 mt-4 sm:mt-5 shrink-0" aria-hidden="true"></i>
+                <div class="flex flex-col items-center gap-1.5 min-w-[4.75rem] sm:min-w-[6rem]">
+                    <span class="inline-flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-[#7c2d12] text-white text-base shadow"><i class="fas fa-spell-check"></i></span>
+                    <span class="text-[11px] sm:text-[13px] font-bold text-[#7c4a30] leading-snug">텍스트 추출<br>(오타 수정)</span>
                 </div>
             </div>
         </div>
 
-        <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer"
-           class="w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-md transition hover:shadow-lg border border-teal-200/80 bg-gradient-to-r from-teal-100 via-emerald-100 to-sky-100 text-slate-800 text-[19px] md:text-[21px] hover:from-teal-50 hover:via-emerald-50 hover:to-sky-50">
-            <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/70 text-teal-700 text-[1.125rem] shadow-sm" aria-hidden="true">✦</span>
+        <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer"
+           class="w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-md transition hover:shadow-lg border border-[#e8c7b0] bg-gradient-to-r from-[#fff4e6] via-[#ffe9d4] to-[#ffd9b8] text-[#2b1a12] text-[19px] md:text-[21px] hover:from-[#fffaf2] hover:via-[#fff0e0] hover:to-[#ffe2c8]">
+            <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/90 text-[#c2410c] text-[1.125rem] shadow-sm" aria-hidden="true"><i class="fas fa-robot"></i></span>
             <span class="text-center min-w-0">
-                <span class="block text-slate-800">브라우저에서 제미나이 열기(로그인 필수) <i class="fas fa-external-link-alt ml-1 text-[17px] opacity-80 align-middle"></i></span>
+                <span class="block text-[#2b1a12]">브라우저에서 코파일럿 열기(로그인 필수) <i class="fas fa-external-link-alt ml-1 text-[17px] opacity-80 align-middle"></i></span>
             </span>
         </a>
             </div>
         </div>
 
-        <p id="copyToast" class="hidden mt-3 text-center text-xs font-bold text-slate-600">클립보드에 복사했습니다.</p>
+        <p id="copyToast" class="hidden mt-3 text-center text-xs font-bold text-[#7c4a30]">클립보드에 복사했습니다.</p>
 
-        <footer class="mt-12 pt-8 border-t border-slate-200 text-center">
-            <div class="max-w-2xl mx-auto w-full rounded-2xl border border-amber-200/90 bg-gradient-to-b from-amber-50 to-orange-50/60 shadow-sm mb-10 overflow-hidden">
-                <div class="px-3 sm:px-5 py-4 md:py-5 flex flex-col items-stretch gap-2.5 text-slate-800 leading-snug text-center max-w-full">
+        <footer class="mt-12 pt-8 border-t border-[#e8c7b0] text-center">
+            <div class="max-w-2xl mx-auto w-full rounded-2xl border border-[#e8c7b0] bg-gradient-to-b from-[#fff4e6] to-[#ffe9d4]/70 shadow-sm mb-10 overflow-hidden">
+                <div class="px-3 sm:px-5 py-4 md:py-5 flex flex-col items-stretch gap-2.5 text-[#2b1a12] leading-snug text-center max-w-full">
                     <p class="text-[clamp(0.6875rem,3vw,0.875rem)] break-words">
-                        AI로 만든 <strong>나만의 감사 포토카드</strong>를 <a href="https://hmap.hdec.co.kr/HMAP/Authentication/HMAPAccess.aspx?popupUrl=PLAYGALLERY" target="_blank" rel="noopener noreferrer" class="text-slate-900 font-bold underline underline-offset-2 hover:text-slate-950"><strong>PlayDay Gallery</strong> <i class="fas fa-external-link-alt text-[10px] opacity-70"></i></a><span class="text-slate-500 text-[12px] font-semibold">(로그인 필수)</span>에 업로드 해주세요.
+                        AI로 만든 <strong>나만의 감사 포토카드</strong>를 <a href="https://hmap.hdec.co.kr/HMAP/Authentication/HMAPAccess.aspx?popupUrl=PLAYGALLERY" target="_blank" rel="noopener noreferrer" class="text-[#7c2d12] font-bold underline underline-offset-2 hover:text-[#2b1a12]"><strong>PlayDay Gallery</strong> <i class="fas fa-external-link-alt text-[10px] opacity-70"></i></a><span class="text-[#a07658] text-[12px] font-semibold">(로그인 필수)</span>에 업로드 해주세요.
                     </p>
-                    <p class="text-[clamp(0.6875rem,3vw,0.875rem)] font-semibold text-slate-900 break-words">
-                        따뜻한 사연을 선정하여 <strong class="text-amber-800">스타벅스 상품권</strong>을 보내 드립니다. (제출기한 : 26년 6월 30일)
+                    <p class="text-[clamp(0.6875rem,3vw,0.875rem)] font-semibold text-[#2b1a12] break-words">
+                        따뜻한 사연을 선정하여 <strong class="text-[#9a3412]">스타벅스 상품권</strong>을 보내 드립니다. (제출기한 : 26년 6월 30일)
                     </p>
                 </div>
             </div>
-            <div class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-slate-600 font-semibold">
-                <span class="text-slate-500">워크이노베이션센터</span>
-                <span class="text-slate-300" aria-hidden="true">│</span>
+            <div class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-[#7c4a30] font-semibold">
+                <span class="text-[#9a6444]">워크이노베이션센터</span>
+                <span class="text-[#d6b6a0]" aria-hidden="true">│</span>
                 <span class="inline-flex items-center gap-1">
-                    <svg class="h-4 w-4 text-slate-700" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 45L28 35V80L12 90V45Z" fill="currentColor"/><path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z" fill="currentColor"/></svg>
+                    <svg class="h-4 w-4 text-[#7c4a30]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 45L28 35V80L12 90V45Z" fill="currentColor"/><path d="M28 5 L82 32 V48 L38 70 V54 L66 40 L28 21 V5 Z" fill="currentColor"/></svg>
                 AI디자인랩
                 </span>
             </div>
@@ -394,6 +402,7 @@
             L.push('- 입력 내용을 감정적으로 재해석해 2~4줄의 짧은 편지 문구를 만들고, 이미지 안에 자연스럽게 녹여 넣기');
             L.push('- "TO. ' + receiver + '"를 작게 넣고, 편지 문구는 한국어로 또렷하게 읽히게 배치');
             L.push('- 텍스트 박스나 배너 없이 빛, 벽면, 하늘, 책상, 편지지, 창가 그림자 같은 자연스러운 공간 위에 문구 배치');
+            L.push('- 사람 얼굴 중심보다 손, 뒷모습, 실루엣  같은 오브제로 감정 표현');
             L.push('');
             L.push('[금지]');
             L.push('- 설명, 문구 초안, 제작 과정, 이미지 생성 프롬프트를 텍스트로 출력하지 말 것');
