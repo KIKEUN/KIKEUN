@@ -70,6 +70,36 @@
             font-size: 0.72rem;
             line-height: 1.5;
             tab-size: 2;
+            cursor: text;
+            caret-color: #fdba74;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        #mdPreview:focus {
+            background-color: #2b170d;
+            box-shadow: inset 0 0 0 1px rgba(253, 186, 116, 0.45);
+        }
+        /* 사용자가 직접 수정한 상태 */
+        #mdPreview.is-edited {
+            background-color: #2b170d;
+            box-shadow: inset 0 0 0 1px rgba(253, 186, 116, 0.55);
+        }
+        .prompt-edit-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #fdba74;
+            background: rgba(253, 186, 116, 0.12);
+            border: 1px solid rgba(253, 186, 116, 0.35);
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.02em;
+        }
+        .prompt-edit-hint.is-active {
+            color: #fff;
+            background: rgba(253, 186, 116, 0.28);
+            border-color: rgba(253, 186, 116, 0.7);
         }
 
         input::placeholder,
@@ -288,15 +318,21 @@
 
         <div class="bg-[#3b1f12] rounded-2xl border border-[#5a3220] shadow-xl overflow-hidden w-full">
             <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-[#3b1f12] border-b border-[#5a3220]">
-                <span class="text-xs font-bold text-[#f2c8a8] tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 프롬프트</span>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xs font-bold text-[#f2c8a8] tracking-wider"><i class="fas fa-file-code mr-1"></i>생성된 프롬프트</span>
+                    <span id="editHint" class="prompt-edit-hint" title="프롬프트를 직접 수정할 수 있습니다"><i class="fas fa-pen-to-square text-[9px]"></i> 직접 수정 가능</span>
+                </div>
                 <div class="flex gap-2">
+                    <button type="button" id="btnRegen" class="hidden text-xs font-bold bg-[#fdba74] hover:bg-[#fb923c] text-[#7c2d12] px-3 py-1.5 rounded-lg transition-colors" title="입력값으로 다시 생성합니다">
+                        <i class="fas fa-rotate mr-1"></i>재생성
+                    </button>
                     <button type="button" id="btnCopy" class="text-xs font-bold bg-[#ffedd5] hover:bg-[#fed7aa] text-[#7c2d12] px-3 py-1.5 rounded-lg transition-colors">
                         <i class="fas fa-copy mr-1"></i>복사
                     </button>
                     <button type="button" id="btnReset" class="text-xs font-bold bg-[#7c4a30] hover:bg-[#6b3f29] text-white px-3 py-1.5 rounded-lg transition-colors">초기화</button>
                 </div>
             </div>
-            <textarea id="mdPreview" readonly class="w-full min-h-[280px] p-3 text-[#fff4e6] bg-[#3b1f12] border-0 outline-none resize-y text-xs"></textarea>
+            <textarea id="mdPreview" class="w-full min-h-[280px] p-3 text-[#fff4e6] bg-[#3b1f12] border-0 outline-none resize-y text-xs" spellcheck="false" aria-label="생성된 프롬프트 (직접 수정 가능)"></textarea>
         </div>
 
         <!-- 순서 안내 -->
@@ -338,6 +374,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- 가이드 영상 -->
+        <section class="w-full rounded-2xl border border-[#e8c7b0] bg-gradient-to-b from-white to-[#fdf6ee] shadow-sm overflow-hidden">
+            <button type="button" id="btnGuideVideo" class="w-full flex items-center justify-center gap-2 px-4 py-3.5 text-[#7c2d12] font-black text-sm md:text-base transition-colors hover:bg-[#fff4e6]" aria-expanded="false" aria-controls="guideVideoPanel">
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#fff4e6] text-[#c2410c] shadow-sm" aria-hidden="true"><i class="fas fa-circle-play"></i></span>
+                <span>가이드 영상 보기</span>
+                <i id="guideVideoIcon" class="fas fa-chevron-down text-xs transition-transform" aria-hidden="true"></i>
+            </button>
+            <div id="guideVideoPanel" class="hidden border-t border-[#e8c7b0] bg-[#fffaf2] p-3 sm:p-4">
+                <video id="guideVideo" class="w-full rounded-xl border border-[#e8c7b0] bg-[#2b1a12] shadow-md" controls preload="metadata" playsinline>
+                    <source src="https://kikeun.github.io/KIKEUN/play3.mp4" type="video/mp4">
+                    브라우저가 video 태그를 지원하지 않습니다.
+                </video>
+                <p class="mt-2 text-center text-[11px] sm:text-xs font-semibold text-[#9a6444]">
+                    영상을 보고 순서대로 따라 하면 포토카드를 더 쉽게 만들 수 있어요.
+                </p>
+            </div>
+        </section>
 
         <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer"
            class="w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-md transition hover:shadow-lg border border-[#e8c7b0] bg-gradient-to-r from-[#fff4e6] via-[#ffe9d4] to-[#ffd9b8] text-[#2b1a12] text-[19px] md:text-[21px] hover:from-[#fffaf2] hover:via-[#fff0e0] hover:to-[#ffe2c8]">
@@ -398,25 +452,71 @@
             L.push('- 전하고 싶은 마음: ' + message.replace(/\n/g, ' '));
             L.push('- 분위기: ' + mood);
             L.push('');
+            L.push('[편지 문구 작성 방식]');
+            L.push('- 입력한 문장을 그대로 복사하지 말고, 고마움이 느껴지는 따뜻한 편지 문장으로 감성적으로 다시 써줄 것');
+            L.push('- 4~5줄 구성: 1줄은 고마운 마음, 2~3줄은 상대가 해준 도움이나 함께한 시간을 떠올리는 문장, 마지막 줄은 진심 어린 마무리');
+            L.push('- 너무 딱딱한 보고서 문체나 설명문이 아니라, 조용히 마음을 전하는 손편지 같은 말투로 작성');
+            L.push('- "감사합니다"만 반복하지 말고, 덕분에 힘이 된 순간·배운 점·따뜻했던 기억이 자연스럽게 느껴지게 표현');
+            L.push('- 과장된 시적 표현보다 담백하고 진심 있는 한국어 문장으로 작성');
+            L.push('');
             L.push('[이미지 요구사항]');
-            L.push('- 9:16 세로 비율, 핸드폰 화면을 꽉 채우는 full-bleed 포토카드');
+            L.push('- 핸드폰 화면을 꽉 채우는 full-bleed 포토카드');
             L.push('- 카드 주변 여백, 흰 테두리, 프레임, 목업 배경 없이 화면 전체가 곧 포토카드');
             L.push('- 실사 사진풍, 영화 스틸컷 같은 자연광, 얕은 심도, 필름 그레인, 시네마틱 색감');
-            L.push('- 입력 내용을 감정적으로 재해석해 2~4줄의 짧은 편지 문구를 만들고, 이미지 안에 자연스럽게 녹여 넣기');
-            L.push('- "TO. ' + receiver + '"를 작게 넣고, 편지 문구는 한국어로 또렷하게 읽히게 배치');
-            L.push('- 텍스트 박스나 배너 없이 빛, 벽면, 하늘, 책상, 편지지, 창가 그림자 같은 자연스러운 공간 위에 문구 배치');
-            L.push('- 사람 얼굴 중심보다 손, 뒷모습, 실루엣  같은 오브제로 감정 표현');
+            L.push('- 입력 내용을 감정적으로 재해석해 4~5줄의 짧은 편지 문구를 만들고, 이미지 안에 자연스럽게 녹여 넣기');
+            L.push('- 텍스트 박스나 배너 없이 빛, 벽면, 하늘, 유리창, 포스트잇, 사진, 작은 선물, 식물, 공구, 작업물 등 자연스러운 공간 위에 문구 배치');
+            L.push('');
+            L.push('[필수 텍스트]');
+            L.push('- 이미지 안에 반드시 받는 사람 표기 "TO. ' + receiver + '"를 넣을 것');
+            L.push('- "TO. ' + receiver + '"는 편지 문구와 분리해서 보이게 배치하고, 작지만 또렷하게 읽히게 할 것');
+            L.push('- 위치는 상단 왼쪽, 상단 중앙, 벽면, 유리창, 포스트잇, 작은 카드, 작업물 위, 빛이 닿는 빈 공간 중 자연스러운 곳에 배치');
+            L.push('');
+            L.push('[이미지 컨셉]');
+            L.push('- 사람 얼굴 중심 금지. 인물이 나오더라도 뒷모습, 손, 어깨선, 실루엣 수준만 작게 허용');
+            L.push('- 인물 클로즈업보다 스토리에 맞는 공간, 빛, 소품, 분위기가 메인이 되도록 구성');
+            L.push('- 사연의 내용에 맞춰 아래 장면 중 하나를 새롭게 선택하거나 조합하되, 매번 같은 소품을 반복하지 말 것');
+            L.push('- "성장, 배움, 감사"의 느낌이 직접적인 표정 대신 환경과 오브제에서 자연스럽게 드러나게 표현');
+            L.push('- 감정 표현은 얼굴보다 손, 뒷모습, 실루엣, 작은 메모, 꽃, 빛, 그림자, 작업 도구, 책장, 모니터, 안전모, 선물, 창밖 풍경 같은 오브제 중심으로 표현');
+            L.push('- 한 화면 안에 소품을 너무 많이 넣지 말고, 1~3개의 핵심 오브제와 공간 분위기로 간결하게 구성');
             L.push('');
             L.push('[금지]');
             L.push('- 설명, 문구 초안, 제작 과정, 이미지 생성 프롬프트를 텍스트로 출력하지 말 것');
+            L.push('- 정면 얼굴 클로즈업, 인물 셀카 구도, 얼굴이 화면 대부분을 차지하는 구성 금지');
+            L.push('- 받는 사람 표기 "TO. ' + receiver + '"를 생략하거나 다른 말로 바꾸는 것 금지');
+            L.push('- 모든 결과를 커피잔, 노트, 펜 중심의 책상 장면으로만 만드는 것 금지');
             L.push('- 만화, 일러스트, 애니메이션풍, 장면 분할 금지');
             L.push('- 결과는 반드시 포토카드 이미지 1장만 보여줄 것');
 
             return L.join('\n');
         }
 
-        function refresh() {
+        let manuallyEdited = false;
+
+        function setEditedState(edited) {
+            manuallyEdited = edited;
+            const ta = $('mdPreview');
+            const hint = $('editHint');
+            const regen = $('btnRegen');
+            if (edited) {
+                ta.classList.add('is-edited');
+                hint.classList.add('is-active');
+                hint.innerHTML = '<i class="fas fa-pen-to-square text-[9px]"></i> 수동 수정 중';
+                regen.classList.remove('hidden');
+            } else {
+                ta.classList.remove('is-edited');
+                hint.classList.remove('is-active');
+                hint.innerHTML = '<i class="fas fa-pen-to-square text-[9px]"></i> 직접 수정 가능';
+                regen.classList.add('hidden');
+            }
+        }
+
+        /**
+         * @param {boolean} force - true면 수동 수정 상태와 무관하게 강제로 재생성
+         */
+        function refresh(force) {
+            if (manuallyEdited && !force) return;
             $('mdPreview').value = buildMarkdown();
+            if (force) setEditedState(false);
         }
 
         const inputs = ['fReceiver', 'fMessage'];
@@ -452,7 +552,8 @@
             inputs.forEach((id) => { $(id).value = ''; });
             selectedMood = '';
             document.querySelectorAll('.mood-chip.selected').forEach((c) => c.classList.remove('selected'));
-            refresh();
+            setEditedState(false);
+            refresh(true);
         }
 
         inputs.forEach((id) => {
@@ -474,7 +575,8 @@
         });
 
         $('btnCopy').addEventListener('click', async () => {
-            refresh();
+            // 수동 수정 상태에서는 텍스트영역의 현재 값을 그대로 사용
+            if (!manuallyEdited) refresh();
             try {
                 await navigator.clipboard.writeText($('mdPreview').value);
                 const t = $('copyToast');
@@ -490,6 +592,31 @@
         $('btnReset').addEventListener('click', () => {
             if (!confirm('입력 내용을 모두 지울까요?')) return;
             clearPromptFields();
+        });
+
+        $('btnRegen').addEventListener('click', () => {
+            if (!confirm('직접 수정한 내용을 버리고 입력값으로 다시 생성할까요?')) return;
+            refresh(true);
+        });
+
+        // 사용자가 프롬프트를 직접 편집하면 수동 모드로 전환
+        $('mdPreview').addEventListener('input', () => {
+            if (!manuallyEdited) setEditedState(true);
+        });
+
+        $('btnGuideVideo').addEventListener('click', () => {
+            const panel = $('guideVideoPanel');
+            const icon = $('guideVideoIcon');
+            const video = $('guideVideo');
+            const willOpen = panel.classList.contains('hidden');
+
+            panel.classList.toggle('hidden', !willOpen);
+            $('btnGuideVideo').setAttribute('aria-expanded', String(willOpen));
+            icon.classList.toggle('rotate-180', willOpen);
+
+            if (!willOpen && video) {
+                video.pause();
+            }
         });
 
         applyPlaceholderHints();
