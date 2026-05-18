@@ -78,6 +78,30 @@
         .playday-gallery-link:hover {
             background-color: #ffedd5;
         }
+
+        .gallery-open-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 20rem;
+            margin: 0 auto;
+            padding: 0.65rem 1.1rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(214, 142, 100, 0.55);
+            background: linear-gradient(180deg, #fff4e6 0%, #ffedd5 100%);
+            color: #7c2d12;
+            font-size: 0.875rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(193, 110, 74, 0.15);
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .gallery-open-btn:hover {
+            background: linear-gradient(180deg, #fffaf2 0%, #fed7aa 100%);
+            transform: translateY(-1px);
+        }
         textarea.input-field {
             min-height: 4.5rem;
             resize: vertical;
@@ -302,10 +326,8 @@
                 완성된 포토카드를
                 <a
                     href="https://hmap.hdec.co.kr/HMAP/Authentication/HMAPAccess.aspx?popupUrl=PLAYGALLERY"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="playday-gallery-link text-[#7c2d12] font-bold hover:text-[#2b1a12]"
-                    title="PlayDay Gallery 열기 (새 창, HMAP 로그인 필요)"
+                    class="playday-gallery-link external-escape-link text-[#7c2d12] font-bold hover:text-[#2b1a12]"
+                    title="PlayDay Gallery 열기 (HMAP 로그인 필요)"
                 >
                     <span aria-hidden="true">🖼️</span>
                     <span>PlayDay Gallery</span>
@@ -430,23 +452,19 @@
                     <a
                         id="guideVideoOpenNew"
                         href="https://kikeun.github.io/KIKEUN/play3.mp4"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#e8c7b0] bg-white px-3 py-2 text-xs sm:text-sm font-bold text-[#7c2d12] shadow-sm hover:bg-[#fff4e6] hover:text-[#2b1a12]"
+                        class="external-escape-link inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#e8c7b0] bg-white px-3 py-2 text-xs sm:text-sm font-bold text-[#7c2d12] shadow-sm hover:bg-[#fff4e6] hover:text-[#2b1a12]"
                     >
-                        <i class="fas fa-up-right-from-square text-[11px] opacity-80" aria-hidden="true"></i>
-                        영상 새 창에서 보기 (확대 가능)
+                        <i class="fas fa-external-link-alt text-[11px] opacity-80" aria-hidden="true"></i>
+                        영상 확대해서 보기
                     </a>
                 </p>
-                <p class="mt-2 text-center text-[11px] sm:text-xs font-semibold text-[#9a6444] leading-relaxed">
-                    영상을 보고 순서대로 따라 하면 포토카드를 더 쉽게 만들 수 있어요.<br>
-                    <span class="font-medium text-[#a07658]">사내 게시판에 임베드하면 전체화면이 막힐 수 있어요. 위 버튼으로 새 창에서 보시면 확대됩니다.</span>
+                <p class="mt-2 text-center text-[11px] sm:text-xs font-semibold text-[#9a6444]">
+                    영상을 보고 순서대로 따라 하면 포토카드를 더 쉽게 만들 수 있어요. 확대해서 보시면 더 잘 보입니다.
                 </p>
             </div>
         </section>
 
-        <a href="https://m365.microsoft/chat/" target="_blank" rel="noopener noreferrer"
-           class="w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-md transition hover:shadow-lg border border-[#e8c7b0] bg-gradient-to-r from-[#fff4e6] via-[#ffe9d4] to-[#ffd9b8] text-[#2b1a12] text-[19px] md:text-[21px] hover:from-[#fffaf2] hover:via-[#fff0e0] hover:to-[#ffe2c8]">
+        <a href="https://m365.microsoft/chat/" class="external-escape-link w-full flex flex-wrap items-center justify-center gap-2 rounded-xl px-4 py-3.5 font-bold shadow-md transition hover:shadow-lg border border-[#e8c7b0] bg-gradient-to-r from-[#fff4e6] via-[#ffe9d4] to-[#ffd9b8] text-[#2b1a12] text-[19px] md:text-[21px] hover:from-[#fffaf2] hover:via-[#fff0e0] hover:to-[#ffe2c8]">
             <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/90 text-[#c2410c] text-[1rem] shadow-sm" aria-hidden="true"><i class="fas fa-robot"></i></span>
             <span class="text-center min-w-0">
                 <span class="block text-[#2b1a12]">브라우저에서 코파일럿 열기(로그인 필수) <i class="fas fa-external-link-alt ml-1 text-[17px] opacity-80 align-middle"></i></span>
@@ -464,10 +482,8 @@
                         AI로 만든 <strong>나만의 감사 포토카드</strong>를
                         <a
                             href="https://hmap.hdec.co.kr/HMAP/Authentication/HMAPAccess.aspx?popupUrl=PLAYGALLERY"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="playday-gallery-link text-[#7c2d12] font-bold hover:text-[#2b1a12]"
-                            title="PlayDay Gallery 열기 (새 창, HMAP 로그인 필요)"
+                            class="playday-gallery-link external-escape-link text-[#7c2d12] font-bold hover:text-[#2b1a12]"
+                            title="PlayDay Gallery 열기 (HMAP 로그인 필요)"
                         >
                             <span aria-hidden="true">🖼️</span>
                             <span>PlayDay Gallery</span>
@@ -497,12 +513,43 @@
         const $ = (id) => document.getElementById(id);
 
         const PLAYGALLERY_URL = 'https://hmap.hdec.co.kr/HMAP/Authentication/HMAPAccess.aspx?popupUrl=PLAYGALLERY';
+        const GUIDE_VIDEO_URL = 'https://kikeun.github.io/KIKEUN/play3.mp4';
 
-        document.querySelectorAll('.playday-gallery-link').forEach((link) => {
-            link.href = PLAYGALLERY_URL;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
+        /** 사내 게시판 iframe 임베드에서도 링크가 열리도록 상위 창으로 이동 */
+        function openExternalUrl(url) {
+            if (!url) return;
+            try {
+                const topWin = window.top || window;
+                const opened = topWin.open(url, '_blank', 'noopener,noreferrer');
+                if (opened) return;
+            } catch (e) {}
+            try {
+                (window.top || window).location.href = url;
+                return;
+            } catch (e2) {}
+            window.location.href = url;
+        }
+
+        document.querySelectorAll('.playday-gallery-link, .external-escape-link').forEach((link) => {
+            if (link.id === 'guideVideoOpenNew') {
+                link.href = GUIDE_VIDEO_URL;
+            } else if (link.classList.contains('playday-gallery-link')) {
+                link.href = PLAYGALLERY_URL;
+            }
+            link.addEventListener('click', function (e) {
+                const url = this.href;
+                if (!url || url === '#' || url.startsWith('javascript:')) return;
+                e.preventDefault();
+                openExternalUrl(url);
+            });
         });
+
+        const btnGalleryTop = $('btnOpenGalleryTop');
+        if (btnGalleryTop) {
+            btnGalleryTop.addEventListener('click', function () {
+                openExternalUrl(PLAYGALLERY_URL);
+            });
+        }
 
         function esc(s) {
             return (s || '').trim();
